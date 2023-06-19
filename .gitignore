@@ -1,0 +1,9 @@
+# Ignore JSON files
+*.json
+
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
