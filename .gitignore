@@ -7,3 +7,6 @@
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 *.ipynb_checkpoints/
+
+# Ignore config.py 
+config.py 
