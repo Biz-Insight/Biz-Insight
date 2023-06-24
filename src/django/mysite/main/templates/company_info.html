@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% extends "base.html" %}
+  {% load humanize %}    
+  {% block contents %}
+  {% with company=company_info.0 %}
+  <style>
+    .tab {
+      display: none;
+    }
+  </style>
+  <script>
+    function showTab(tabName) {
+      var tabs = document.getElementsByClassName('tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = 'none';
+      }
+      document.getElementById(tabName).style.display = 'block';
+    }
+  </script>
+</head>
+<body>
+
+  <h1>{{ company }}</h1>
+  <ul>
+    <li><a href="#" onclick="showTab('tab1')">기업 정보</a></li>
+    <li><a href="#" onclick="showTab('tab2')">투자</a></li>
+    <li><a href="#" onclick="showTab('tab3')">신용</a></li>
+  </ul>
+  
+  <div id="tab1" class="tab">
+    <h2>기업 정보</h2>
+    <p>
+        <div class="row mt-5">
+            <div class="col-12">
+                <table class="table table-light">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">표준코드</th>
+                            <th scope="col">요약코드</th>
+                            <th scope="col">기업명</th>
+                            <th scope="col">기업약명</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-dark">
+                        <tr>
+                            <td scope="row"> {{ company.Standard_code }}</td>
+                            <td scope="row"> {{ company.Short_code }}</td>
+                            <td scope="row"> {{ company.Company_full_name}}</td>
+                            <td scope="row"> {{ company.Company_name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </p>
+  </div>
+  
+  <div id="tab2" class="tab">
+    <h2>투자</h2>
+    <p>
+      <div class='tableauPlaceholder' id='viz1687416160668' style='position: relative'>
+        <noscript>
+          <a href='#'>
+            <img alt='대시보드 1' src='https://public.tableau.com/static/images/pu/publish_test_16874114313730/1/1_rss.png' style='border: none' />
+          </a>
+        </noscript>
+        <object class='tableauViz' style='display:none;' name='삼성전자'>
+          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+          <param name='embed_code_version' value='3' />
+          <param name='site_root' value='' />
+          <param name='name' value='publish_test_16874114313730/1' />
+          <param name='tabs' value='no' />
+          <param name='toolbar' value='yes' />
+          <param name='static_image' value='https://public.tableau.com/static/images/pu/publish_test_16874114313730/1/1.png' />
+          <param name='animate_transition' value='yes' />
+          <param name='display_static_image' value='yes' />
+          <param name='display_spinner' value='yes' />
+          <param name='display_overlay' value='yes' />
+          <param name='display_count' value='yes' />
+          <param name='language' value='ko-KR' />
+          <param name='filter' value='publish=yes' />
+        </object>
+      </div>
+      <script type='text/javascript'>
+        var divElement = document.getElementById('viz1687416160668');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        if (divElement.offsetWidth > 800) {
+          vizElement.style.width = '1024px';
+          vizElement.style.height = '795px';
+        } else if (divElement.offsetWidth > 500) {
+          vizElement.style.width = '1024px';
+          vizElement.style.height = '795px';
+        } else {
+          vizElement.style.width = '100%';
+          vizElement.style.height = '927px';
+        }
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+      </script>
+    </p>    
+  </div>
+  
+  <div id="tab3" class="tab">
+    <h2>신용</h2>
+    <p>
+      신용
+    </p>
+  </div>
+</body>
+{% endwith %}
+{% endblock%}
+</html>
