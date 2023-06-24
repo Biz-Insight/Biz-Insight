@@ -19,4 +19,4 @@ __pycache__/
 *.pyc
 
 # Django migration files
-*/migrations/
+**/migrations/
