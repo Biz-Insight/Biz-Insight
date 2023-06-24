@@ -10,7 +10,7 @@ def company_direct(request):
 def search_view(request):
     company_name = request.GET.get("company_name", "")
     request.session["context"] = company_name
-    return redirect("company_info")
+    return redirect("company_info", company_name=company_name)
 
 
 def home(request):
