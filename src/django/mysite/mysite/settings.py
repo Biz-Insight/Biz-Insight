@@ -80,7 +80,7 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "django_test",
+        "NAME": "django_test2",
         "USER": "multi",
         "PASSWORD": "Campus123!",
         "HOST": "15.152.211.160",
@@ -126,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
