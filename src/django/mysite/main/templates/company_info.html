@@ -1,117 +1,231 @@
 <!DOCTYPE html>
-<html>
-<head>
-  {% extends "base.html" %}
-  {% load humanize %}    
-  {% block contents %}
-  {% with company=company_info.0 %}
-  <style>
-    .tab {
-      display: none;
-    }
-  </style>
-  <script>
-    function showTab(tabName) {
-      var tabs = document.getElementsByClassName('tab');
-      for (var i = 0; i < tabs.length; i++) {
-        tabs[i].style.display = 'none';
-      }
-      document.getElementById(tabName).style.display = 'block';
-    }
-  </script>
-</head>
-<body>
-
-  <h1>{{ company }}</h1>
-  <ul>
-    <li><a href="#" onclick="showTab('tab1')">기업 정보</a></li>
-    <li><a href="#" onclick="showTab('tab2')">투자</a></li>
-    <li><a href="#" onclick="showTab('tab3')">신용</a></li>
-  </ul>
-  
-  <div id="tab1" class="tab">
-    <h2>기업 정보</h2>
-    <p>
-        <div class="row mt-5">
-            <div class="col-12">
-                <table class="table table-light">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">표준코드</th>
-                            <th scope="col">요약코드</th>
-                            <th scope="col">기업명</th>
-                            <th scope="col">기업약명</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-dark">
-                        <tr>
-                            <td scope="row"> {{ company.Standard_code }}</td>
-                            <td scope="row"> {{ company.Short_code }}</td>
-                            <td scope="row"> {{ company.Company_full_name}}</td>
-                            <td scope="row"> {{ company.Company_name}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+{% load static %}
+{% with company=company_info.0 %}
+<scriptscript>
+  const company = "{{ company }}";
+</scriptscript>
+<html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>Dashboard - SB Admin</title>
+      <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+      <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+      < src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Layouts
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="login.html">Login</a>
+                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" href="password.html">Forgot Password</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Error
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="401.html">401 Page</a>
+                                            <a class="nav-link" href="404.html">404 Page</a>
+                                            <a class="nav-link" href="500.html">500 Page</a>
+                                        </nav>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <a class="nav-link" href="charts.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Charts
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">{{ company }}</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Primary Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">Warning Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">Success Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Danger Card</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Area Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myAreaChart2" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Bar Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Example
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                  <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">표준코드</th>
+                                        <th scope="col">요약코드</th>
+                                        <th scope="col">기업명</th>
+                                        <th scope="col">기업약명</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="text-dark">
+                                      <tr>
+                                          <td scope="row"> {{ company.Standard_code }}</td>
+                                          <td scope="row"> {{ company.Short_code }}</td>
+                                          <td scope="row"> {{ company.Company_full_name}}</td>
+                                          <td scope="row"> {{ company.Company_name}}</td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
-
-
-    </p>
-  </div>
-  
-  <div id="tab2" class="tab">
-    <h2>투자</h2>
-    <p>
-      <div class='tableauPlaceholder' id='viz1687416160668' style='position: relative'>
-        <noscript>
-          <a href='#'>
-            <img alt='대시보드 1' src='https://public.tableau.com/static/images/pu/publish_test_16874114313730/1/1_rss.png' style='border: none' />
-          </a>
-        </noscript>
-        <object class='tableauViz' style='display:none;' name='삼성전자'>
-          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-          <param name='embed_code_version' value='3' />
-          <param name='site_root' value='' />
-          <param name='name' value='publish_test_16874114313730/1' />
-          <param name='tabs' value='no' />
-          <param name='toolbar' value='yes' />
-          <param name='static_image' value='https://public.tableau.com/static/images/pu/publish_test_16874114313730/1/1.png' />
-          <param name='animate_transition' value='yes' />
-          <param name='display_static_image' value='yes' />
-          <param name='display_spinner' value='yes' />
-          <param name='display_overlay' value='yes' />
-          <param name='display_count' value='yes' />
-          <param name='language' value='ko-KR' />
-          <param name='filter' value='publish=yes' />
-        </object>
-      </div>
-      <script type='text/javascript'>
-        var divElement = document.getElementById('viz1687416160668');
-        var vizElement = divElement.getElementsByTagName('object')[0];
-        if (divElement.offsetWidth > 800) {
-          vizElement.style.width = '1024px';
-          vizElement.style.height = '795px';
-        } else if (divElement.offsetWidth > 500) {
-          vizElement.style.width = '1024px';
-          vizElement.style.height = '795px';
-        } else {
-          vizElement.style.width = '100%';
-          vizElement.style.height = '927px';
-        }
-        var scriptElement = document.createElement('script');
-        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-        vizElement.parentNode.insertBefore(scriptElement, vizElement);
-      </script>
-    </p>    
-  </div>
-  
-  <div id="tab3" class="tab">
-    <h2>신용</h2>
-    <p>
-      신용
-    </p>
-  </div>
-</body>
-{% endwith %}
-{% endblock%}
+        < src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></>
+        < src="{% static 'js/scripts.js' %}"></>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+        <script src="{% static 'assets/demo/chart-area.js' %}"></script>
+        <script src="{% static 'assets/demo/chart-bar-demo.js' %}"></script>
+    </body>
 </html>
+{% endwith %}
