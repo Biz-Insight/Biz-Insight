@@ -20,3 +20,6 @@ __pycache__/
 
 # Django migration files
 **/migrations/
+
+# Django staticfiles
+staticfiles/
