@@ -7,7 +7,7 @@ urlpatterns = [
     path("search/", views.search_view, name="search"),
     path(
         "company_info/<str:company_name>/",
-        views.Companyinfo.as_view(),
+        views.ChartView.as_view(),
         name="company_info",
     ),
 ]
