@@ -194,10 +194,10 @@
                                   </thead>
                                   <tbody class="text-dark">
                                       <tr>
-                                          <td scope="row"> {{ company.Standard_code }}</td>
-                                          <td scope="row"> {{ company.Short_code }}</td>
-                                          <td scope="row"> {{ company.Company_full_name}}</td>
-                                          <td scope="row"> {{ company.Company_name}}</td>
+                                          <td scope="row"> {{ company.standard_code }}</td>
+                                          <td scope="row"> {{ company.short_code }}</td>
+                                          <td scope="row"> {{ company.company_full_name}}</td>
+                                          <td scope="row"> {{ company.company_name}}</td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -225,6 +225,13 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
         <script src="{% static 'assets/js/chart-area.js' %}"></script>
+
+        <script>
+            // JavaScript 코드 작성
+            var data = ["{{ chart_view.0.number_2018 }}", "{{ chart_view.0.number_2019 }}", "{{ chart_view.0.number_2020 }}",
+            "{{ chart_view.0.number_2021 }}","{{ chart_view.0.number_2022 }}"];
+            // 동적으로 처리할 작업 수행
+        </script>
         <script src="{% static 'assets/js/chart-bar.js' %}"></script>
     </body>
 </html>
