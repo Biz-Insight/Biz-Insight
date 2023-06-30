@@ -114,11 +114,12 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">{{ company.company_name }}</h1>
-                        <ol class="breadcrumb mb-4">
+                        <h1 class="company-title">{{ company.company_name }}</h1>
+
+                        <!-- <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                        <div class="row">
+                        </ol> -->
+                        <!-- <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Primary Card</div>
@@ -155,22 +156,22 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
+                                        <span class="chart-title-unit">주가 그래프</span> <span class="chart-title-unit2">(원)</span>
                                     </div>
-                                    <div class="card-body"><canvas id="myAreaChart2" width="100%" height="40"></canvas></div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        <span class="chart-title-unit">매출원가 막대 그래프</span> <span class="chart-title-unit2">(억원)</span>
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -179,7 +180,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                <span class="chart-title-unit">기업 정보</span>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -227,8 +228,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
-        <script src="{% static 'assets/js/chart-area.js' %}"></script>
-        <script src="{% static 'assets/js/chart-bar.js' %}"></script>
+        <script src="{% static 'assets/js/area.js' %}"></script>
+        <script src="{% static 'assets/js/bar.js' %}"></script>
     </body>
 </html>
 {% endwith %}
