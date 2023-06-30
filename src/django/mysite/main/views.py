@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, ListView
-from .models import CompanyName, CisDf
+from .models import CompanyName, CisDf, StockDay
 from django.http import JsonResponse
 from django.views import View
 
@@ -68,6 +68,20 @@ class ChartData(View):
                 )
             )
             return JsonResponse(data, safe=False)
+
+        else:
+            return JsonResponse({"error": "Invalid parameters"}, status=400)
+
+
+class StockArea(View):
+    def get(self, request, *args, **kwargs):
+        company_name = request.GET.get("company_name", None)
+
+        if company_name is not None:
+            stock_data = StockDay.objects.filter(corp=company_name).order_by("date")
+            data = [day.close_price for day in stock_data]
+            labels = [day.date.strftime("%Y-%m-%d") for day in stock_data]
+            return JsonResponse({"data": data, "labels": labels})
 
         else:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
