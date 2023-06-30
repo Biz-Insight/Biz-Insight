@@ -16,14 +16,13 @@ import_df = import_from_mysql(
 )
 
 # crawl
-stock_price_df_per_month = crawl_stock_price(
-    df=import_df, start_time="20180101", end_time="20220630", time_frame="month"
-)
+#stock_price_df_per_month = crawl_stock_price(
+#    df=import_df, start_time="20180101", end_time="20220630", time_frame="month")
 
-# stock_price_df_per_day = crawl_stock_price(df = import_df,
-#                                           start_time = last_year,
-#                                           end_time = today,
-#                                           time_frame = 'day')
+stock_price_df_per_day = crawl_stock_price(df = import_df,
+                                           start_time = last_year,
+                                           end_time = today,
+                                           time_frame = 'day')
 
 # export data to sql
 # export_to_mysql(df = corp_realtime_df,
@@ -34,18 +33,17 @@ stock_price_df_per_month = crawl_stock_price(
 #                desired_table_name ='corp_realtime_data')
 
 # insert data to sql
-export_to_mysql(
-    df=stock_price_df_per_month,
-    username="multi",
-    password="Campus123!",
-    host_ip="15-152-211-160",
-    database_name="stock_data",
-    desired_table_name="stock_data_per_month",
-)
+#insert_to_mysql(
+#    df=stock_price_df_per_month,
+#    username="multi",
+#    password="Campus123!",
+#    host_ip="15-152-211-160",
+#    database_name="stock_data",
+#    desired_table_name="stock_data_per_month")
 
-# export_to_mysql(df = stock_price_df_per_day,
-#                username = 'multi',
-#                password = 'Campus123!',
-#                host_ip = '15-152-211-160',
-#                database_name = 'stock_data',
-#                desired_table_name ='stock_data_per_day')
+insert_to_mysql(df = stock_price_df_per_day,
+                username = 'multi',
+                password = 'Campus123!',
+                host_ip = '15-152-211-160',
+                database_name = 'stock_data',
+                desired_table_name ='stock_data_per_day')
