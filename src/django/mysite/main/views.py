@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, ListView
 from .models import CompanyName, CisDf
+from django.http import JsonResponse
+from django.views import View
 
 
 def home(request):
@@ -48,6 +50,27 @@ class ChartView(ListView):
         context = super().get_context_data(**kwargs)
         context["company_name"] = self.kwargs.get("company_name")
         return context
+
+
+class ChartData(View):
+    def get(self, request, *args, **kwargs):
+        company_name = request.GET.get("company_name", None)
+
+        if company_name is not None:
+            cis_df = CisDf.objects.filter(corp=company_name, account="매출원가")
+            data = list(
+                cis_df.values(
+                    "number_2018",
+                    "number_2019",
+                    "number_2020",
+                    "number_2021",
+                    "number_2022",
+                )
+            )
+            return JsonResponse(data, safe=False)
+
+        else:
+            return JsonResponse({"error": "Invalid parameters"}, status=400)
 
 
 # class CisDf(ListView):

@@ -7,7 +7,8 @@ urlpatterns = [
     path("search/", views.search_view, name="search"),
     path(
         "company_info/<str:company_name>/",
-        views.ChartView.as_view(),
+        views.Companyinfo.as_view(),
         name="company_info",
     ),
+    path("chart_data/", views.ChartData.as_view(), name="chart_data"),
 ]
