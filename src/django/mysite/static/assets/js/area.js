@@ -34,7 +34,7 @@ function drawAreaChart(data) {
       datasets: [{
         label: "주가",
         lineTension: 0.3,
-        // backgroundColor: "rgba(2,117,216,0.2)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
         borderColor: "rgba(2,117,216,1)",
         pointRadius: 0.1,
         pointBackgroundColor: "rgba(2,117,216,1)",
