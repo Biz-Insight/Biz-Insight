@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% extends "base.html" %}
+  {% load humanize %}    
+  {% block contents %}
+  <p>검색 가능 리스트</p>
+</head>
+<body>
+  <div class="row mt-5">
+      <div class="col-12">
+          <table class="table table-light">
+              <thead class="thead-light">
+                  <tr>
+                      <th scope="col">표준코드</th>
+                      <th scope="col">요약코드</th>
+                      <th scope="col">기업명</th>
+                      <th scope="col">기업약명</th>
+                  </tr>
+              </thead>
+              <tbody class="text-dark">
+                  {% for company in company_list %}
+                  <tr>
+                      <td scope="row"> {{ company.standard_code }}</td>
+                      <td scope="row"> {{ company.short_code }}</td>
+                      <td scope="row"> {{ company.company_full_name}}</td>
+                      <td scope="row"> {{ company.company_name}}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</body>
+{% endblock%}
+</html>
