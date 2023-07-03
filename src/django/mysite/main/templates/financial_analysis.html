@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% with company=company_info.0 %}
+{% with company=financial_analysis.0 %}
 <html lang="en">
     <head>
       <meta charset="utf-8" />
@@ -60,7 +60,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 재무분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>                             
+                            </a>    
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="layout-static.html">Static Navigation</a>
@@ -93,85 +93,17 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="company-title">{{ company.company_name }}</h1>
-
-                        <!-- <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol> -->
-                        <!-- <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        <span class="chart-title-unit">매출원가 막대 그래프</span> <span class="chart-title-unit2">(억원)</span>
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        <span class="chart-title-unit">주가 그래프</span> <span class="chart-title-unit2">(원)</span>
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">기업 정보</span>
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                  <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">표준코드</th>
-                                        <th scope="col">요약코드</th>
-                                        <th scope="col">기업명</th>
-                                        <th scope="col">기업약명</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody class="text-dark">
-                                      <tr>
-                                          <td scope="row"> {{ company.standard_code }}</td>
-                                          <td scope="row"> {{ company.short_code }}</td>
-                                          <td scope="row"> {{ company.company_full_name}}</td>
-                                          <td scope="row"> {{ company.company_name}}</td>
-                                      </tr>
-                                  </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        </div>      
                     </div>
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
@@ -197,7 +129,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
-        <script src="{% static 'assets/js/bar.js' %}"></script>
+        <script src="{% static 'assets/js/area.js' %}"></script>
     </body>
 </html>
 {% endwith %}

@@ -53,11 +53,14 @@ function drawAreaChart(data) {
             unit: 'date'
           },
           gridLines: {
-            display: false
+            color: "rgba(150, 0, 0, .2)",
           },
           ticks: {
-            maxTicksLimit: 7
-          }
+            maxTicksLimit: 10,
+            maxRotation: 0,
+            minRotation: 0 
+          },
+          offset: true
         }],
         yAxes: [{
           ticks: {
@@ -65,7 +68,7 @@ function drawAreaChart(data) {
             maxTicksLimit: 50
           },
           gridLines: {
-            color: "rgba(0, 0, 0, .125)",
+            color: "rgba(0, 0, 0, .1)",
           }
         }],
       },
