@@ -80,6 +80,17 @@ class FinancialStatements(ListView):
         return queryset
 
 
+class InvestmentIndicator(ListView):
+    model = CompanyName
+    template_name = "investment_indicator.html"
+    context_object_name = "investment_indicator"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
 class ChartView(ListView):
     model = CisDf
     template_name = "company_info.html"
