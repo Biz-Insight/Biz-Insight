@@ -54,17 +54,17 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="{% url 'credit_analysis' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="sb-sidenav-menu-heading">상세지표</div>
-                            <a class="nav-link" href="charts.html">
+                            <a class="nav-link" href="{% url 'financial_statements' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 재무제표
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="{% url 'investment_indicator' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
