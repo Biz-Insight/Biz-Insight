@@ -68,6 +68,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
+                            <a class="nav-link" href="{% url 'credit_indicator' company.company_name|urlencode %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                신용지표
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -81,16 +85,16 @@
                     <div class="container-fluid px-4">
                         <h1 class="company-title">{{ company.company_name }}</h1>
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-12">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        <span class="chart-title-unit">매출원가 막대 그래프</span> <span class="chart-title-unit2">(억원)</span>
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        <span class="chart-title-unit">주가 그래프</span> <span class="chart-title-unit2">(원)</span>
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -142,7 +146,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
-        <script src="{% static 'assets/js/bar.js' %}"></script>
+        <script src="{% static 'assets/js/area.js' %}"></script>
     </body>
 </html>
 {% endwith %}
