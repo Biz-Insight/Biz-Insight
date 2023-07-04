@@ -15,6 +15,11 @@ urlpatterns = [
         views.FinancialAnalysis.as_view(),
         name="financial_analysis",
     ),
-    path('chart_data/', views.ChartData.as_view(), name='chart_data'),
-    path('stock_area/', views.StockArea.as_view(), name='stock_area')
+    path(
+        "company_news/<str:company_name>/",
+        views.CompanyNews.as_view(),
+        name="company_news",
+    ),
+    path("chart_data/", views.ChartData.as_view(), name="chart_data"),
+    path("stock_area/", views.StockArea.as_view(), name="stock_area"),
 ]
