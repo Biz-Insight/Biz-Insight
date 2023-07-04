@@ -1,4 +1,6 @@
 from django.db import models
+from sklearn.ensemble import RandomForestClassifier
+import joblib
 
 
 class CisDf(models.Model):
@@ -40,6 +42,48 @@ class CompanyName(models.Model):
         db_column="Company_full_name", blank=True, null=True
     )
     company_name = models.TextField(db_column="Company_name", blank=True, null=True)
+
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        db_table = "company_name"
+
+
+class CreditPredictionModel(models.Model):
+    year = models.TextField(blank=True, null=True)
+    total_liabilities = models.FloatField(blank=True, null=True)
+    total_assets = models.FloatField(blank=True, null=True)
+    total_equity = models.FloatField(blank=True, null=True)
+    stock_code = models.TextField(blank=True, null=True)
+    short_borrowing = models.FloatField(blank=True, null=True)
+    sector = models.TextField(blank=True, null=True)
+    revenue = models.FloatField(blank=True, null=True)
+    retained_earnings = models.FloatField(blank=True, null=True)
+    ppe = models.FloatField(blank=True, null=True)
+    outstanding_shares = models.BigIntegerField(blank=True, null=True)
+    operating_income = models.FloatField(blank=True, null=True)
+    non_current_liabilities = models.FloatField(blank=True, null=True)
+    net_liabilities = models.FloatField(blank=True, null=True)
+    net_income = models.FloatField(blank=True, null=True)
+    long_borrowing = models.FloatField(blank=True, null=True)
+    inventory = models.FloatField(blank=True, null=True)
+    intangible_assets = models.FloatField(blank=True, null=True)
+    gross_profit = models.FloatField(blank=True, null=True)
+    fixed_assets = models.FloatField(blank=True, null=True)
+    ebitda = models.FloatField(blank=True, null=True)
+    ebit = models.FloatField(blank=True, null=True)
+    current_liabilities = models.FloatField(blank=True, null=True)
+    current_assets = models.FloatField(blank=True, null=True)
+    cost_of_sales = models.FloatField(blank=True, null=True)
+    corp = models.TextField(blank=True, null=True)
+    cash_flow_per_share = models.FloatField(blank=True, null=True)
+    cash_flow = models.FloatField(blank=True, null=True)
+    cash_and_equivalents = models.FloatField(blank=True, null=True)
+    borrowings = models.FloatField(blank=True, null=True)
+    accounts_receivable = models.FloatField(blank=True, null=True)
+    accounts_payable = models.FloatField(blank=True, null=True)
+    foreign_ownership_ratio = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.company_name
