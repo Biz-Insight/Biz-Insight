@@ -11,14 +11,29 @@ urlpatterns = [
         name="company_info",
     ),
     path(
+        "company_news/<str:company_name>/",
+        views.CompanyNews.as_view(),
+        name="company_news",
+    ),
+    path(
         "financial_analysis/<str:company_name>/",
         views.FinancialAnalysis.as_view(),
         name="financial_analysis",
     ),
     path(
-        "company_news/<str:company_name>/",
-        views.CompanyNews.as_view(),
-        name="company_news",
+        "credit_analysis/<str:company_name>/",
+        views.CreditAnalysis.as_view(),
+        name="credit_analysis",
+    ),
+    path(
+        "financial_statements/<str:company_name>/",
+        views.FinancialStatements.as_view(),
+        name="financial_statements",
+    ),
+    path(
+        "investment_indicator/<str:company_name>/",
+        views.InvestmentIndicator.as_view(),
+        name="investment_indicator",
     ),
     path("chart_data/", views.ChartData.as_view(), name="chart_data"),
     path("stock_area/", views.StockArea.as_view(), name="stock_area"),
