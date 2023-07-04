@@ -69,6 +69,17 @@ class CreditAnalysis(ListView):
         return queryset
 
 
+class FinancialStatements(ListView):
+    model = CompanyName
+    template_name = "financial_statements.html"
+    context_object_name = "financial_statements"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
 class ChartView(ListView):
     model = CisDf
     template_name = "company_info.html"
