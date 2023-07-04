@@ -16,6 +16,21 @@ class CisDf(models.Model):
         db_table = "cis_df"
 
 
+class StockDay(models.Model):
+    corp = models.TextField(blank=True, null=True)
+    stock_code = models.TextField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    open_price = models.FloatField(blank=True, null=True)
+    high_price = models.FloatField(blank=True, null=True)
+    low_price = models.FloatField(blank=True, null=True)
+    close_price = models.FloatField(blank=True, null=True)
+    amount = models.FloatField(blank=True, null=True)
+    foreign_ownership_ratio = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        db_table = "stock_data_per_day"
+
+
 class CompanyName(models.Model):
     standard_code = models.CharField(
         db_column="Standard_code", unique=True, max_length=20
