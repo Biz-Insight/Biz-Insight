@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% with company=financial_analysis.0 %}
+{% with company=investment_indicator.0 %}
 <html lang="en">
     <head>
       <meta charset="utf-8" />
@@ -38,12 +38,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 기업개요
                               </a>                              
-                            <a class="nav-link" href="{% url 'company_news' company.company_name|urlencode %}">
+                              <a class="nav-link" href="{% url 'company_news' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 뉴스/공시
                             </a>
                         <div class="sb-sidenav-menu-heading">기업분석</div>
-                            <a class="nav-link" href="{% url 'financial_analysis' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
+                            <a class="nav-link" href="{% url 'financial_analysis' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 재무분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -64,7 +64,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 재무제표
                             </a>
-                            <a class="nav-link" href="{% url 'investment_indicator' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'investment_indicator' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
@@ -84,17 +84,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="company-title">{{ company.company_name }}</h1>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        <span class="chart-title-unit">매출원가 막대 그래프</span> <span class="chart-title-unit2">(억원)</span>
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>     
+                        <p>투자지표 페이지입니다.</p>
                     </div>
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
@@ -120,7 +110,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
-        <script src="{% static 'assets/js/bar.js' %}"></script>
-    </body> 
+        <script src="{% static 'assets/js/area.js' %}"></script>
+    </body>
 </html>
 {% endwith %}

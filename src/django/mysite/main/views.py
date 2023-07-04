@@ -36,10 +36,65 @@ class Companyinfo(ListView):
         return queryset
 
 
+class CompanyNews(ListView):
+    model = CompanyName
+    template_name = "company_news.html"
+    context_object_name = "company_news"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
 class FinancialAnalysis(ListView):
     model = CompanyName
     template_name = "financial_analysis.html"
     context_object_name = "financial_analysis"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
+class CreditAnalysis(ListView):
+    model = CompanyName
+    template_name = "credit_analysis.html"
+    context_object_name = "credit_analysis"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
+class FinancialStatements(ListView):
+    model = CompanyName
+    template_name = "financial_statements.html"
+    context_object_name = "financial_statements"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
+class InvestmentIndicator(ListView):
+    model = CompanyName
+    template_name = "investment_indicator.html"
+    context_object_name = "investment_indicator"
+
+    def get_queryset(self):
+        company_name = self.request.session.get("context")
+        queryset = CompanyName.objects.filter(company_name=company_name)
+        return queryset
+
+
+class CreditIndicator(ListView):
+    model = CompanyName
+    template_name = "credit_indicator.html"
+    context_object_name = "credit_indicator"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
