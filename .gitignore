@@ -14,12 +14,12 @@
 # Ignore config.py file
 config.py
 
-# Python cache
-__pycache__/
-*.pyc
+# # Python cache
+# __pycache__/
+# *.pyc
 
-# Django migration files
-**/migrations/
+# # Django migration files
+# **/migrations/
 
 # Django staticfiles
 staticfiles/
