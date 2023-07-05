@@ -153,9 +153,9 @@ class StockArea(View):
             return JsonResponse({"error": "Invalid parameters"}, status=400)
 
 
-class StockArea(View):
-    model = MockupData
-    pass
+# class StockArea(View):
+#     model = MockupData
+#     pass
 
 
 # class CisDf(ListView):

@@ -1,6 +1,7 @@
 from django.db import models
-from sklearn.ensemble import RandomForestClassifier
-import joblib
+
+# from sklearn.ensemble import RandomForestClassifier
+# import joblib
 
 
 class CisDf(models.Model):
