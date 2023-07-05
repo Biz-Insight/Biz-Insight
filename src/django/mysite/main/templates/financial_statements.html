@@ -103,37 +103,127 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">재무제표</span> <span class="chart-title-unit2">(억원)</span>
+                                <span class="chart-title-unit">재무제표</span>
+                                <span class="chart-title-unit2">(억원)</span>
                             </div>
-                            
                             <div class="card-body">
                                 <table class="table">
-                                  <thead>
-                                    <tr>
-                                        <th scope="col">항목</th>
-                                        <th scope="col">2018</th>
-                                        <th scope="col">2019</th>
-                                        <th scope="col">2020</th>
-                                        <th scope="col">2021</th>
-                                        <th scope="col">2022</th>
-                                        <th scope="col">전년대비</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody class="table-group-divider">
-                                    {% for statement in financial_statements  %}
-                                      <tr>
-                                          <td scope="row"> {{ statement.label_ko }}</td>
-                                          <td scope="row"> {{ statement.number_2018|div:"100000000" }}</td>
-                                          <td scope="row"> {{ statement.number_2019|div:"100000000"}}</td>
-                                          <td scope="row"> {{ statement.number_2020|div:"100000000"}}</td>
-                                          <td scope="row"> {{ statement.number_2021|div:"100000000"}}</td>
-                                          <td scope="row"> {{ statement.number_2022|div:"100000000"}}</td>
-                                          <td scope="row"> {{ statement.yoy}}</td>
-                                      </tr>
-                                    {% endfor %}
-                                  </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">항목</th>
+                                            <th scope="col" class="vertical-line">2018</th>
+                                            <th scope="col" class="vertical-line">2019</th>
+                                            <th scope="col" class="vertical-line">2020</th>
+                                            <th scope="col" class="vertical-line">2021</th>
+                                            <th scope="col" class="vertical-line">2022</th>
+                                            <th scope="col" class="vertical-line">전년대비</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for statement in financial_statements %}
+                                            {% if statement.fs_type == 'bs' %}
+                                                <tr>
+                                                    <td scope="row"> {{ statement.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
                                 </table>
                             </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                <span class="chart-title-unit">손익계산서</span>
+                                <span class="chart-title-unit2">(억원)</span>
+                            </div>
+                            <div class="card-body">
+                                <style>
+                                    .vertical-line {
+                                        border-left: 2px solid #000;
+                                        margin-right: 0;
+                                    }
+                                </style>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">항목</th>
+                                            <th scope="col" class="vertical-line">2018</th>
+                                            <th scope="col" class="vertical-line">2019</th>
+                                            <th scope="col" class="vertical-line">2020</th>
+                                            <th scope="col" class="vertical-line">2021</th>
+                                            <th scope="col" class="vertical-line">2022</th>
+                                            <th scope="col" class="vertical-line">전년대비</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for statement in financial_statements %}
+                                            {% if statement.fs_type == 'incs' %}
+                                                <tr>
+                                                    <td scope="row"> {{ statement.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                <span class="chart-title-unit">현금흐름표</span>
+                                <span class="chart-title-unit2">(억원)</span>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">항목</th>
+                                            <th scope="col" class="vertical-line">2018</th>
+                                            <th scope="col" class="vertical-line">2019</th>
+                                            <th scope="col" class="vertical-line">2020</th>
+                                            <th scope="col" class="vertical-line">2021</th>
+                                            <th scope="col" class="vertical-line">2022</th>
+                                            <th scope="col" class="vertical-line">전년대비</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for statement in financial_statements %}
+                                            {% if statement.fs_type == 'cf' %}
+                                                <tr>
+                                                    <td scope="row"> {{ statement.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+
                         </div>
                     </div>
                 </main>
