@@ -85,8 +85,5 @@ class CreditPredictionModel(models.Model):
     accounts_payable = models.FloatField(blank=True, null=True)
     foreign_ownership_ratio = models.FloatField(blank=True, null=True)
 
-    def __str__(self):
-        return self.company_name
-
     class Meta:
-        db_table = "company_name"
+        db_table = "feature_combined"
