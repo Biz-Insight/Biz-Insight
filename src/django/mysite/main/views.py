@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, ListView
-from .models import CompanyName, CisDf, StockDay
+from .models import CompanyName, CisDf, StockDay, MockupData
 from django.http import JsonResponse
 from django.views import View
 
@@ -151,6 +151,11 @@ class StockArea(View):
 
         else:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
+
+
+class StockArea(View):
+    model = MockupData
+    pass
 
 
 # class CisDf(ListView):
