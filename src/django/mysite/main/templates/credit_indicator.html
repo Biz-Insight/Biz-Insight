@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% with company=credit_analysis.0 %}
+{% with company=credit_indicator.0 %}
 <html lang="en">
     <head>
       <meta charset="utf-8" />
@@ -64,7 +64,7 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="{% url 'credit_analysis' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
+                            <a class="nav-link" href="{% url 'credit_analysis' company.company_name|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -83,7 +83,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
-                            <a class="nav-link" href="{% url 'credit_indicator' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'credit_indicator' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 신용지표
                             </a>
@@ -99,7 +99,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="company-title">{{ company.company_name }}</h1>
-                        <p>신용분석 페이지입니다.</p>
+                        <p>신용지표 페이지입니다.</p>
                     </div>
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
