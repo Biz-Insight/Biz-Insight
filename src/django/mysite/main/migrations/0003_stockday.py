@@ -4,28 +4,35 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0002_auto_20230628_1542'),
+        ("main", "0002_auto_20230628_1542"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StockDay',
+            name="StockDay",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('corp', models.TextField(blank=True, null=True)),
-                ('stock_code', models.TextField(blank=True, null=True)),
-                ('date', models.DateField(blank=True, null=True)),
-                ('open_price', models.FloatField(blank=True, null=True)),
-                ('high_price', models.FloatField(blank=True, null=True)),
-                ('low_price', models.FloatField(blank=True, null=True)),
-                ('close_price', models.FloatField(blank=True, null=True)),
-                ('amount', models.FloatField(blank=True, null=True)),
-                ('foreign_ownership_ratio', models.FloatField(blank=True, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("corp", models.TextField(blank=True, null=True)),
+                ("stock_code", models.TextField(blank=True, null=True)),
+                ("date", models.DateField(blank=True, null=True)),
+                ("open_price", models.FloatField(blank=True, null=True)),
+                ("high_price", models.FloatField(blank=True, null=True)),
+                ("low_price", models.FloatField(blank=True, null=True)),
+                ("close_price", models.FloatField(blank=True, null=True)),
+                ("amount", models.FloatField(blank=True, null=True)),
+                ("foreign_ownership_ratio", models.FloatField(blank=True, null=True)),
             ],
             options={
-                'db_table': 'stock_data_per_day',
+                "db_table": "stock_data_per_day",
             },
         ),
     ]
