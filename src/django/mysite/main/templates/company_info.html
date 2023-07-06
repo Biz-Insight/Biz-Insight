@@ -39,11 +39,11 @@
                                 </svg>
                                 기업정보
                             </div>                              
-                            <a class="nav-link" href="{% url 'company_info' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
+                            <a class="nav-link" href="{% url 'company_info' company.corp|urlencode %}" style="color: red; font-weight: bold; font-size: 21px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 기업개요
                             </a>                                                                                                                 
-                            <a class="nav-link" href="{% url 'company_news' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'company_news' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 뉴스/공시
                             </a>
@@ -53,7 +53,7 @@
                                 </svg>
                                 기업분석
                             </div>
-                            <a class="nav-link" href="{% url 'financial_analysis' company.company_name|urlencode %}" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link" href="{% url 'financial_analysis' company.corp|urlencode %}" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 재무분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -64,7 +64,7 @@
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="{% url 'credit_analysis' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'credit_analysis' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -75,15 +75,15 @@
                                 </svg>
                                 상세지표
                             </div>
-                            <a class="nav-link" href="{% url 'financial_statements' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'financial_statements' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 재무제표
                             </a>
-                            <a class="nav-link" href="{% url 'investment_indicator' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'investment_indicator' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
-                            <a class="nav-link" href="{% url 'credit_indicator' company.company_name|urlencode %}">
+                            <a class="nav-link" href="{% url 'credit_indicator' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 신용지표
                             </a>
@@ -97,8 +97,41 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="company-title">{{ company.company_name }}</h1>
+                    <div class="container-fluid d-flex">
+                        <div class="w-60 px-2">
+                            <h1 class="company-title">{{ company.corp }}</h1>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">종목코드</th>
+                                        <td class="vertical-line"> {{ company.stock_code }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">업종</th>
+                                        <td class="vertical-line"> {{ company.sector }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">주요제품</th>
+                                        <td class="vertical-line"> {{ company.main_product }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">상장일</th>
+                                        <td class="vertical-line"> {{ company.listing_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">대표자명</th>
+                                        <td class="vertical-line"> {{ company.representative_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">홈페이지</th>
+                                        <td class="vertical-line"> <a href="{{ company.homepage }}" target="_blank">{{ company.homepage }}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="container-fluid px-3">
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card mb-4">
@@ -127,7 +160,7 @@
             </div>
         </div>
         <script>
-            var company_name = "{{ company.company_name }}";
+            var company_name = "{{ company.corp }}";
         </script>
         <!-- < src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></> -->
         <!-- < src="{% static 'js/scripts.js' %}"></> -->
