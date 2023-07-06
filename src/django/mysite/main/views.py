@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, ListView
-from .models import CompanyName, CisDf, StockDay, MockupData
+from .models import *
 from django.http import JsonResponse
 from django.views import View
 
@@ -69,14 +69,14 @@ class CreditAnalysis(ListView):
         return queryset
 
 
-class FinancialStatements(ListView):
-    model = CompanyName
+class MainFinancialStatements(ListView):
+    model = MainFs
     template_name = "financial_statements.html"
     context_object_name = "financial_statements"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = MainFs.objects.filter(corp=company_name)
         return queryset
 
 
@@ -153,9 +153,9 @@ class StockArea(View):
             return JsonResponse({"error": "Invalid parameters"}, status=400)
 
 
-class StockArea(View):
-    model = MockupData
-    pass
+# class StockArea(View):
+#     model = MockupData
+#     pass
 
 
 # class CisDf(ListView):
