@@ -120,3 +120,18 @@ class MockupData(models.Model):
 
     class Meta:
         db_table = "credit_mockup"
+
+
+class Score(models.Model):
+    name = models.CharField(blank=True, null=False, max_length=20)
+    score = models.FloatField(blank=True, null=True)
+
+
+class PhoneNumber(models.Model):
+    name = models.CharField(blank=True, null=False, max_length=20)
+    phone_number = models.FloatField(blank=True, null=True)
+
+
+class Address(models.Model):
+    name = models.CharField(blank=True, null=False, max_length=20)
+    address = models.CharField(blank=True, null=True, max_length=20)

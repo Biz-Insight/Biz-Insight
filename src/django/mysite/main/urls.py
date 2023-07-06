@@ -42,4 +42,5 @@ urlpatterns = [
     ),
     path("chart_data/", views.ChartData.as_view(), name="chart_data"),
     path("stock_area/", views.StockArea.as_view(), name="stock_area"),
+    path("credit_request/", views.credit_request),
 ]
