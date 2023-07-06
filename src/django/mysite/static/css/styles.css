@@ -11267,3 +11267,8 @@ body {
 .nav-link {
   font-size: 18px;
 }
+
+.vertical-line {
+  border-left: 2px solid #000;
+  margin-right: 0;
+}
