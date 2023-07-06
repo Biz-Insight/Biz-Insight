@@ -3,6 +3,8 @@ from django.views.generic import FormView, ListView
 from .models import *
 from django.http import JsonResponse
 from django.views import View
+import pandas as pd
+import pickle
 
 
 def home(request):
@@ -31,7 +33,7 @@ class Companyinfo(ListView):
     context_object_name = "company_info"
 
     def get_queryset(self):
-        company_name = self.request.session.get("context")
+        company_name = self.request.session.get("context", "")
         queryset = CompanyName.objects.filter(company_name=company_name)
         return queryset
 
@@ -66,7 +68,20 @@ class CreditAnalysis(ListView):
     def get_queryset(self):
         company_name = self.request.session.get("context")
         queryset = MockupData.objects.filter(corp=company_name)
-        return queryset
+        data_list = list(queryset.values())
+        test_data = pd.DataFrame(data_list)
+        model_data = test_data.drop(
+            ["id", "ebit", "stock_code", "year", "sector", "corp"], axis=1
+        )
+        credit_model = pickle.load(open("static/test_model.pkl", "rb"))
+        pred = credit_model.predict(model_data)
+        context = {
+            "company_name": test_data.corp,
+            "year": test_data.year,
+            "pred_result": pred,
+        }
+        context_df = pd.DataFrame(context)
+        return context_df[:1]
 
 
 class MainFinancialStatements(ListView):
