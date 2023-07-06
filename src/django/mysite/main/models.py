@@ -84,8 +84,5 @@ class MockupData(models.Model):
     fixed_assets = models.FloatField(blank=True, null=True)
     cash_flow_per_share = models.FloatField(blank=True, null=True)
 
-    def __str__(self):
-        return self.stock_code
-
     class Meta:
         db_table = "credit_mockup"

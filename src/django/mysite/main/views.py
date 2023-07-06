@@ -14,7 +14,7 @@ def company_direct(request):
 
 
 def search_view(request):
-    company_name = request.GET.get("company_name", "")
+    company_name = request.GET.get("company_name")
     request.session["context"] = company_name
     return redirect("company_info", company_name=company_name)
 
@@ -59,13 +59,13 @@ class FinancialAnalysis(ListView):
 
 
 class CreditAnalysis(ListView):
-    model = CompanyName
+    model = MockupData
     template_name = "credit_analysis.html"
     context_object_name = "credit_analysis"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = MockupData.objects.filter(corp=company_name)
         return queryset
 
 
