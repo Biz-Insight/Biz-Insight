@@ -11272,3 +11272,9 @@ body {
   border-left: 2px solid #000;
   margin-right: 0;
 }
+
+.rating-title{
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 10px;
+}
