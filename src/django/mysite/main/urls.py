@@ -27,7 +27,7 @@ urlpatterns = [
     ),
     path(
         "financial_statements/<str:company_name>/",
-        views.FinancialStatements.as_view(),
+        views.MainFinancialStatements.as_view(),
         name="financial_statements",
     ),
     path(
