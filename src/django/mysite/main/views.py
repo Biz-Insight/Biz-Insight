@@ -38,6 +38,12 @@ class CompanyInfo(ListView):
         queryset = KospiCompanyInfo.objects.filter(corp=company_name)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        company_name = self.request.session.get("context")
+        context["rating_data"] = RatingData.objects.filter(corp=company_name)
+        return context
+
 
 class CompanyNews(ListView):
     model = CompanyName
