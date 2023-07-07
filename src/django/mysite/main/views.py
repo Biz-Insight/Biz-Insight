@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views import View
 import pandas as pd
 import pickle
-import csv
+from math import floor
 
 
 def home(request):
@@ -41,8 +41,23 @@ class CompanyInfo(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         company_name = self.request.session.get("context")
-        context["rating_data"] = RatingData.objects.filter(corp=company_name)
+        rating_data = RatingData.objects.filter(corp=company_name)
+        context["rating_data"] = rating_data
+        context["rating_stars"] = self.get_rating_stars(rating_data)
         return context
+
+    def get_rating_stars(self, rating_data):
+        rating = rating_data[0].jobp_rating
+        full_stars = floor(rating)
+        half_star = False
+        if rating - full_stars >= 0.5:
+            half_star = True
+        empty_stars = 5 - full_stars - half_star
+        return {
+            "full_stars": range(full_stars),
+            "half_star": half_star,
+            "empty_stars": range(empty_stars),
+        }
 
 
 class CompanyNews(ListView):
