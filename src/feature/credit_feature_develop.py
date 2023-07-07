@@ -129,7 +129,7 @@ mapping = {
     "net_borrowings_to_ebitda": "순차입금/EBITDA",
     "sales_revenue": "매출액",
     "cogs": "매출원가",
-    "sga": "판매관리비",
+    "selling_general_administrative_expenses": "판매관리비",
     "ebit": "EBIT",
     "ebit_margin": "EBIT마진",
     "ebitda_to_sales_revenue": "EBITDA/매출액",
