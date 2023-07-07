@@ -190,8 +190,31 @@ class StockArea(View):
             return JsonResponse({"error": "Invalid parameters"}, status=400)
 
 
+def search_view(request):
+    company_name = request.GET.get("company_name")
+    request.session["context"] = company_name
+    return redirect("company_info", company_name=company_name)
+
+
+# def credit_request(request):
+#     return render(request, "credit_request.html")
+
+
 def credit_request(request):
+    if request.method == "POST":
+        csv_file = request.FILES["file"]
+        csv_data = pd.read_csv(csv_file)
+
+        # 필요한 처리가 완료된 후에는 원하는 결과를 context에 담아 템플릿으로 전달할 수 있습니다.
+        context = {"message": "파일이 성공적으로 처리되었습니다.", "df": csv_data}
+        return render(request, "result.html", context)
+
     return render(request, "credit_request.html")
+
+
+def show_result(request):
+    context = {"message": "파일이 성공적으로 처리되었습니다."}
+    return render(request, "result.html", context)
 
 
 # class CisDf(ListView):
