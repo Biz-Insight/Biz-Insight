@@ -203,10 +203,10 @@ def search_view(request):
 def credit_request(request):
     if request.method == "POST":
         csv_file = request.FILES["file"]
-        csv_data = pd.read_csv(csv_file)
-
+        df = pd.read_csv(csv_file)
+        df_records = df.to_dict(orient="records")
         # 필요한 처리가 완료된 후에는 원하는 결과를 context에 담아 템플릿으로 전달할 수 있습니다.
-        context = {"message": "파일이 성공적으로 처리되었습니다.", "df": csv_data}
+        context = {"message": "파일이 성공적으로 처리되었습니다.", "df_records": df_records}
         return render(request, "result.html", context)
 
     return render(request, "credit_request.html")
