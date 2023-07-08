@@ -16,16 +16,16 @@
       </div>
   </div>
   <div class="row mt-5">
-      <div class="col-12">
-          <form method="post" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
-              {% csrf_token %}
-              <div class="form-group">
-                  <label for="file">파일 선택</label>
-                  <input type="file" class="form-control-file" id="file" name="file" accept=".csv">
-              </div>
-              <button type="submit" class="btn btn-primary">파일 업로드</button>
-          </form>
-      </div>
-  </div>
+    <div class="col-12">
+        <form method="post" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="file">파일 선택</label>
+                <input type="file" class="form-control-file" id="file" name="file" accept=".csv" multiple>
+            </div>
+            <button type="submit" class="btn btn-primary">파일 업로드</button>
+        </form>
+    </div>
+</div>
 </div>
 </html>

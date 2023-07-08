@@ -93,7 +93,53 @@
                     <main>
                         <div class="container-fluid px-4">
                             <h1 class="company-title">{{ company.company_name.0}}</h1>
-                            <p>신용분석 페이지입니다.{{ company.pred_result.0}}{{company.year.0}}</p>
+                            <p>신용분석 페이지입니다.
+                                <style>
+                                    table {
+                                      border-collapse: collapse;
+                                      width: 100%;
+                                    }
+                                    
+                                    th, td {
+                                      text-align: left;
+                                      padding: 8px;
+                                    }
+                                    
+                                    th {
+                                      background-color: #f2f2f2;
+                                    }
+                                    
+                                    tr:nth-child(even) {
+                                      background-color: #f9f9f9;
+                                    }
+                                    
+                                    tr:nth-child(odd) {
+                                      background-color: #ffffff;
+                                    }
+                                    
+                                    th, td {
+                                      border-right: 1px solid #dddddd;
+                                      border-bottom: 1px solid #dddddd;
+                                    }
+                                    
+                                    th:last-child, td:last-child {
+                                      border-right: none;
+                                    }
+                                  </style>
+                                  
+                                  <table>
+                                    <tr>
+                                      <th>Company Name</th>
+                                      <th>Year</th>
+                                      <th>EBIT Prediction Result</th>
+                                    </tr>
+                                    <tr>
+                                      <td>{{ company.company_name.0 }}</td>
+                                      <td>{{ company.year.0 }}</td>
+                                      <td>{{ company.pred_result.0 }}</td>
+                                    </tr>
+                                  </table>                               
+                            </p>
                         </div>
                     </main>
                     <!-- {{company.corp}} {{ company.pred_result }} -->

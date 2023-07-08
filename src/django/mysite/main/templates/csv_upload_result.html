@@ -1,0 +1,75 @@
+{% if message %}
+  <h1>{{ message }}
+    <p>파일에서 불러온 제무재표 정보입니다.
+      <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          
+          th {
+            background-color: #f2f2f2;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          
+          tr:nth-child(odd) {
+            background-color: #ffffff;
+          }
+          
+          th, td {
+            border-right: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+          }
+          
+          th:last-child, td:last-child {
+            border-right: none;
+          }
+        </style>
+        
+        <table>
+          <tr>
+            <th>fs_type</th>
+            <th>corp</th>
+            <th>stock_code</th>
+            <th>sector</th>
+            <th>label_en</th>
+            <th>label_ko</th>
+            <th>2018</th>
+            <th>2019</th>
+            <th>2020</th>
+            <th>2021</th>
+            <th>2022</th>
+            <th>YoY</th>
+          </tr>
+          {% for row in df_records %}
+            <tr>
+              <td>{{ row.fs_type }}</td>
+              <td>{{ row.corp }}</td>
+              <td>{{ row.stock_code }}</td>
+              <td>{{ row.sector }}</td>
+              <td>{{ row.label_en }}</td>
+              <td>{{ row.label_ko }}</td>
+              <td>{{ row.2018 }}</td>
+              <td>{{ row.2019 }}</td>
+              <td>{{ row.2020 }}</td>
+              <td>{{ row.2021 }}</td>
+              <td>{{ row.2022 }}</td>
+              <td>{{ row.YoY }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+        
+        
+                                 
+  </p>
+
+  </h1>
+{% endif %}
