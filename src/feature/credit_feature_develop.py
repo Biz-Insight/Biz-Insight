@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 username = "*****"
 password = "*****"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
-database_name = "dart_data"
+database_name = "Data_Mart"
 desired_table_name = "credit_data"
 
 
@@ -22,7 +22,7 @@ cnx = pymysql.connect(
     database=database_name,
 )
 
-query = "SELECT * FROM dart_data.preprocessed;"
+query = "SELECT * FROM Data_Warehouse.final_features;"
 data = pd.read_sql(query, cnx)
 cnx.close()
 
