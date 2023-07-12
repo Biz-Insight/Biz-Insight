@@ -10906,10 +10906,10 @@ body {
     transition: margin 0.15s ease-in-out;
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-225px);
+    transform: translateX(-160px);
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -225px;
+    margin-left: -160px;
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;
@@ -10930,8 +10930,8 @@ body {
   overflow-y: auto;
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-  padding-left: 180px;
-  top: 50px;
+  padding-left: 170px;
+  top: 75px;
 }
 
 #layoutError {
@@ -10999,7 +10999,7 @@ body {
   position: relative;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-sidenav-collapse-arrow {
   display: inline-block;
@@ -11278,3 +11278,61 @@ body {
   font-weight: bold;
   margin-top: 10px;
 }
+
+.star {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
+
+.filled {
+  color: red;
+}
+
+.rating-bar {
+  width: 200px; /* 바의 전체 너비 설정 */
+  height: 20px; /* 바의 높이 설정 */
+  background-color: lightgray; /* 빈 바의 배경색 설정 */
+  position: relative;
+}
+
+.filled-bar {
+  height: 100%;
+  background-color: green; /* 채워진 바의 색상 설정 */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.empty-bar {
+  height: 100%;
+  background-color: lightgray; /* 빈 바의 색상 설정 */
+}
+

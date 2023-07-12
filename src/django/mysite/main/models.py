@@ -84,29 +84,22 @@ class KospiCompanyInfo(models.Model):
         db_table = "kospi_company_info"
 
 
-class RatingData(models.Model):
-    stock_code = models.TextField(blank=True, null=True)
-    jobp_rating = models.FloatField(blank=True, null=True)
-    jobp_paywellfare = models.FloatField(blank=True, null=True)
-    jobp_worklifebal = models.FloatField(blank=True, null=True)
-    jobp_culture = models.FloatField(blank=True, null=True)
-    jobp_opportunity = models.FloatField(blank=True, null=True)
-    jobp_manager = models.FloatField(blank=True, null=True)
-    jobp_recommend = models.FloatField(blank=True, null=True)
-    jobp_ceo = models.FloatField(blank=True, null=True)
-    jobp_potential = models.FloatField(blank=True, null=True)
-    jobp_cnt = models.FloatField(blank=True, null=True)
-    blind_rating = models.FloatField(blank=True, null=True)
-    blind_cnt = models.FloatField(blank=True, null=True)
-    blind_opportunity = models.FloatField(blank=True, null=True)
-    blind_worklifebal = models.FloatField(blank=True, null=True)
-    blind_paywellfare = models.FloatField(blank=True, null=True)
-    blind_culture = models.FloatField(blank=True, null=True)
-    blind_manager = models.FloatField(blank=True, null=True)
+class Rating(models.Model):
     corp = models.TextField(blank=True, null=True)
+    stock_code = models.TextField(blank=True, null=True)
+    count = models.FloatField(blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    paywellfare = models.FloatField(blank=True, null=True)
+    worklifebal = models.FloatField(blank=True, null=True)
+    culture = models.FloatField(blank=True, null=True)
+    opportunity = models.FloatField(blank=True, null=True)
+    manager = models.FloatField(blank=True, null=True)
+    recommend = models.FloatField(blank=True, null=True)
+    ceo = models.FloatField(blank=True, null=True)
+    potential = models.FloatField(blank=True, null=True)
 
     class Meta:
-        db_table = "rating_data"
+        db_table = "rating"
 
 
 class MockupData(models.Model):
