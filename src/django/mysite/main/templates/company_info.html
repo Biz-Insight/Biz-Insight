@@ -1,6 +1,7 @@
     <!DOCTYPE html>
     {% load static %}
     {% with company=company_info.0 %}
+
     <html lang="en">
         <head>
         <meta charset="utf-8" />
@@ -91,6 +92,7 @@
                 </div>
                 <div id="layoutSidenav_content">
                     <main>
+                        
                         <div class="container-fluid d-flex">
                             <div class="w-50 px-2">
                                 <h1 class="company-title">{{ company.corp }}</h1>
@@ -125,20 +127,130 @@
                             </div>
                             <div class="w-50 px-2">
                                 <h1 class="rating-title">별점</h1>
-                                {{ rating_data.0.jobp_rating }}
+                                
                                 <div class="rating-stars">
-                                    {% for _ in rating_stars.full_stars %}
+                                    <h4 style="display: inline-block;">총점 {{ rating_data.rating }}</h4>
+                                    {% for _ in rating_stars.rating.full_stars %}
                                         <i class="fas fa-star filled"></i>
                                     {% endfor %}
-                                    {% if rating_stars.half_star %}
+                                    {% if rating_stars.rating.half_star %}
                                         <i class="fas fa-star-half-alt filled"></i>
                                     {% endif %}
-                                    {% for _ in rating_stars.empty_stars %}
+                                    {% for _ in rating_stars.rating.empty_stars %}
                                         <i class="far fa-star"></i>
                                     {% endfor %}
                                 </div>
+                                
+                                <div class="rating-stars">
+                                    임금 및 복지 {{ rating_data.paywellfare }}
+                                    {% for _ in rating_stars.paywellfare.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.paywellfare.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.paywellfare.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    업무와 삶의 균형 {{ rating_data.worklifebal }}
+                                    {% for _ in rating_stars.worklifebal.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.worklifebal.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.worklifebal.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    사내 문화 {{ rating_data.culture }}
+                                    {% for _ in rating_stars.culture.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.culture.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.culture.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    승진 가능성 및 기회 {{ rating_data.opportunity }}
+                                    {% for _ in rating_stars.opportunity.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.opportunity.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.opportunity.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    경영진 평 {{ rating_data.manager }}
+                                    {% for _ in rating_stars.manager.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.manager.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.manager.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    기업 추천도 {{ rating_data.recommend }}
+                                    {% for _ in rating_stars.recommend.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.recommend.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.recommend.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    CEO 지지율 {{ rating_data.ceo }}
+                                    {% for _ in rating_stars.ceo.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.ceo.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.ceo.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <div class="rating-stars">
+                                    성장 잠재성 {{ rating_data.potential }}
+                                    {% for _ in rating_stars.potential.full_stars %}
+                                        <i class="fas fa-star filled"></i>
+                                    {% endfor %}
+                                    {% if rating_stars.potential.half_star %}
+                                        <i class="fas fa-star-half-alt filled"></i>
+                                    {% endif %}
+                                    {% for _ in rating_stars.potential.empty_stars %}
+                                        <i class="far fa-star"></i>
+                                    {% endfor %}
+                                </div>
+                                <!-- <p style="margin-bottom: 1px;">승진 가능성 및 기회 {{ rating_data.opportunity }}</p>
+                                <div class="rating-bar">
+                                    <div class="filled-bar" id="opportunity-bar"></div>
+                                    <div class="empty-bar"></div>
+                                </div>
+
+                                  <script>
+                                    var opportunityRating = parseFloat("{{ rating_data.opportunity }}");
+                                    var barElement = document.getElementById("opportunity-bar");
+                                    var maxWidth = 200;
+                                    barElement.style.width = (opportunityRating / 5) * maxWidth + "px";
+                                  </script> -->              
                             </div>
-                        </div>
+                        </div>  
                         <div class="container-fluid px-3">
                             <div class="row">
                                 <div class="col-xl-12">

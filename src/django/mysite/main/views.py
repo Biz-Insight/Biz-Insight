@@ -28,6 +28,9 @@ class CompanyList(ListView):
     context_object_name = "company_list"
 
 
+from math import floor
+
+
 class CompanyInfo(ListView):
     model = KospiCompanyInfo
     template_name = "company_info.html"
@@ -41,17 +44,29 @@ class CompanyInfo(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         company_name = self.request.session.get("context")
-        rating_data = RatingData.objects.filter(corp=company_name)
+        rating_data = Rating.objects.filter(corp=company_name).first()
         context["rating_data"] = rating_data
-        context["rating_stars"] = self.get_rating_stars(rating_data)
+        context["rating_stars"] = {
+            "rating": self.get_rating_stars(rating_data, "rating"),
+            "paywellfare": self.get_rating_stars(rating_data, "paywellfare"),
+            "worklifebal": self.get_rating_stars(rating_data, "worklifebal"),
+            "culture": self.get_rating_stars(rating_data, "culture"),
+            "opportunity": self.get_rating_stars(rating_data, "opportunity"),
+            "manager": self.get_rating_stars(rating_data, "manager"),
+            "recommend": self.get_rating_stars(rating_data, "recommend"),
+            "ceo": self.get_rating_stars(rating_data, "ceo"),
+            "potential": self.get_rating_stars(rating_data, "potential"),
+        }
         return context
 
-    def get_rating_stars(self, rating_data):
-        rating = rating_data[0].jobp_rating
+    def get_rating_stars(self, rating_data, field):
+        rating = getattr(rating_data, field)
         full_stars = floor(rating)
         half_star = False
-        if rating - full_stars >= 0.5:
+        if 0.75 >= rating - full_stars >= 0.25:
             half_star = True
+        elif rating - full_stars >= 0.75:
+            full_stars = full_stars + 1
         empty_stars = 5 - full_stars - half_star
         return {
             "full_stars": range(full_stars),

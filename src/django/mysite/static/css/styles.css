@@ -11315,3 +11315,24 @@ body {
 .filled {
   color: red;
 }
+
+.rating-bar {
+  width: 200px; /* 바의 전체 너비 설정 */
+  height: 20px; /* 바의 높이 설정 */
+  background-color: lightgray; /* 빈 바의 배경색 설정 */
+  position: relative;
+}
+
+.filled-bar {
+  height: 100%;
+  background-color: green; /* 채워진 바의 색상 설정 */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.empty-bar {
+  height: 100%;
+  background-color: lightgray; /* 빈 바의 색상 설정 */
+}
+
