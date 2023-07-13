@@ -41,7 +41,7 @@ credit_data.loc[:, "operating_cf_to_total_borrowings"] = (
     data["cash_flow_operating"] / data["borrowings"]
 )
 credit_data.loc[:, "net_borrowings_to_ebitda"] = data["net_borrowings"] / data["ebitda"]
-credit_data.loc[:, "sales_revenue"] = data["revenue"]
+credit_data.loc[:, "revenue"] = data["revenue"]
 credit_data.loc[:, "cogs"] = data["cost_of_sales"]
 credit_data.loc[:, "selling_general_administrative_expenses"] = data[
     "selling_general_administrative_expenses"
@@ -128,7 +128,7 @@ mapping = {
     "dependence_on_net_borrowings": "순차입금의존도",
     "operating_cf_to_total_borrowings": "영업현금흐름/총차입금",
     "net_borrowings_to_ebitda": "순차입금/EBITDA",
-    "sales_revenue": "매출액",
+    "revenue": "매출액",
     "cogs": "매출원가",
     "selling_general_administrative_expenses": "판매관리비",
     "ebit": "EBIT",
