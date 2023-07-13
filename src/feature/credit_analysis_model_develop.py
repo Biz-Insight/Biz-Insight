@@ -19,7 +19,7 @@ cnx = pymysql.connect(
 )
 
 
-query = "SELECT * FROM Data_Warehouse.credit_data_temp"
+query = "SELECT * FROM Data_Warehouse.credit_data_model"
 credit_data = pd.read_sql(query, cnx)
 
 query = "SELECT * FROM Data_Warehouse.economic_indicators;"
@@ -34,7 +34,7 @@ rating_filled = pd.read_sql(query, cnx)
 query = "SELECT * FROM Data_Lake.crb_index;"
 crb_index = pd.read_sql(query, cnx)
 
-query = "SELECT * FROM Data_Warehouse.investment_data_temp"
+query = "SELECT * FROM Data_Warehouse.investment_data_model"
 investment_data = pd.read_sql(query, cnx)
 
 cnx.close()
