@@ -8,8 +8,8 @@ from sqlalchemy.orm import sessionmaker
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-username = "multi"
-password = "Campus123!"
+username = "*****"
+password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database_name = "Data_Mart"
 desired_table_name = "credit_data_web"
