@@ -4,8 +4,8 @@ import numpy as np
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-username = "*****"
-password = "*****"
+username = "*****!"
+password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database_name = "Data_Mart"
 desired_table_name = "main_fs"
@@ -93,6 +93,7 @@ for info in main_fs_info_list:
         main_fs=main_fs,
     )
 
+main_fs.to_csv("main_fs.csv", encoding="utf-8-sig", index=False)
 
 cnx = pymysql.connect(user=username, password=password, host=hostname)
 cursor = cnx.cursor()
