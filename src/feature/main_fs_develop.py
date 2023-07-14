@@ -4,7 +4,7 @@ import numpy as np
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-username = "*****"
+username = "*****!"
 password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database_name = "Data_Mart"
