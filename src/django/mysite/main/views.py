@@ -214,6 +214,31 @@ class InvestmentIndicator(ListView):
             if data.label_ko in desired_labels_valuation
         ]
 
+        context["investment_indicator_profitability"] = sorted(
+            context["investment_indicator_profitability"],
+            key=lambda data: desired_labels_profitability.index(data.label_ko),
+        )
+
+        context["investment_indicator_growth"] = sorted(
+            context["investment_indicator_growth"],
+            key=lambda data: desired_labels_growth.index(data.label_ko),
+        )
+
+        context["investment_indicator_stability"] = sorted(
+            context["investment_indicator_stability"],
+            key=lambda data: desired_labels_stability.index(data.label_ko),
+        )
+
+        context["investment_indicator_activity"] = sorted(
+            context["investment_indicator_activity"],
+            key=lambda data: desired_labels_activity.index(data.label_ko),
+        )
+
+        context["investment_indicator_valuation"] = sorted(
+            context["investment_indicator_valuation"],
+            key=lambda data: desired_labels_valuation.index(data.label_ko),
+        )
+
         return context
 
 
