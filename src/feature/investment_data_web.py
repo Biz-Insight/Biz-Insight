@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-username = "*****!"
+username = "multi"
 password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database_name = "Data_Mart"
@@ -31,45 +31,51 @@ investment_data = data[["corp", "stock_code", "sector", "year"]].copy()
 data["earnings_per_share"] = data["net_income"] / data["outstanding_shares"]
 data["book_value_per_share"] = data["total_equity"] / data["outstanding_shares"]
 
-
-# 수익성 (Profitability)
-investment_data["gross_profit_margin"] = (data["gross_profit"] / data["revenue"]) * 100
+# Profitability
+investment_data["gross_profit_margin"] = data["gross_profit"] / data["revenue"] * 100
 investment_data["operating_profit_margin"] = (
-    data["operating_income"] / data["revenue"]
-) * 100
-investment_data["net_profit_margin"] = (data["net_income"] / data["revenue"]) * 100
-investment_data["ebitda_margin"] = (data["ebitda"] / data["revenue"]) * 100
-investment_data["return_on_equity"] = (data["net_income"] / data["total_equity"]) * 100
-investment_data["return_on_assets"] = (data["net_income"] / data["total_assets"]) * 100
-investment_data["return_on_invested_capital"] = data["operating_income"] / (
-    data["total_equity"] + data["total_liabilities"]
+    data["operating_income"] / data["revenue"] * 100
+)
+investment_data["net_profit_margin"] = data["net_income"] / data["revenue"] * 100
+investment_data["ebitda_margin"] = data["ebitda"] / data["revenue"] * 100
+investment_data["return_on_equity"] = data["net_income"] / data["total_equity"] * 100
+investment_data["return_on_assets"] = data["net_income"] / data["total_assets"] * 100
+investment_data["return_on_invested_capital"] = (
+    (data["ebit"] - data["tax"])
+    / (data["borrowings"] + data["total_equity"] - data["cash_and_equivalents"])
+    * 100
 )
 
-# 안정성 (Stability)
-investment_data["debt_ratio"] = data["total_liabilities"] / data["total_assets"]
-investment_data["current_ratio"] = data["current_assets"] / data["current_liabilities"]
-investment_data["quick_ratio"] = (data["current_assets"] - data["inventory"]) / data[
-    "current_liabilities"
-]
-investment_data["non_current_debt_ratio"] = (
-    data["non_current_liabilities"] / data["total_assets"]
+# Stability
+investment_data["debt_ratio"] = data["total_liabilities"] / data["total_equity"] * 100
+investment_data["current_ratio"] = (
+    data["current_assets"] / data["current_liabilities"] * 100
 )
-investment_data["equity_ratio"] = data["total_equity"] / data["total_assets"]
-investment_data["interest_coverage_ratio"] = data["ebit"] / data["interest"]
+investment_data["quick_ratio"] = (
+    (data["current_assets"] - data["inventory"]) / data["current_liabilities"] * 100
+)
+investment_data["non_current_debt_ratio"] = (
+    data["non_current_liabilities"] / data["total_equity"]
+) * 100
+investment_data["equity_ratio"] = data["total_equity"] / data["total_assets"] * 100
+investment_data["interest_coverage_ratio"] = (
+    data["operating_income"] / data["interest"] * 100
+)
 investment_data["debt_to_equity_ratio"] = (
-    data["total_liabilities"] / data["total_equity"]
+    data["borrowings"] / data["total_equity"] * 100
 )
 investment_data["net_debt_ratio"] = (
-    data["borrowings"] - data["cash_and_equivalents"]
-) / data["total_assets"]
-investment_data["retention_ratio"] = data["retained_earnings"] / data["net_income"]
-
-
-# 가치지표 (Valuation Ratios)
-investment_data["earnings_per_share"] = data["net_income"] / data["outstanding_shares"]
-investment_data["book_value_per_share"] = (
-    data["total_equity"] / data["outstanding_shares"]
+    (data["total_liabilities"] - data["cash_and_equivalents"])
+    / data["total_equity"]
+    * 100
 )
+investment_data["retention_ratio"] = (
+    data["retained_earnings"] / data["net_income"] * 100
+)
+
+# Valuation Ratios
+investment_data["earnings_per_share"] = data["earnings_per_share"]
+investment_data["book_value_per_share"] = data["book_value_per_share"]
 investment_data["price_earnings_ratio"] = (
     data["stock_price"] / data["earnings_per_share"]
 )
@@ -85,16 +91,14 @@ investment_data["enterprise_value_to_ebitda"] = (
 
 investment_data["market_capitalization"] = data["market_capitalization"]
 
-
-# 성장성 (Growth)
+# Growth
 data_sorted = data.sort_values(["corp", "year"])
-
 columns = [
     "revenue",
     "operating_income",
     "net_income",
     "total_assets",
-    "fixed_assets",
+    "tangible_assets",
     "total_liabilities",
     "total_equity",
 ]
@@ -103,7 +107,7 @@ growth_columns = [
     "operating_income_growth_rate",
     "net_income_growth_rate",
     "total_asset_growth_rate",
-    "fixed_asset_growth_rate",
+    "tangible_asset_growth_rate",
     "total_liabilities_growth_rate",
     "total_equity_growth_rate",
 ]
@@ -115,20 +119,25 @@ for col, growth_col in zip(columns, growth_columns):
 for growth_col in growth_columns:
     investment_data[growth_col] = data_sorted[growth_col]
 
-# 활동성 (Efficiency)
-investment_data["total_asset_turnover"] = data["revenue"] / data["total_assets"]
+# Efficiency
+investment_data["total_asset_turnover"] = (data["revenue"] / data["total_assets"]) * 100
 investment_data["return_on_equity"] = (data["net_income"] / data["total_equity"]) * 100
-investment_data["net_working_capital_turnover"] = data["revenue"] / (
-    data["current_assets"] - data["current_liabilities"]
-)
-investment_data["fixed_asset_turnover"] = data["revenue"] / data["fixed_assets"]
+investment_data["net_working_capital_turnover"] = (
+    data["revenue"] / (data["current_assets"] - data["current_liabilities"])
+) * 100
+investment_data["tangible_asset_turnover"] = (
+    data["revenue"] / data["tangible_assets"]
+) * 100
 investment_data["accounts_receivable_turnover"] = (
     data["revenue"] / data["accounts_receivable"]
-)
-investment_data["inventory_turnover"] = data["cost_of_sales"] / data["inventory"]
+) * 100
+investment_data["inventory_turnover"] = (
+    data["cost_of_sales"] / data["inventory"]
+) * 100
 investment_data["accounts_payable_turnover"] = (
     data["cost_of_sales"] / data["accounts_payable"]
-)
+) * 100
+
 
 id_vars = ["corp", "stock_code", "sector", "year"]
 value_vars = investment_data.columns[4:]
@@ -185,12 +194,12 @@ mapping = {
     "operating_income_growth_rate": "영업이익증가율",
     "net_income_growth_rate": "순이익증가율",
     "total_asset_growth_rate": "총자산증가율",
-    "fixed_asset_growth_rate": "유형자산증가율",
+    "tangible_asset_growth_rate": "유형자산증가율",
     "total_liabilities_growth_rate": "부채총계증가율",
     "total_equity_growth_rate": "자기자본증가율",
     "total_asset_turnover": "총자산회전율",
     "net_working_capital_turnover": "순운전자본회전율",
-    "fixed_asset_turnover": "유형자산회전율",
+    "tangible_asset_turnover": "유형자산회전율",
     "accounts_receivable_turnover": "매출채권회전율",
     "inventory_turnover": "재고자산회전율",
     "accounts_payable_turnover": "매입채무회전율",

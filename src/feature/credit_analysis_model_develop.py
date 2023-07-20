@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-username = "*****!"
+username = "multi"
 password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database_name = "Data_Mart"
@@ -77,6 +77,17 @@ credit_analysis_features = credit_analysis_features.merge(
 )
 
 credit_analysis_model_b = credit_analysis_features.copy()
+
+for model in [credit_analysis_model_a, credit_analysis_model_b]:
+    model.rename(
+        columns={
+            "minimum_wag": "minimum_wage",
+            "uskor_exchange_average": "us_kor_exchange_avg",
+            "PPI_year": "ppi_year",
+        },
+        inplace=True,
+    )
+
 
 credit_analysis_model_a.to_csv(
     "credit_analysis_model_a.csv", encoding="utf-8-sig", index=False
