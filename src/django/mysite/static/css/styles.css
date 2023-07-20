@@ -11342,6 +11342,7 @@ body {
   text-align: center;
   border-radius: 8px; 
   margin: 0; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
 }
 
 .company-title {
@@ -11349,5 +11350,11 @@ body {
   font-size: 30px;
   font-weight: bold; 
   color: #000000; 
+}
+
+.card.border-dark {
+  border: 1px solid #343a40; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
 }
 
