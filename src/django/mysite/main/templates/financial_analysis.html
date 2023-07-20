@@ -18,7 +18,7 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i> Home</a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-search"></i></button>
+            <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
 
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{% url 'search' %}">
@@ -91,8 +91,11 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="company-title">{{ company.company_name }}</h1>
+                    <div class="w-25 px-4" style="margin-bottom: 12px;">
+                        <div class="company-name-box">
+                            <h1 class="company-title">{{ company.company_name }}</h1>
+                        </div>
+                    </div>
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">

@@ -19,7 +19,7 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i> Home</a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-search"></i></button>
+            <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
 
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{% url 'search' %}">
@@ -92,187 +92,192 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="company-title">{{ company.corp }}</h1>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">수익성</span>
-                                <span class="chart-title-unit2">(%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line">2018</th>
-                                            <th scope="col" class="vertical-line">2019</th>
-                                            <th scope="col" class="vertical-line">2020</th>
-                                            <th scope="col" class="vertical-line">2021</th>
-                                            <th scope="col" class="vertical-line">2022</th>
-                                            <th scope="col" class="vertical-line">전년대비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for investment_data in investment_indicator_profitability %}
-                                            <tr>
-                                                <td scope="row"> {{ investment_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                 
-                                </table>
-                            </div>
+                    <div class="w-25 px-4" style="margin-bottom: 15px;">
+                        <div class="company-name-box">
+                            <h1 class="company-title">{{ company.corp }}</h1>
                         </div>
+                    </div>
+                        <div class="px-4">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">수익성</span>
+                                    <span class="chart-title-unit2">(%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">항목</th>
+                                                <th scope="col" class="vertical-line">2018</th>
+                                                <th scope="col" class="vertical-line">2019</th>
+                                                <th scope="col" class="vertical-line">2020</th>
+                                                <th scope="col" class="vertical-line">2021</th>
+                                                <th scope="col" class="vertical-line">2022</th>
+                                                <th scope="col" class="vertical-line">전년대비</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for investment_data in investment_indicator_profitability %}
+                                                <tr>
+                                                    <td scope="row"> {{ investment_data.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                                                    
+                                    </table>
+                                </div>
+                            </div>
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">성장성</span>
-                                <span class="chart-title-unit2">(%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line">2019</th>
-                                            <th scope="col" class="vertical-line">2020</th>
-                                            <th scope="col" class="vertical-line">2021</th>
-                                            <th scope="col" class="vertical-line">2022</th>
-                                            <th scope="col" class="vertical-line">전년대비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for investment_data in investment_indicator_growth %}
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">성장성</span>
+                                    <span class="chart-title-unit2">(%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td scope="row"> {{ investment_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                <th scope="col">항목</th>
+                                                <th scope="col" class="vertical-line">2019</th>
+                                                <th scope="col" class="vertical-line">2020</th>
+                                                <th scope="col" class="vertical-line">2021</th>
+                                                <th scope="col" class="vertical-line">2022</th>
+                                                <th scope="col" class="vertical-line">전년대비</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                 
-                                </table>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for investment_data in investment_indicator_growth %}
+                                                <tr>
+                                                    <td scope="row"> {{ investment_data.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                                                    
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">안정성</span>
-                                <span class="chart-title-unit2">(%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line">2018</th>
-                                            <th scope="col" class="vertical-line">2019</th>
-                                            <th scope="col" class="vertical-line">2020</th>
-                                            <th scope="col" class="vertical-line">2021</th>
-                                            <th scope="col" class="vertical-line">2022</th>
-                                            <th scope="col" class="vertical-line">전년대비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for investment_data in investment_indicator_stability %}
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">안정성</span>
+                                    <span class="chart-title-unit2">(%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td scope="row"> {{ investment_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                <th scope="col">항목</th>
+                                                <th scope="col" class="vertical-line">2018</th>
+                                                <th scope="col" class="vertical-line">2019</th>
+                                                <th scope="col" class="vertical-line">2020</th>
+                                                <th scope="col" class="vertical-line">2021</th>
+                                                <th scope="col" class="vertical-line">2022</th>
+                                                <th scope="col" class="vertical-line">전년대비</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                 
-                                </table>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for investment_data in investment_indicator_stability %}
+                                                <tr>
+                                                    <td scope="row"> {{ investment_data.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                                                    
+                                    </table>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">활동성</span>
-                                <span class="chart-title-unit2">(%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line">2018</th>
-                                            <th scope="col" class="vertical-line">2019</th>
-                                            <th scope="col" class="vertical-line">2020</th>
-                                            <th scope="col" class="vertical-line">2021</th>
-                                            <th scope="col" class="vertical-line">2022</th>
-                                            <th scope="col" class="vertical-line">전년대비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for investment_data in investment_indicator_activity %}
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">활동성</span>
+                                    <span class="chart-title-unit2">(%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td scope="row"> {{ investment_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                <th scope="col">항목</th>
+                                                <th scope="col" class="vertical-line">2018</th>
+                                                <th scope="col" class="vertical-line">2019</th>
+                                                <th scope="col" class="vertical-line">2020</th>
+                                                <th scope="col" class="vertical-line">2021</th>
+                                                <th scope="col" class="vertical-line">2022</th>
+                                                <th scope="col" class="vertical-line">전년대비</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                 
-                                </table>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for investment_data in investment_indicator_activity %}
+                                                <tr>
+                                                    <td scope="row"> {{ investment_data.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                                                    
+                                    </table>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">가치지표</span>
-                                <span class="chart-title-unit2">(원/배/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line">2018</th>
-                                            <th scope="col" class="vertical-line">2019</th>
-                                            <th scope="col" class="vertical-line">2020</th>
-                                            <th scope="col" class="vertical-line">2021</th>
-                                            <th scope="col" class="vertical-line">2022</th>
-                                            <th scope="col" class="vertical-line">전년대비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for investment_data in investment_indicator_valuation %}
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">가치지표</span>
+                                    <span class="chart-title-unit2">(원/배/%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td scope="row"> {{ investment_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                <th scope="col">항목</th>
+                                                <th scope="col" class="vertical-line">2018</th>
+                                                <th scope="col" class="vertical-line">2019</th>
+                                                <th scope="col" class="vertical-line">2020</th>
+                                                <th scope="col" class="vertical-line">2021</th>
+                                                <th scope="col" class="vertical-line">2022</th>
+                                                <th scope="col" class="vertical-line">전년대비</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                 
-                                </table>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for investment_data in investment_indicator_valuation %}
+                                                <tr>
+                                                    <td scope="row"> {{ investment_data.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2018|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2019|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2020|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2021|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line"> {{ investment_data.number_2022|floatformat:"2" }}</td>
+                                                    <td scope="row" class="vertical-line" style="color: red;"> {{ investment_data.yoy|floatformat:"2" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                                                    
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
