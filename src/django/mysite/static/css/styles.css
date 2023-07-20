@@ -11336,7 +11336,7 @@ body {
   background-color: lightgray; /* 빈 바의 색상 설정 */
 }
 .company-name-box {
-  border: 5px solid #000000; 
+  border: 4px solid #000000; 
   padding: 10px; 
   background-color: #f8f9fa; 
   text-align: center;
