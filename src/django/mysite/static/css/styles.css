@@ -11335,4 +11335,19 @@ body {
   height: 100%;
   background-color: lightgray; /* 빈 바의 색상 설정 */
 }
+.company-name-box {
+  border: 5px solid #000000; 
+  padding: 10px; 
+  background-color: #f8f9fa; 
+  text-align: center;
+  border-radius: 8px; 
+  margin: 0; 
+}
+
+.company-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: bold; 
+  color: #000000; 
+}
 
