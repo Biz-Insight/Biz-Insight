@@ -133,14 +133,113 @@ class MainFinancialStatements(ListView):
 
 
 class InvestmentIndicator(ListView):
-    model = CompanyName
+    model = InvestmentData
     template_name = "investment_indicator.html"
     context_object_name = "investment_indicator"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = InvestmentData.objects.filter(corp=company_name)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        investment_indicator = context["investment_indicator"]
+        desired_labels_profitability = [
+            "매출총이익률",
+            "영업이익률",
+            "순이익률",
+            "EBITDA마진율",
+            "ROE",
+            "ROA",
+            "ROIC",
+        ]
+        context["investment_indicator_profitability"] = [
+            data
+            for data in investment_indicator
+            if data.label_ko in desired_labels_profitability
+        ]
+
+        desired_labels_growth = [
+            "매출액증가율",
+            "영업이익증가율",
+            "순이익증가율",
+            "총자산증가율",
+            "유형자산증가율",
+            "부채총계증가율",
+            "자기자본증가율",
+        ]
+        context["investment_indicator_growth"] = [
+            data
+            for data in investment_indicator
+            if data.label_ko in desired_labels_growth
+        ]
+
+        desired_labels_stability = [
+            "부채비율",
+            "유동비율",
+            "당좌비율",
+            "비유동부채비율",
+            "자기자본비율",
+            "이자보상배율",
+            "차입금비율",
+            "순부채비율",
+            "자본유보율",
+        ]
+        context["investment_indicator_stability"] = [
+            data
+            for data in investment_indicator
+            if data.label_ko in desired_labels_stability
+        ]
+
+        desired_labels_activity = [
+            "총자산회전율",
+            "자기자본회전율",
+            "순운전자본회전율",
+            "유형자산회전율",
+            "매출채권회전율",
+            "재고자산회전율",
+            "매입채무회전율",
+        ]
+        context["investment_indicator_activity"] = [
+            data
+            for data in investment_indicator
+            if data.label_ko in desired_labels_activity
+        ]
+
+        desired_labels_valuation = ["EPS", "BPS", "PER", "PBR", "PCR", "EV/EBITDA"]
+        context["investment_indicator_valuation"] = [
+            data
+            for data in investment_indicator
+            if data.label_ko in desired_labels_valuation
+        ]
+
+        context["investment_indicator_profitability"] = sorted(
+            context["investment_indicator_profitability"],
+            key=lambda data: desired_labels_profitability.index(data.label_ko),
+        )
+
+        context["investment_indicator_growth"] = sorted(
+            context["investment_indicator_growth"],
+            key=lambda data: desired_labels_growth.index(data.label_ko),
+        )
+
+        context["investment_indicator_stability"] = sorted(
+            context["investment_indicator_stability"],
+            key=lambda data: desired_labels_stability.index(data.label_ko),
+        )
+
+        context["investment_indicator_activity"] = sorted(
+            context["investment_indicator_activity"],
+            key=lambda data: desired_labels_activity.index(data.label_ko),
+        )
+
+        context["investment_indicator_valuation"] = sorted(
+            context["investment_indicator_valuation"],
+            key=lambda data: desired_labels_valuation.index(data.label_ko),
+        )
+
+        return context
 
 
 class CreditIndicator(ListView):
