@@ -11253,7 +11253,7 @@ body {
 }
 
 .chart-title-unit2 {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #6c757d;
   margin-right: 0;
 }
@@ -11355,6 +11355,6 @@ body {
 .card.border-dark {
   border: 1px solid #343a40; 
   border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
 }
 
