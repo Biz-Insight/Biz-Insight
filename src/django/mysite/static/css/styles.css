@@ -10,6 +10,11 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11249,6 +11254,7 @@ body {
 }
 
 .chart-title-unit {
+  font-size: 20px;
   font-weight: bold;
 }
 
