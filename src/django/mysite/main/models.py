@@ -103,6 +103,23 @@ class CreditData(models.Model):
         db_table = "credit_data"
 
 
+class Visualization(models.Model):
+    corp = models.TextField(blank=True, null=True)
+    stock_code = models.TextField(blank=True, null=True)
+    sector = models.TextField(blank=True, null=True)
+    label_en = models.TextField(blank=True, null=True)
+    label_ko = models.TextField(blank=True, null=True)
+    number_2018 = models.FloatField(db_column="2018", blank=True, null=True)
+    number_2019 = models.FloatField(db_column="2019", blank=True, null=True)
+    number_2020 = models.FloatField(db_column="2020", blank=True, null=True)
+    number_2021 = models.FloatField(db_column="2021", blank=True, null=True)
+    number_2022 = models.FloatField(db_column="2022", blank=True, null=True)
+    yoy = models.FloatField(db_column="YoY", blank=True, null=True)
+
+    class Meta:
+        db_table = "visualization_data"
+
+
 class KospiCompanyInfo(models.Model):
     corp = models.TextField(blank=True, null=True)
     stock_code = models.TextField(blank=True, null=True)
