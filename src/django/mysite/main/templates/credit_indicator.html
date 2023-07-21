@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load filters %}
 {% with company=credit_indicator.0 %}
 <html lang="en">
     <head>
@@ -73,7 +74,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 재무제표
                             </a>
-                            <a class="nav-link" href="{% url 'credit_indicator' company.corp|urlencode %}">
+                            <a class="nav-link" href="{% url 'investment_indicator' company.corp|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
@@ -120,12 +121,12 @@
                                         {% for credit_data in credit_indicator_stability %}
                                             <tr>
                                                 <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|floatformat:"2" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
@@ -156,11 +157,11 @@
                                         {% for credit_data in credit_indicator_liquidity %}
                                             <tr>
                                                 <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|floatformat:"2" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
@@ -191,12 +192,12 @@
                                         {% for credit_data in credit_indicator_profitability %}
                                             <tr>
                                                 <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|floatformat:"2" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
@@ -228,12 +229,12 @@
                                         {% for credit_data in credit_indicator_cash_flow %}
                                             <tr>
                                                 <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|floatformat:"2" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|floatformat:"2" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>                             
