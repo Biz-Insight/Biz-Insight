@@ -252,6 +252,40 @@ class CreditIndicator(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         credit_indicator = context["credit_indicator"]
+
+        # List of labels that need to be divided by 100,000,000
+        labels_to_divide = [
+            "자산총계",
+            "부채총계",
+            "자본총계",
+            "총차입금",
+            "순차입금",
+            "유동부채금액",
+            "운전자본",
+            "당좌자산",
+            "현금성자산",
+            "단기성차입금",
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "자산총계",
+            "영업활동현금흐름",
+            "잉여현금흐름",
+            "금융비용",
+            "EBITDA",
+            "법인세납부",
+        ]
+
+        # Update the values of the specified labels by dividing them by 100,000,000
+        for data in credit_indicator:
+            if data.label_ko in labels_to_divide:
+                data.number_2018 /= 100000000
+                data.number_2019 /= 100000000
+                data.number_2020 /= 100000000
+                data.number_2021 /= 100000000
+                data.number_2022 /= 100000000
+
         desired_labels_stability = [
             "자산총계",
             "부채총계",
@@ -270,7 +304,6 @@ class CreditIndicator(ListView):
             "유동부채비율",
             "운전자본",
             "당좌자산",
-            "당좌비율",
         ]
         context["credit_indicator_stability"] = [
             data
