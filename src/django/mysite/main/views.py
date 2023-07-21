@@ -28,9 +28,6 @@ class CompanyList(ListView):
     context_object_name = "company_list"
 
 
-from math import floor
-
-
 class CompanyInfo(ListView):
     model = KospiCompanyInfo
     template_name = "company_info.html"
