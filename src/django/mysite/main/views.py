@@ -240,14 +240,101 @@ class InvestmentIndicator(ListView):
 
 
 class CreditIndicator(ListView):
-    model = CompanyName
+    model = CreditData
     template_name = "credit_indicator.html"
     context_object_name = "credit_indicator"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = CreditData.objects.filter(corp=company_name)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        credit_indicator = context["credit_indicator"]
+        desired_labels_stability = [
+            "자산총계",
+            "부채총계",
+            "자본총계",
+            "총차입금",
+            "순차입금",
+            "부채비율",
+            "차입금의존도",
+            "순차입금의존도",
+            "총차입금/EBITDA",
+            "순차입금/EBITDA",
+            "EBITDA/금융비용",
+            "영업활동현금흐름/총차입금",
+            "총자산레버리지",
+            "유동부채금액",
+            "유동부채비율",
+            "운전자본",
+            "당좌자산",
+            "당좌비율",
+        ]
+        context["credit_indicator_stability"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_stability
+        ]
+
+        desired_labels_liquidity = [
+            "현금성자산",
+            "단기성차입금",
+            "현금성자산/단기성차입금",
+            "단기성차입금/총차입금",
+            "매출채권회전일수",
+        ]
+        context["credit_indicator_liquidity"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_liquidity
+        ]
+
+        desired_labels_profitability = [
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "EBIT마진",
+            "EBITDA/매출액",
+            "자산총계",
+            "총자산수익률()",
+        ]
+        context["credit_indicator_profitability"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_profitability
+        ]
+
+        desired_labels_cash_flow = ["영업활동현금흐름", "잉여현금흐름", "금융비용", "EBITDA", "법인세납부"]
+        context["credit_indicator_cash_flow"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_cash_flow
+        ]
+
+        context["credit_indicator_stability"] = sorted(
+            context["credit_indicator_stability"],
+            key=lambda data: desired_labels_stability.index(data.label_ko),
+        )
+
+        context["credit_indicator_liquidity"] = sorted(
+            context["credit_indicator_liquidity"],
+            key=lambda data: desired_labels_liquidity.index(data.label_ko),
+        )
+
+        context["credit_indicator_profitability"] = sorted(
+            context["credit_indicator_profitability"],
+            key=lambda data: desired_labels_profitability.index(data.label_ko),
+        )
+
+        context["credit_indicator_cash_flow"] = sorted(
+            context["credit_indicator_cash_flow"],
+            key=lambda data: desired_labels_cash_flow.index(data.label_ko),
+        )
+
+        return context
 
 
 class ChartView(ListView):
