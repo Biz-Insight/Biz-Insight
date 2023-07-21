@@ -6,6 +6,7 @@ from django.views import View
 import pandas as pd
 import pickle
 from math import floor
+from .django_transform import django_transform
 
 
 def home(request):
@@ -310,33 +311,157 @@ def search_view(request):
     return redirect("company_info", company_name=company_name)
 
 
-# def credit_request(request):
-#     return render(request, "credit_request.html")
-
-
 def credit_request(request):
     if request.method == "POST":
         csv_file = request.FILES["file"]
-        df = pd.read_csv(csv_file)
-        df_records = df.to_dict(orient="records")
-        # 필요한 처리가 완료된 후에는 원하는 결과를 context에 담아 템플릿으로 전달할 수 있습니다.
-        context = {"message": "파일이 성공적으로 처리되었습니다.", "df_records": df_records}
-        return render(request, "csv_upload_result.html", context)
+        (
+            credit_prediction,
+            main_fs,
+            credit_data_web,
+            investment_data_web,
+        ) = django_transform(csv_file)
+        request.session["credit_prediction"] = main_fs.to_json(orient="split")
+        request.session["main_fs"] = main_fs.to_json(orient="split")
+        request.session["credit_data_web"] = main_fs.to_json(orient="split")
+        request.session["investment_data_web"] = main_fs.to_json(orient="split")
 
+        context = {
+            "message": "파일이 성공적으로 처리되었습니다.",
+            "credit_prediction": credit_prediction,
+            "main_fs": main_fs,
+            "credit_data_web": credit_data_web,
+            "investment_data_web": investment_data_web,
+        }
+        return render(request, "csv_upload_result.html", context)
     return render(request, "credit_request.html")
 
 
 def show_result(request):
     context = {"message": "파일이 성공적으로 처리되었습니다."}
-    return render(request, "csv_upload_result.html", context)
+    return render(request, "csv_upload_result.html")
 
 
-# class CisDf(ListView):
-#     model = CisDf
-#     template_name = "company_info.html"
-#     context_object_name = "cis_df"
+def new_company_info(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_company_info.html", context)
 
-#     def get_queryset(self):
-#         company_name = self.request.session.get("context")
-#         queryset = CisDf.objects.filter(corp=company_name)
-#         return queryset
+
+def new_company_news(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_company_news.html", context)
+
+
+def new_credit_analysis(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_credit_analysis.html", context)
+
+
+def new_credit_indicator(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_credit_indicator.html", context)
+
+
+def new_financial_analysis(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_financial_analysis.html", context)
+
+
+def new_financial_statements(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_financial_statements.html", context)
+
+
+def new_investment_indicator(request):
+    credit_prediction = request.session.get("credit_prediction")
+    main_fs = request.session.get("main_fs")
+    credit_data_web = request.session.get("credit_data_web")
+    investment_data_web = request.session.get("investment_data_web")
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs,
+        "credit_data_web": credit_data_web,
+        "investment_data_web": investment_data_web,
+    }
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs
+    request.session["credit_data_web"] = credit_data_web
+    request.session["investment_data_web"] = investment_data_web
+    return render(request, "new_investment_indicator.html", context)
