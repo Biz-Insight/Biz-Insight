@@ -29,9 +29,6 @@ class CompanyList(ListView):
     context_object_name = "company_list"
 
 
-from math import floor
-
-
 class CompanyInfo(ListView):
     model = KospiCompanyInfo
     template_name = "company_info.html"
@@ -88,13 +85,13 @@ class CompanyNews(ListView):
 
 
 class FinancialAnalysis(ListView):
-    model = CompanyName
+    model = InvestmentData
     template_name = "financial_analysis.html"
     context_object_name = "financial_analysis"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = InvestmentData.objects.filter(corp=company_name)
         return queryset
 
 
@@ -244,14 +241,134 @@ class InvestmentIndicator(ListView):
 
 
 class CreditIndicator(ListView):
-    model = CompanyName
+    model = CreditData
     template_name = "credit_indicator.html"
     context_object_name = "credit_indicator"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = CreditData.objects.filter(corp=company_name)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        credit_indicator = context["credit_indicator"]
+
+        # List of labels that need to be divided by 100,000,000
+        labels_to_divide = [
+            "자산총계",
+            "부채총계",
+            "자본총계",
+            "총차입금",
+            "순차입금",
+            "유동부채금액",
+            "운전자본",
+            "당좌자산",
+            "현금성자산",
+            "단기성차입금",
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "자산총계",
+            "영업활동현금흐름",
+            "잉여현금흐름",
+            "금융비용",
+            "EBITDA",
+            "법인세납부",
+        ]
+
+        # Update the values of the specified labels by dividing them by 100,000,000
+        for data in credit_indicator:
+            if data.label_ko in labels_to_divide:
+                data.number_2018 /= 100000000
+                data.number_2019 /= 100000000
+                data.number_2020 /= 100000000
+                data.number_2021 /= 100000000
+                data.number_2022 /= 100000000
+
+        desired_labels_stability = [
+            "자산총계",
+            "부채총계",
+            "자본총계",
+            "총차입금",
+            "순차입금",
+            "부채비율",
+            "차입금의존도",
+            "순차입금의존도",
+            "총차입금/EBITDA",
+            "순차입금/EBITDA",
+            "EBITDA/금융비용",
+            "영업활동현금흐름/총차입금",
+            "총자산레버리지",
+            "유동부채금액",
+            "유동부채비율",
+            "운전자본",
+            "당좌자산",
+        ]
+        context["credit_indicator_stability"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_stability
+        ]
+
+        desired_labels_liquidity = [
+            "현금성자산",
+            "단기성차입금",
+            "현금성자산/단기성차입금",
+            "단기성차입금/총차입금",
+            "매출채권회전일수",
+        ]
+        context["credit_indicator_liquidity"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_liquidity
+        ]
+
+        desired_labels_profitability = [
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "EBIT마진",
+            "EBITDA/매출액",
+            "자산총계",
+            "총자산수익률()",
+        ]
+        context["credit_indicator_profitability"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_profitability
+        ]
+
+        desired_labels_cash_flow = ["영업활동현금흐름", "잉여현금흐름", "금융비용", "EBITDA", "법인세납부"]
+        context["credit_indicator_cash_flow"] = [
+            data
+            for data in credit_indicator
+            if data.label_ko in desired_labels_cash_flow
+        ]
+
+        context["credit_indicator_stability"] = sorted(
+            context["credit_indicator_stability"],
+            key=lambda data: desired_labels_stability.index(data.label_ko),
+        )
+
+        context["credit_indicator_liquidity"] = sorted(
+            context["credit_indicator_liquidity"],
+            key=lambda data: desired_labels_liquidity.index(data.label_ko),
+        )
+
+        context["credit_indicator_profitability"] = sorted(
+            context["credit_indicator_profitability"],
+            key=lambda data: desired_labels_profitability.index(data.label_ko),
+        )
+
+        context["credit_indicator_cash_flow"] = sorted(
+            context["credit_indicator_cash_flow"],
+            key=lambda data: desired_labels_cash_flow.index(data.label_ko),
+        )
+
+        return context
 
 
 class ChartView(ListView):
@@ -271,24 +388,109 @@ class ChartView(ListView):
 
 
 class ChartData(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request, chart_type, *args, **kwargs):
         company_name = request.GET.get("company_name", None)
+        data = {}
 
-        if company_name is not None:
-            cis_df = CisDf.objects.filter(corp=company_name, account="매출원가")
-            data = list(
-                cis_df.values(
-                    "number_2018",
-                    "number_2019",
-                    "number_2020",
-                    "number_2021",
-                    "number_2022",
+        if company_name:
+            if chart_type == "profitability_indicator":
+                sales_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="매출액"
                 )
-            )
-            return JsonResponse(data, safe=False)
+                profit_margin_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="영업이익률"
+                )
+                net_profit_margin_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="순이익률"
+                )
 
-        else:
+                data = {
+                    "sales": list(
+                        sales_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "profit_margin": list(
+                        profit_margin_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "net_profit_margin": list(
+                        net_profit_margin_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
+            elif chart_type == "return_investment":
+                roe_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROE"
+                )
+                roa_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROA"
+                )
+                roic_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROIC"
+                )
+                net_income_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="당기순이익"
+                )
+
+                data = {
+                    "roe": list(
+                        roe_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "roa": list(
+                        roa_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "roic": list(
+                        roic_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "net_income": list(
+                        net_income_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
+        if not data:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
+
+        return JsonResponse(data, safe=False)
 
 
 class StockArea(View):
