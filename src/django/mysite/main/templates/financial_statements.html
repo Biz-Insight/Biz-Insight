@@ -109,25 +109,25 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">항목</th>
-                                                <th scope="col" class="vertical-line">2018</th>
-                                                <th scope="col" class="vertical-line">2019</th>
-                                                <th scope="col" class="vertical-line">2020</th>
-                                                <th scope="col" class="vertical-line">2021</th>
-                                                <th scope="col" class="vertical-line">2022</th>
-                                                <th scope="col" class="vertical-line">전년대비 %</th>
+                                                <th scope="col" class="vertical-line text-end">2018</th>
+                                                <th scope="col" class="vertical-line text-end">2019</th>
+                                                <th scope="col" class="vertical-line text-end">2020</th>
+                                                <th scope="col" class="vertical-line text-end">2021</th>
+                                                <th scope="col" class="vertical-line text-end">2022</th>
+                                                <th scope="col" class="vertical-line text-end">전년대비 %</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for statement in financial_statements %}
                                                 {% if statement.fs_type == 'bs' %}
                                                     <tr>
-                                                        <td scope="row"> {{ statement.label_ko }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                        <td scope="row" > {{ statement.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ statement.yoy }}</td>
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
@@ -147,12 +147,12 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">항목</th>
-                                                <th scope="col" class="vertical-line">2018</th>
-                                                <th scope="col" class="vertical-line">2019</th>
-                                                <th scope="col" class="vertical-line">2020</th>
-                                                <th scope="col" class="vertical-line">2021</th>
-                                                <th scope="col" class="vertical-line">2022</th>
-                                                <th scope="col" class="vertical-line">전년대비 %</th>
+                                                <th scope="col" class="vertical-line text-end">2018</th>
+                                                <th scope="col" class="vertical-line text-end">2019</th>
+                                                <th scope="col" class="vertical-line text-end">2020</th>
+                                                <th scope="col" class="vertical-line text-end">2021</th>
+                                                <th scope="col" class="vertical-line text-end">2022</th>
+                                                <th scope="col" class="vertical-line text-end">전년대비 %</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
@@ -160,12 +160,12 @@
                                                 {% if statement.fs_type == 'incs' %}
                                                     <tr>
                                                         <td scope="row"> {{ statement.label_ko }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ statement.yoy }}</td>
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
@@ -185,12 +185,12 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">항목</th>
-                                                <th scope="col" class="vertical-line">2018</th>
-                                                <th scope="col" class="vertical-line">2019</th>
-                                                <th scope="col" class="vertical-line">2020</th>
-                                                <th scope="col" class="vertical-line">2021</th>
-                                                <th scope="col" class="vertical-line">2022</th>
-                                                <th scope="col" class="vertical-line">전년대비 %</th>
+                                                <th scope="col" class="vertical-line text-end">2018</th>
+                                                <th scope="col" class="vertical-line text-end">2019</th>
+                                                <th scope="col" class="vertical-line text-end">2020</th>
+                                                <th scope="col" class="vertical-line text-end">2021</th>
+                                                <th scope="col" class="vertical-line text-end">2022</th>
+                                                <th scope="col" class="vertical-line text-end">전년대비 %</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
@@ -198,12 +198,12 @@
                                                 {% if statement.fs_type == 'cf' %}
                                                     <tr>
                                                         <td scope="row"> {{ statement.label_ko }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2018|div:"100000000" }}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2019|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2020|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2021|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line"> {{ statement.number_2022|div:"100000000"}}</td>
-                                                        <td scope="row" class="vertical-line" style="color: red;"> {{ statement.yoy }}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2020|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2021|div:"100000000"}}</td>
+                                                       <td scope="row" class="vertical-line text-end"> {{ statement.number_2022|div:"100000000"}}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ statement.yoy }}</td>
                                                     </tr>
                                                 {% endif %}
                                             {% endfor %}
