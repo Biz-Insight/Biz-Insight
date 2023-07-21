@@ -84,13 +84,13 @@ class CompanyNews(ListView):
 
 
 class FinancialAnalysis(ListView):
-    model = CompanyName
+    model = InvestmentData
     template_name = "financial_analysis.html"
     context_object_name = "financial_analysis"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyName.objects.filter(company_name=company_name)
+        queryset = InvestmentData.objects.filter(corp=company_name)
         return queryset
 
 
@@ -387,24 +387,109 @@ class ChartView(ListView):
 
 
 class ChartData(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request, chart_type, *args, **kwargs):
         company_name = request.GET.get("company_name", None)
+        data = {}
 
-        if company_name is not None:
-            cis_df = CisDf.objects.filter(corp=company_name, account="매출원가")
-            data = list(
-                cis_df.values(
-                    "number_2018",
-                    "number_2019",
-                    "number_2020",
-                    "number_2021",
-                    "number_2022",
+        if company_name:
+            if chart_type == "profitability_indicator":
+                sales_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="매출액"
                 )
-            )
-            return JsonResponse(data, safe=False)
+                profit_margin_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="영업이익률"
+                )
+                net_profit_margin_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="순이익률"
+                )
 
-        else:
+                data = {
+                    "sales": list(
+                        sales_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "profit_margin": list(
+                        profit_margin_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "net_profit_margin": list(
+                        net_profit_margin_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
+            elif chart_type == "return_investment":
+                roe_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROE"
+                )
+                roa_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROA"
+                )
+                roic_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="ROIC"
+                )
+                net_income_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="당기순이익"
+                )
+
+                data = {
+                    "roe": list(
+                        roe_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "roa": list(
+                        roa_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "roic": list(
+                        roic_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "net_income": list(
+                        net_income_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
+        if not data:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
+
+        return JsonResponse(data, safe=False)
 
 
 class StockArea(View):
