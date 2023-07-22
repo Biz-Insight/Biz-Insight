@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-
+{% with company=credit_indicator.0 %}
 <html lang="en">
     <head>
     <meta charset="utf-8" />
@@ -41,7 +41,7 @@
                                 </svg>
                                 기업정보
                             </div>                              
-                                                                            
+                                                                                                           
                             <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
                                 <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
                                 뉴스/공시
@@ -88,55 +88,13 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                  {% if message %}
-                  <h1>{{ message }}</h1>
-                    <p>파일에서 불러온 제무재표 정보입니다.</p>
-                      <style>
-                          table {
-                            border-collapse: collapse;
-                            width: 100%;
-                          }
-                          
-                          th, td {
-                            text-align: left;
-                            padding: 8px;
-                          }
-                          
-                          th {
-                            background-color: #f2f2f2;
-                          }
-                          
-                          tr:nth-child(even) {
-                            background-color: #f9f9f9;
-                          }
-                          
-                          tr:nth-child(odd) {
-                            background-color: #ffffff;
-                          }
-                          
-                          th, td {
-                            border-right: 1px solid #dddddd;
-                            border-bottom: 1px solid #dddddd;
-                          }
-                          
-                          th:last-child, td:last-child {
-                            border-right: none;
-                          }
-                      </style>
-                
-                    <h2>주요 재무 정보</h2>
-                    <p>{{ main_fs }}</p>
-                
-                    <h2>신용 예측</h2>
-                    <p>{{ credit_prediction }}</p>
-                
-                    <h2>신용 데이터 웹</h2>
-                    <p>{{ credit_data_web }}</p>
-                
-                    <h2>투자 데이터 웹</h2>
-                    <p>{{ investment_data_web }}</p>
-                {% endif %}
-                    
+                    <div class="w-25 px-4" style="margin-bottom: 12px;">
+                        <div class="company-name-box">
+                            <h1 class="company-title">{{ company.company_name }}</h1>
+                        </div>
+                    </div>
+                        <p>신용지표 페이지입니다.</p>
+                    </div>
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -152,8 +110,8 @@
                 </footer> -->
             </div>
         </div>
-        
-        <script>                 
+        <script>
+            var company_name = "{{ company.company_name }}";
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -165,8 +123,4 @@
         <script src="{% static 'assets/js/area.js' %}"></script>
     </body>
 </html>
-
-
-
-
-
+{% endwith %}
