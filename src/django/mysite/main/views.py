@@ -486,6 +486,122 @@ class ChartData(View):
                     ),
                 }
 
+            elif chart_type == "profitability_growth":
+                revenue_growth_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="매출액증가율"
+                )
+                operating_income_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="영업이익증가율"
+                )
+                net_income_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="순이익증가율"
+                )
+
+                data = {
+                    "revenue_growth": list(
+                        revenue_growth_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "operating_income": list(
+                        operating_income_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "net_income": list(
+                        net_income_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
+            elif chart_type == "asset_growth":
+                asset_growth_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="총자산증가율"
+                )
+                tangible_asset_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="유형자산증가율"
+                )
+                total_equity_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="자기자본증가율"
+                )
+
+                data = {
+                    "asset_growth": list(
+                        asset_growth_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "tangible_asset": list(
+                        tangible_asset_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "total_equity": list(
+                        total_equity_data.values(
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+            elif chart_type == "stability":
+                debt_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="부채비율"
+                )
+                current_liabilities_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="유동부채비율"
+                )
+                non_current_liabilities_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="비유동부채비율"
+                )
+
+                data = {
+                    "debt": list(
+                        debt_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "current_liabilities": list(
+                        current_liabilities_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "non_current_liabilities": list(
+                        non_current_liabilities_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
         if not data:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
 
