@@ -84,10 +84,6 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -97,13 +93,20 @@
                             <h1 class="company-title">{{ company.corp }}</h1>
                         </div>
                     </div>
+                    
+                    <div class="container-fluid d-flex">
+                        <div class="indicator-title w-100 text-center py-1">
+                            수익성
+                        </div>     
+                    </div>                 
+                    
                     <div class="container-fluid d-flex">
                         <div class="w-50 px-2" style="margin-top: 5px;">
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
+                                    <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">수익성지표</span> 
-                                    <span class="chart-title-unit2">(억원)</span>
+                                    <span class="chart-title-unit2">(억원/%)</span>
                                 </div>
                                 <div class="card-body"><canvas id="profitability_indicator" width="100%" height="45"></canvas></div>
                             </div>  
@@ -111,14 +114,107 @@
                         <div class="w-50 px-2" style="margin-top: 5px;">
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
+                                    <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">투자수익률</span> 
-                                    <span class="chart-title-unit2">(억원)</span>
+                                    <span class="chart-title-unit2">(억원/%)</span>
                                 </div>
                                 <div class="card-body"><canvas id="return_investment" width="100%" height="45"></canvas></div>
                             </div>  
                         </div>  
                     </div>
+                    
+                    <div class="container-fluid d-flex">
+                        <div class="indicator-title w-100 text-center py-1">
+                            성장성
+                        </div>     
+                    </div>    
+                    
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">수익성장성지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="profitability_growth" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>   
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">자산성장성지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="asset_growth" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>  
+                    </div>
+
+                    <div class="container-fluid d-flex">
+                        <div class="indicator-title w-50 text-center py-1">
+                            안전성
+                        </div>     
+                        <div class="indicator-title w-50 text-center py-1">
+                            활동성
+                        </div>    
+                    </div>    
+                    
+                    
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">안전성지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="stability" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>   
+
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">활동성지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="stability" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>   
+                    </div>
+
+                    <div class="container-fluid d-flex">
+                        <div class="indicator-title w-100 text-center py-1">
+                            가치지표
+                        </div>     
+                    </div>    
+                    
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">주당지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="profitability_growth" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>   
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">가치지표</span> 
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="asset_growth" width="100%" height="45"></canvas></div>
+                            </div>  
+                        </div>  
+                    </div>
+                    
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
