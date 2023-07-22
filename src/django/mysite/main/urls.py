@@ -48,4 +48,24 @@ urlpatterns = [
     path("stock_area/", views.StockArea.as_view(), name="stock_area"),
     path("credit_request/", views.credit_request),
     path("result/", views.show_result, name="result"),
+    path("new_company_news/", views.new_company_news, name="new_company_news"),
+    path("new_credit_analysis/", views.new_credit_analysis, name="new_credit_analysis"),
+    path(
+        "new_credit_indicator/", views.new_credit_indicator, name="new_credit_indicator"
+    ),
+    path(
+        "new_financial_analysis/",
+        views.new_financial_analysis,
+        name="new_financial_analysis",
+    ),
+    path(
+        "new_financial_statements/",
+        views.new_financial_statements,
+        name="new_financial_statements",
+    ),
+    path(
+        "new_investment_indicator/",
+        views.new_investment_indicator,
+        name="new_investment_indicator",
+    ),
 ]

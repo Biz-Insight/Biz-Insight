@@ -10,7 +10,6 @@
         <meta name="author" content="" />
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         </head>
@@ -42,11 +41,8 @@
                                     </svg>
                                     기업정보
                                 </div>                              
-                                <a class="nav-link" href="{% url 'company_info' company.company_name|urlencode %}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    기업개요    
-                                </a>                                                                                                                 
-                                <a class="nav-link" href="{% url 'company_news' company.company_name|urlencode %}">
+                                                                                                               
+                                <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
                                     <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
                                     뉴스/공시
                                 </a>
@@ -56,11 +52,11 @@
                                     </svg>
                                     기업분석
                                 </div>
-                                <a class="nav-link" href="{% url 'financial_analysis' company.company_name|urlencode %}">
+                                <a class="nav-link" href="{% url 'new_financial_analysis' %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                     재무분석
                                 </a>                             
-                                <a class="nav-link" href="{% url 'credit_analysis' company.company_name|urlencode %}" style="color: red; font-weight: bold; font-size: 22px;">
+                                <a class="nav-link" href="{% url 'new_credit_analysis' %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     신용분석
                                 </a>
@@ -70,19 +66,23 @@
                                     </svg>
                                     상세지표
                                 </div>
-                                <a class="nav-link" href="{% url 'financial_statements' company.company_name|urlencode %}">
+                                <a class="nav-link" href="{% url 'new_financial_statements' %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     재무제표
                                 </a>
-                                <a class="nav-link" href="{% url 'investment_indicator' company.company_name|urlencode %}">
+                                <a class="nav-link" href="{% url 'new_investment_indicator' %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     투자지표
                                 </a>
-                                <a class="nav-link" href="{% url 'credit_indicator' company.company_name|urlencode %}">
+                                <a class="nav-link" href="{% url 'new_credit_indicator'%}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     신용지표
-                                </a>
+                                </a>  
                             </div>
+                        </div>
+                        <div class="sb-sidenav-footer">
+                            <div class="small">Logged in as:</div>
+                            Start Bootstrap
                         </div>
                     </nav>
                 </div>
@@ -138,7 +138,8 @@
                                       <td>{{ company.year.0 }}</td>
                                       <td>{{ company.pred_result.0 }}</td>
                                     </tr>
-                                  </table>                               
+                                  </table>                  
+                                               
                             </p>
                         </div>
                     </main>
