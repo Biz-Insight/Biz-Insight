@@ -14,6 +14,12 @@ function fetchChartData(company_name, chart_type) {
                 drawProfitabilityIndicatorChart(data);
             } else if (chart_type === 'return_investment') {
                 drawReturnInvestmentChart(data);
+            } else if (chart_type === 'profitability_growth') {
+                drawProfitabilityGrowthChart(data);
+            } else if (chart_type === 'asset_growth') {
+                drawAssetGrowthChart(data);
+            } else if (chart_type === 'stability') {
+                drawStabiliytChart(data);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -57,39 +63,39 @@ function drawProfitabilityIndicatorChart(data) {
             datasets: [
                 {
                     label: "영업이익률",
-                    backgroundColor: "rgba(214, 69, 65, 0.5)", // 어두운 핑크
-                    borderColor: "rgba(214, 69, 65, 1)", // 경계 색상
-                    borderWidth: 2, // 경계 두께
+                    backgroundColor: "transparent",
+                    borderColor: "#8B0000",
+                    borderWidth: 2,
                     data: profitMarginData,
                     yAxisID: 'y-axis-2',
                     type: 'line',
-                    fill: false,
-                    pointRadius: 7,
+                    fill: 'origin',  
+                    pointRadius: 4,
                     pointStyle: 'rectRounded',
                     lineTension: 0
                 },
                 {
                     label: "순이익률",
-                    backgroundColor: "rgba(125, 60, 152, 0.5)", // 어두운 보라
-                    borderColor: "rgba(125, 60, 152, 1)", // 경계 색상
-                    borderWidth: 2, // 경계 두께
+                    backgroundColor: "transparent",
+                    borderColor:"#8B6508",
+                    borderWidth: 2, 
                     data: netProfitMarginData,
                     yAxisID: 'y-axis-2',
                     type: 'line',
-                    fill: false,
-                    pointRadius: 7,
+                    fill: 'origin',  
+                    pointRadius: 4,
                     pointStyle: 'triangle',
                     lineTension: 0
                 },
                 {
                     label: "매출액",
-                    backgroundColor: "rgba(40, 80, 130, 0.6)", // 어두운 초록색 (투명도 증가)
-                    borderColor: "rgba(40, 80, 130, 1)", // 경계 색상
-                    borderWidth: 2, // 경계 두께
+                    backgroundColor: "rgba(0, 51, 102, 0.4)",
+                    borderColor: "rgba(0, 51, 102, 1)", 
+                    borderWidth: 2,
                     data: salesData,
                     yAxisID: 'y-axis-1'
                 }
-            ],
+            ],            
         },
         options: {
             scales: {
@@ -191,51 +197,51 @@ function drawReturnInvestmentChart(data) {
                 {
                     label: "ROE",
                     backgroundColor: "transparent",
-                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderColor: "#8B0000",
                     borderWidth: 2,
                     data: roeData,
                     yAxisID: 'y-axis-2',
                     type: 'line',
                     fill: false,
-                    pointRadius: 7,
+                    pointRadius: 4,
                     pointStyle: 'rectRounded',
                     lineTension: 0
                 },
                 {
                     label: "ROA",
                     backgroundColor: "transparent",
-                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderColor: "#006363", // Darker shade of teal/cyan
                     borderWidth: 2,
                     data: roaData,
                     yAxisID: 'y-axis-2',
                     type: 'line',
                     fill: false,
-                    pointRadius: 7,
+                    pointRadius: 4,
                     pointStyle: 'triangle',
                     lineTension: 0
                 },
                 {
                     label: "ROIC",
                     backgroundColor: "transparent",
-                    borderColor: "rgba(255, 206, 86, 1)",
+                    borderColor: "#8B6508", 
                     borderWidth: 2,
                     data: roicData,
                     yAxisID: 'y-axis-2',
                     type: 'line',
                     fill: false,
-                    pointRadius: 7,
+                    pointRadius: 4,
                     pointStyle: 'circle',
                     lineTension: 0
                 },
                 {
                     label: "당기순이익",
-                    backgroundColor: "rgba(54, 162, 235, 0.6)",
-                    borderColor: "rgba(54, 162, 235, 1)",
+                    backgroundColor: "rgba(0, 51, 102, 0.4)",
+                    borderColor: "rgba(0, 51, 102, 1)", 
                     borderWidth: 2,
                     data: netIncomeData,
                     yAxisID: 'y-axis-1'
                 }
-            ],
+            ],            
         },
         options: {
             scales: {
@@ -293,9 +299,364 @@ function drawReturnInvestmentChart(data) {
     });
 };
 
+function drawProfitabilityGrowthChart(data) {
+    var labels = ["2019", "2020", "2021", "2022"];
+    var revenue_growth_data = [];
+    var operating_income_data = [];
+    var netIncomeData = [];
+
+    var revenueGrowthItem = data.revenue_growth[0];
+    revenue_growth_data.push(revenueGrowthItem.number_2019 );
+    revenue_growth_data.push(revenueGrowthItem.number_2020 );
+    revenue_growth_data.push(revenueGrowthItem.number_2021 );
+    revenue_growth_data.push(revenueGrowthItem.number_2022 );
+
+    var operatingIncomeItem = data.operating_income[0];
+    operating_income_data.push(operatingIncomeItem.number_2019);
+    operating_income_data.push(operatingIncomeItem.number_2020);
+    operating_income_data.push(operatingIncomeItem.number_2021);
+    operating_income_data.push(operatingIncomeItem.number_2022);
+
+    var netIncomeItem = data.net_income[0];
+    netIncomeData.push(netIncomeItem.number_2019);
+    netIncomeData.push(netIncomeItem.number_2020);
+    netIncomeData.push(netIncomeItem.number_2021);
+    netIncomeData.push(netIncomeItem.number_2022);
+
+    var ctx = document.getElementById('profitability_growth');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "매출액증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B0000",
+                    borderWidth: 2,
+                    data: revenue_growth_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'rectRounded',
+                    lineTension: 0
+                },
+                {
+                    label: "영업이익증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#006363",
+                    borderWidth: 2,
+                    data: operating_income_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'triangle',
+                    lineTension: 0
+                },
+                {
+                    label: "순이익증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B4500", 
+                    borderWidth: 2,
+                    data: netIncomeData,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'circle',
+                    lineTension: 0
+                },
+            ],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'year'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    }
+                }],
+                yAxes: [
+                {
+                    id: 'y-axis-1',
+                    position: 'right',
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }],
+            },
+            legend: {
+                display: true
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel.toFixed(1);
+                        return label;
+                    }
+                }
+            }
+        }
+    });
+};
+
+function drawAssetGrowthChart(data) {
+    var labels = ["2019", "2020", "2021", "2022"];
+    var asset_growth_data = [];
+    var tangible_asset_data = [];
+    var total_equity_data = [];
+
+    var assetGrowthItem = data.asset_growth[0];
+    asset_growth_data.push(assetGrowthItem.number_2019 );
+    asset_growth_data.push(assetGrowthItem.number_2020 );
+    asset_growth_data.push(assetGrowthItem.number_2021 );
+    asset_growth_data.push(assetGrowthItem.number_2022 );
+
+    var tangibleAssetItem = data.tangible_asset[0];
+    tangible_asset_data.push(tangibleAssetItem.number_2019);
+    tangible_asset_data.push(tangibleAssetItem.number_2020);
+    tangible_asset_data.push(tangibleAssetItem.number_2021);
+    tangible_asset_data.push(tangibleAssetItem.number_2022);
+
+    var totalEquityItem = data.total_equity[0];
+    total_equity_data.push(totalEquityItem.number_2019);
+    total_equity_data.push(totalEquityItem.number_2020);
+    total_equity_data.push(totalEquityItem.number_2021);
+    total_equity_data.push(totalEquityItem.number_2022);
+
+    var ctx = document.getElementById('asset_growth');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "총자산증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B0000",
+                    borderWidth: 2,
+                    data: asset_growth_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'rectRounded',
+                    lineTension: 0
+                },
+                {
+                    label: "유형자산증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#006363",
+                    borderWidth: 2,
+                    data: tangible_asset_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'triangle',
+                    lineTension: 0
+                },
+                {
+                    label: "자기자본증가율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B4500", 
+                    borderWidth: 2,
+                    data: total_equity_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'circle',
+                    lineTension: 0
+                },
+            ],
+            
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'year'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    }
+                }],
+                yAxes: [
+                {
+                    id: 'y-axis-1',
+                    position: 'right',
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }],
+            },
+            legend: {
+                display: true
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel.toFixed(1);
+                        return label;
+                    }
+                }
+            }
+        }
+    });
+};
+
+
+function drawStabiliytChart(data) {
+    var labels = ["2019", "2020", "2021", "2022"];
+    var debt_data = [];
+    var current_liabilities_data = [];
+    var non_current_liabilities_data = [];
+
+    var debtItem = data.debt[0];
+    debt_data.push(debtItem.number_2018 );
+    debt_data.push(debtItem.number_2019 );
+    debt_data.push(debtItem.number_2020 );
+    debt_data.push(debtItem.number_2021 );
+    debt_data.push(debtItem.number_2022 );
+
+    var currentLiabilitiesItem = data.current_liabilities[0];
+    current_liabilities_data.push(currentLiabilitiesItem.number_2018 );
+    current_liabilities_data.push(currentLiabilitiesItem.number_2019);
+    current_liabilities_data.push(currentLiabilitiesItem.number_2020);
+    current_liabilities_data.push(currentLiabilitiesItem.number_2021);
+    current_liabilities_data.push(currentLiabilitiesItem.number_2022);
+
+    var nonCurrentLiabilitiesItem = data.non_current_liabilities[0];
+    non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2018 );
+    non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2019);
+    non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2020);
+    non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2021);
+    non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2022);
+
+    var ctx = document.getElementById('stability');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "부채비율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B0000",
+                    borderWidth: 2,
+                    data: debt_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'rectRounded',
+                    lineTension: 0
+                },
+                {
+                    label: "유동부채비율",
+                    backgroundColor: "transparent",
+                    borderColor: "#006363",
+                    borderWidth: 2,
+                    data: current_liabilities_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'triangle',
+                    lineTension: 0
+                },
+                {
+                    label: "비유동부채비율",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B4500", 
+                    borderWidth: 2,
+                    data: non_current_liabilities_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'circle',
+                    lineTension: 0
+                },
+            ],
+            
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'year'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    }
+                }],
+                yAxes: [
+                {
+                    id: 'y-axis-1',
+                    position: 'right',
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }],
+            },
+            legend: {
+                display: true
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel.toFixed(1);
+                        return label;
+                    }
+                }
+            }
+        }
+    }); 
+};
+
+
 $(document).ready(function() {
     fetchChartData(corp, 'profitability_indicator');
     fetchChartData(corp, 'return_investment');
+    fetchChartData(corp, 'profitability_growth');
+    fetchChartData(corp, 'asset_growth');
+    fetchChartData(corp, 'stability');
 });
 
 
