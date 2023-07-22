@@ -8183,7 +8183,7 @@ textarea.form-control-lg {
 
 .bg-dark {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  background-color: #000000 !important;
 }
 
 .bg-black {
@@ -10962,6 +10962,7 @@ body {
 }
 
 .sb-topnav {
+  background-color: #000000;
   padding-left: 0;
   height: 56px;
   z-index: 1039;
@@ -10976,6 +10977,7 @@ body {
 .sb-topnav.navbar-light #sidebarToggle {
   color: #212529;
 }
+
 
 .sb-sidenav {
   display: flex;
@@ -11024,7 +11026,7 @@ body {
 }
 
 .sb-sidenav-dark {
-  background-color: #212529;
+  background-color: #000000; 
   color: #fff;
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
@@ -11341,21 +11343,21 @@ body {
   height: 100%;
   background-color: lightgray; /* 빈 바의 색상 설정 */
 }
+
 .company-name-box {
-  border: 4px solid #000000; 
-  padding: 10px; 
-  background-color: #f8f9fa; 
+  border-radius: 5px;
+  padding: 10px;
   text-align: center;
-  border-radius: 8px; 
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  border: 3px solid #000000; 
   margin: 0; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
 }
 
 .company-title {
+  color: #333;
+  font-weight: bold;
   margin: 0;
   font-size: 30px;
-  font-weight: bold; 
-  color: #000000; 
 }
 
 .card.border-dark {
@@ -11363,4 +11365,47 @@ body {
   border-radius: 8px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
 }
+
+  
+.card-header {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}
+
+.chart-title-unit, .chart-title-unit2 {
+    color: #fff;
+}
+
+.vertical-line {
+    border-right: 1px solid #e5e5e5;
+}
+
+.table-group-divider tr {
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.table-group-divider tr:last-child {
+    border-bottom: none;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 10px;
+}
+
+.indicator-title {
+  background-color: #ffffff; /* 흰색 배경 */
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid #b0b0b0; /* 회색 테두리 */
+  margin-right: 5px; /* 오른쪽 마진 추가 */
+}
+
+
+
 
