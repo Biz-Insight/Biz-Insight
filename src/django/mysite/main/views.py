@@ -661,93 +661,127 @@ def show_result(request):
 
 
 def new_company_info(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+
     return render(request, "new_company_info.html", context)
 
 
 def new_company_news(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
 
     return render(request, "new_company_news.html", context)
 
 
 def new_credit_analysis(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+
     return render(request, "new_credit_analysis.html", context)
 
 
 def new_credit_indicator(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+
     return render(request, "new_credit_indicator.html", context)
 
 
 def new_financial_analysis(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+
     return render(request, "new_financial_analysis.html", context)
 
 
@@ -762,24 +796,11 @@ def new_financial_statements(request):
     credit_data_web_dict = json.loads(credit_data_web_json)
     investment_data_web_dict = json.loads(investment_data_web_json)
 
-
-    # credit_prediction_df = pd.DataFrame(credit_prediction_dict)
-    # main_fs_df = pd.DataFrame(main_fs_dict)
-    # credit_data_web_df = pd.DataFrame(credit_data_web_dict)
-    # investment_data_web_df = pd.DataFrame(investment_data_web_dict)
-
-    # bs_data = main_fs_df[main_fs_df["fs_type"] == "bs"]
-    # incs_data = main_fs_df[main_fs_df["fs_type"] == "incs"]
-    # cf_data = main_fs_df[main_fs_df["fs_type"] == "cf"]
-
     context = {
         "credit_prediction": credit_prediction_dict,
         "main_fs": main_fs_dict,
         "credit_data_web": credit_data_web_dict,
         "investment_data_web": investment_data_web_dict,
-        # "bs_data": bs_data,
-        # "incs_data": incs_data,
-        # "cf_data": cf_data,
     }
 
     request.session["credit_prediction"] = credit_prediction_json
@@ -791,18 +812,26 @@ def new_financial_statements(request):
 
 
 def new_investment_indicator(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs = request.session.get("main_fs")
-    credit_data_web = request.session.get("credit_data_web")
-    investment_data_web = request.session.get("investment_data_web")
+    credit_prediction_json = request.session.get("credit_prediction")
+    main_fs_json = request.session.get("main_fs")
+    credit_data_web_json = request.session.get("credit_data_web")
+    investment_data_web_json = request.session.get("investment_data_web")
+
+    credit_prediction_dict = json.loads(credit_prediction_json)
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs,
-        "credit_data_web": credit_data_web,
-        "investment_data_web": investment_data_web,
+        "credit_prediction": credit_prediction_dict,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
     }
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs
-    request.session["credit_data_web"] = credit_data_web
-    request.session["investment_data_web"] = investment_data_web
+
+    request.session["credit_prediction"] = credit_prediction_json
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
+
     return render(request, "new_investment_indicator.html", context)
