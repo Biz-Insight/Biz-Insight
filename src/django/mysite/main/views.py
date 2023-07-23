@@ -604,6 +604,98 @@ class ChartData(View):
                     ),
                 }
 
+            elif chart_type == "turnover":
+                asset_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="총자산회전율"
+                )
+                accounts_receivable_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="매출채권회전율"
+                )
+                inventory_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="재고자산회전율"
+                )
+                accounts_payable_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="매입채무회전율"
+                )
+                data = {
+                    "asset": list(
+                        asset_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "accounts_receivable": list(
+                        accounts_receivable_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "inventory": list(
+                        inventory_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "accounts_payable": list(
+                        accounts_payable_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+            elif chart_type == "per_share":
+                per_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="PER"
+                )
+                pbr_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="PBR"
+                )
+                pcr_data = Visualization.objects.filter(
+                    corp=company_name, label_ko="PCR"
+                )
+
+                data = {
+                    "per": list(
+                        per_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "pbr": list(
+                        pbr_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                    "pcr": list(
+                        pcr_data.values(
+                            "number_2018",
+                            "number_2019",
+                            "number_2020",
+                            "number_2021",
+                            "number_2022",
+                        )
+                    ),
+                }
+
         if not data:
             return JsonResponse({"error": "Invalid parameters"}, status=400)
 
