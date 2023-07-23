@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import joblib
 import numpy as np
+import lightgbm as lgb
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
@@ -34,7 +35,7 @@ def django_transform(fs):
     ###############################################################################
     # initialization
     user = "multi"
-    password = "Campus123!"
+    password = "*****!"
     host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
     database = "Data_Mart"
 
@@ -52,8 +53,8 @@ def django_transform(fs):
     query = "SELECT * FROM Data_Mart.model_a_processed;"
     model_a = pd.read_sql(query, engine)
 
-    query = "SELECT * FROM Data_Mart.model_b_processed"
-    model_b = pd.read_sql(query, engine)
+    query = "SELECT * FROM Data_Mart.model_a_processed"
+    model_a = pd.read_sql(query, engine)
 
     ###############################################################################
     # credit_prediction
@@ -70,12 +71,12 @@ def django_transform(fs):
     }
 
     model_with_y = (
-        model_b[model_b["rank"].notna()]
+        model_a[model_a["rank"].notna()]
         .reset_index(drop=True)
         .drop(["corp", "stock_code", "sector", "year"], axis=1)
     )
     model_without_y = (
-        model_b[model_b["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
+        model_a[model_a["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
     )
 
     # 선정한 모델
@@ -84,14 +85,14 @@ def django_transform(fs):
     y = y.map(rank_mapping)
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=40
+        X, y, test_size=0.2, random_state=42
     )
 
     clf = RandomForestClassifier(
         criterion="entropy",
-        max_depth=10,
-        max_features="auto",
-        n_estimators=200,
+        max_depth=18,
+        max_features="sqrt",
+        n_estimators=500,
         random_state=42,
     )
     clf.fit(X_train, y_train)
@@ -176,13 +177,13 @@ def django_transform(fs):
     market_capitalization = market_capitalization
 
     # 질적데이터 피쳐
-    minimum_wage = model_b[model_b["year"] == "2022"]["minimum_wage"].values[0]
-    us_kor_exchange_avg = model_b[model_b["year"] == "2022"][
+    minimum_wage = model_a[model_a["year"] == "2022"]["minimum_wage"].values[0]
+    us_kor_exchange_avg = model_a[model_a["year"] == "2022"][
         "us_kor_exchange_avg"
     ].values[0]
-    ppi_year = model_b[model_b["year"] == "2022"]["ppi_year"].values[0]
-    kor_usa_ir_diff = model_b[model_b["year"] == "2022"]["kor_usa_ir_diff"].values[0]
-    kr_standard_yield = model_b[model_b["year"] == "2022"]["kr_standard_yield"].values[
+    ppi_year = model_a[model_a["year"] == "2022"]["ppi_year"].values[0]
+    kor_usa_ir_diff = model_a[model_a["year"] == "2022"]["kor_usa_ir_diff"].values[0]
+    kr_standard_yield = model_a[model_a["year"] == "2022"]["kr_standard_yield"].values[
         0
     ]
     crb_index_avg = crb_index[crb_index["year"] == 2023]["crb_index"].mean()
@@ -314,33 +315,6 @@ def django_transform(fs):
             "ceo": [ceo],
             "potential": [potential],
             "crb_index_avg": [crb_index_avg],
-            "gross_profit_margin": [gross_profit_margin],
-            "operating_profit_margin": [operating_profit_margin],
-            "net_profit_margin": [net_profit_margin],
-            "return_on_equity": [return_on_equity],
-            "return_on_invested_capital": [return_on_invested_capital],
-            "current_ratio": [current_ratio],
-            "non_current_debt_ratio": [non_current_debt_ratio],
-            "equity_ratio": [equity_ratio],
-            "interest_coverage_ratio": [interest_coverage_ratio],
-            "debt_to_equity_ratio": [debt_to_equity_ratio],
-            "net_debt_ratio": [net_debt_ratio],
-            "retention_ratio": [retention_ratio],
-            "earnings_per_share": [earnings_per_share],
-            "book_value_per_share": [book_value_per_share],
-            "price_earnings_ratio": [price_earnings_ratio],
-            "price_to_book_ratio": [price_to_book_ratio],
-            "price_cash_flow_ratio": [price_cash_flow_ratio],
-            "enterprise_value_to_ebitda": [enterprise_value_to_ebitda],
-            "operating_income": [operating_income],
-            "net_income": [net_income],
-            "tangible_assets": [tangible_assets],
-            "total_asset_turnover": [total_asset_turnover],
-            "net_working_capital_turnover": [net_working_capital_turnover],
-            "tangible_asset_turnover": [tangible_asset_turnover],
-            "accounts_receivable_turnover": [accounts_receivable_turnover],
-            "inventory_turnover": [inventory_turnover],
-            "accounts_payable_turnover": [accounts_payable_turnover],
         }
     )
 
