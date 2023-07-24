@@ -50,10 +50,7 @@ def django_transform(fs):
     query = "SELECT * FROM Data_Lake.economic_indicators;"
     economic_indicators = pd.read_sql(query, engine)
 
-    query = "SELECT * FROM Data_Mart.model_a_processed;"
-    model_a = pd.read_sql(query, engine)
-
-    query = "SELECT * FROM Data_Mart.model_a_processed"
+    query = "SELECT * FROM Data_Mart.credit_model_a;"
     model_a = pd.read_sql(query, engine)
 
     ###############################################################################

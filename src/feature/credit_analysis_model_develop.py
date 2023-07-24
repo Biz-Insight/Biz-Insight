@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 username = "multi"
 password = "*****!"
 hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
-database_name = "Data_Mart"
+database_name = "Data_Warehouse"
 
 cnx = pymysql.connect(
     user=username,
