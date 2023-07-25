@@ -47,7 +47,7 @@ urlpatterns = [
     ),
     path("stock_area/", views.StockArea.as_view(), name="stock_area"),
     path("credit_request/", views.credit_request),
-    path("result/", views.show_result, name="result"),
+    path("new_company_info/", views.new_company_info, name="new_company_info"),
     path("new_company_news/", views.new_company_news, name="new_company_news"),
     path("new_credit_analysis/", views.new_credit_analysis, name="new_credit_analysis"),
     path(
