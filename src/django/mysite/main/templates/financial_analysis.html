@@ -93,6 +93,45 @@
                             <h1 class="company-title">{{ company.corp }}</h1>
                         </div>
                     </div>
+                    <div class="container-fluid d-flex"> 
+                        <div class="indicator-title w-100 text-center py-1">
+                            산업내 기업 위치
+                        </div>     
+                    </div>                 
+                    
+                    <div class="container-fluid d-flex"> 
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">주요항목 방사형 그래프</span> 
+                                    <span class="chart-title-unit2">(억원/%)</span>
+                                </div>
+                                <div class="card-body"><canvas id="industry" width="100%" height="60"></canvas></div>
+                            </div>  
+                        </div> 
+                        <div class="w-50 px-2 mt-5">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(0 ~ 1)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>{{ company.corp }}</th>
+                                                <th>{{ company.sector }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="container-fluid d-flex">
                         <div class="indicator-title w-100 text-center py-1">
@@ -210,7 +249,7 @@
                                     <span class="chart-title-unit">가치지표</span> 
                                     <span class="chart-title-unit2">(%)</span>
                                 </div>
-                                <div class="card-body"><canvas id="asset_growth" width="100%" height="45"></canvas></div>
+                                <div class="card-body"><canvas id="value" width="100%" height="45"></canvas></div>
                             </div>  
                         </div>  
                     </div>

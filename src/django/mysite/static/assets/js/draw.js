@@ -23,7 +23,12 @@ function fetchChartData(company_name, chart_type) {
             } else if (chart_type === 'turnover') {
                 drawTurnoverChart(data);
             } else if (chart_type === 'per_share') {
-                drawPerShareChart(data);
+                drawPerShareChart(data); 
+            } else if (chart_type === 'value') {
+                drawValueChart(data); 
+            } else if (chart_type === 'industry') {
+                drawIndustryChart(data);
+                drawIndustryTable(data); 
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -393,7 +398,6 @@ function drawProfitabilityGrowthChart(data) {
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 100
                     }
                 }],
             },
@@ -792,31 +796,22 @@ function drawTurnoverChart(data) {
 };
 function drawPerShareChart(data) {
     var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var per_data = [];
-    var pbr_data = [];
-    var pcr_data = [];
+    var eps_data = [];
+    var bps_data = [];
 
-    var perItem = data.per[0];
-    per_data.push(perItem.number_2018 );
-    per_data.push(perItem.number_2019 );
-    per_data.push(perItem.number_2020 );
-    per_data.push(perItem.number_2021 );
-    per_data.push(perItem.number_2022 );
+    var epsItem = data.eps[0];
+    eps_data.push(epsItem.number_2018 );
+    eps_data.push(epsItem.number_2019 );
+    eps_data.push(epsItem.number_2020 );
+    eps_data.push(epsItem.number_2021 );
+    eps_data.push(epsItem.number_2022 );
 
-    var pbrItem = data.pbr[0];
-    pbr_data.push(pbrItem.number_2018);
-    pbr_data.push(pbrItem.number_2019);
-    pbr_data.push(pbrItem.number_2020);
-    pbr_data.push(pbrItem.number_2021);
-    pbr_data.push(pbrItem.number_2022);
-
-    var pcrItem = data.pcr[0];
-    pcr_data.push(pcrItem.number_2018);
-    pcr_data.push(pcrItem.number_2019);
-    pcr_data.push(pcrItem.number_2020);
-    pcr_data.push(pcrItem.number_2021);
-    pcr_data.push(pcrItem.number_2022);
-
+    var bpsItem = data.bps[0];
+    bps_data.push(bpsItem.number_2018);
+    bps_data.push(bpsItem.number_2019);
+    bps_data.push(bpsItem.number_2020);
+    bps_data.push(bpsItem.number_2021);
+    bps_data.push(bpsItem.number_2022);
 
     var ctx = document.getElementById('per_share');
     var myBarChart = new Chart(ctx, {
@@ -825,29 +820,21 @@ function drawPerShareChart(data) {
             labels: labels,
             datasets: [
                 {
-                    label: "PER",
+                    label: "EPS",
                     backgroundColor: "rgba(0, 51, 102, 0.6)",
                     borderColor: "rgba(0, 51, 102, 1)",
                     borderWidth: 1,
-                    data: per_data,
+                    data: eps_data,
                     yAxisID: 'y-axis-1',
                 },
                 {
-                    label: "PBR",
+                    label: "BPS",
                     backgroundColor: "rgba(0, 76, 153, 0.6)",
                     borderColor: "rgba(0, 76, 153, 1)",
                     borderWidth: 1,
-                    data: pbr_data,
+                    data: bps_data,
                     yAxisID: 'y-axis-1',
                 },
-                {
-                    label: "PCR",
-                    backgroundColor: "rgba(0, 102, 204, 0.6)",
-                    borderColor: "rgba(0, 102, 204, 1)",
-                    borderWidth: 1,
-                    data: pcr_data,
-                    yAxisID: 'y-axis-1',
-                }
             ],            
         
         },
@@ -897,6 +884,250 @@ function drawPerShareChart(data) {
     }); 
 };
 
+function drawValueChart(data) {
+    var labels = ["2018", "2019", "2020", "2021", "2022"];
+    var per_data = [];
+    var pbr_data = [];
+    var pcr_data = [];
+  
+    var perItem = data.per[0];
+    per_data.push(perItem.number_2018 );
+    per_data.push(perItem.number_2019 );
+    per_data.push(perItem.number_2020 );
+    per_data.push(perItem.number_2021 );
+    per_data.push(perItem.number_2022 );
+  
+    var pbrItem = data.pbr[0];
+    pbr_data.push(pbrItem.number_2018);
+    pbr_data.push(pbrItem.number_2019);
+    pbr_data.push(pbrItem.number_2020);
+    pbr_data.push(pbrItem.number_2021);
+    pbr_data.push(pbrItem.number_2022);
+  
+    var pcrItem = data.pcr[0];
+    pcr_data.push(pcrItem.number_2018);
+    pcr_data.push(pcrItem.number_2019);
+    pcr_data.push(pcrItem.number_2020);
+    pcr_data.push(pcrItem.number_2021);
+    pcr_data.push(pcrItem.number_2022);
+  
+    var ctx = document.getElementById('value');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "PER",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B0000",
+                    borderWidth: 2,
+                    data: per_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'rectRounded',
+                    lineTension: 0
+                },
+                {
+                    label: "PBR",
+                    backgroundColor: "transparent",
+                    borderColor: "#006363",
+                    borderWidth: 2,
+                    data: pbr_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'triangle',
+                    lineTension: 0
+                },
+                {
+                    label: "PCR",
+                    backgroundColor: "transparent",
+                    borderColor: "#8B4500", 
+                    borderWidth: 2,
+                    data: pcr_data,
+                    yAxisID: 'y-axis-1',
+                    fill: false,
+                    pointRadius: 4,
+                    pointStyle: 'circle',
+                    lineTension: 0
+                },
+            ],
+            
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    time: {
+                        unit: 'year'
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    }
+                }],
+                yAxes: [
+                {
+                    id: 'y-axis-1',
+                    position: 'right',
+                    gridLines: {
+                        display: true
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }],
+            },
+            legend: {
+                display: true
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel.toFixed(1);
+                        return label;
+                    }
+                }
+            }
+        }
+    }); 
+  };
+
+  function drawIndustryChart(data) {
+    var ctx = document.getElementById('industry').getContext('2d');
+
+    var chartData = {
+        labels: ['수익성', '성장성', '안정성', '활동성', '가치지표'],
+        datasets: [{
+            label: data.company_name,
+            data: [
+                data.company.profitability,
+                data.company.growth,
+                data.company.stability,
+                data.company.activity,
+                data.company.valuation
+            ],
+            fill: true,
+            backgroundColor: 'rgba(25, 40, 190, 0.5)', // 더 어두운 파랑색
+            borderColor: 'rgba(25, 40, 190, 1)',
+            pointBackgroundColor: 'rgba(25, 40, 190, 1)',
+            pointHoverBorderColor: 'rgba(25, 40, 190, 1)'
+        },
+            {
+            label: data.sector_name,
+            data: [
+                data.industry.profitability,
+                data.industry.growth,
+                data.industry.stability,
+                data.industry.activity,
+                data.industry.valuation
+            ],
+            fill: true,
+            backgroundColor: 'rgba(180, 50, 40, 0.5)', // 더 어두운 주황색
+            borderColor: 'rgba(180, 50, 40, 1)',
+            pointBackgroundColor: 'rgba(180, 50, 40, 1)',
+            pointHoverBorderColor: 'rgba(180, 50, 40, 1)'
+        },]
+    };
+
+    var radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: chartData,
+        options: {
+            scale: {
+                ticks: {
+                    display: false,
+                    beginAtZero: true
+                },
+                pointLabels: {
+                    fontSize: 18,    
+                    fontStyle: "bold"  
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0,
+                    borderWidth: 2
+                },
+                point: {
+                    radius: 3,
+                    hoverRadius: 7  
+                }
+            },
+            tooltips: {
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                titleFontSize: 16,
+                bodyFontSize: 14,
+                xPadding: 10,
+                yPadding: 10,
+                displayColors: false,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += tooltipItem.yLabel.toFixed(1);
+                        return label;
+                    }
+                }
+            },
+            legend: {
+                position: 'bottom',
+                labels: {
+                    fontSize: 16,
+                    fontStyle: "bold",
+                    padding: 20
+                }
+            },
+        }
+    });
+}
+
+function drawIndustryTable(data) {
+    const tableBody = document.querySelector("#data-table tbody");
+
+    const categoriesInKorean = {
+        "profitability": "수익성",
+        "growth": "성장성",
+        "stability": "안정성",
+        "activity": "활동성",
+        "valuation": "가치지표"
+    };
+
+    for (let category in categoriesInKorean) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = categoriesInKorean[category];
+        row.appendChild(nameCell);
+        
+        const companyCell = document.createElement('td');
+        companyCell.textContent = (data.company[category]).toFixed(2);
+        row.appendChild(companyCell);
+        
+        const industryCell = document.createElement('td');
+        industryCell.textContent = (data.industry[category]).toFixed(2);
+        row.appendChild(industryCell);
+        
+        tableBody.appendChild(row);
+    }
+}
+
+
+
+
+
+
 
 $(document).ready(function() {
     fetchChartData(corp, 'profitability_indicator');
@@ -906,6 +1137,8 @@ $(document).ready(function() {
     fetchChartData(corp, 'stability');
     fetchChartData(corp, 'turnover');
     fetchChartData(corp, 'per_share');
+    fetchChartData(corp, 'value');
+    fetchChartData(corp, 'industry');
 });
 
 
