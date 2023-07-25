@@ -35,7 +35,7 @@ def django_transform(fs):
     ###############################################################################
     # initialization
     user = "multi"
-    password = "*****!"
+    password = "*****"
     host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
     database = "Data_Mart"
 
@@ -92,11 +92,9 @@ def django_transform(fs):
         "기타제조업",
     ]
 
-    # Load the cluster-label mappings
     with open("cluster_label_mappings.pkl", "rb") as f:
         cluster_label_mappings = pickle.load(f)
 
-    # Load the sector revenue data for percentile sectors
     with open("sector_revenue_data.pkl", "rb") as f:
         sector_revenue_data = pickle.load(f)
 
@@ -108,10 +106,7 @@ def django_transform(fs):
             data = new_data[sector]
             data_array = np.array([[data]])
             cluster_label = model.predict(data_array)[0]
-            revenue_group = cluster_label_mappings[sector][
-                cluster_label
-            ]  # get the corresponding label from the dictionary
-            print(f"The data of {sector} belongs to group {revenue_group}")
+            revenue_group = cluster_label_mappings[sector][cluster_label]
         elif sector in percentile_sectors:
             data = new_data[sector]
             data_of_sector = np.array(sector_revenue_data[sector])
@@ -646,6 +641,8 @@ def django_transform(fs):
         )
 
     ###############################################################################
+    # update main_fs, credit_data_web, investment_data_web
+
     corp_average = industry_average[industry_average["sector"] == sector]
 
     corp_average = corp_average.set_index("sector")
@@ -709,6 +706,7 @@ def django_transform(fs):
     investment_data_web = populate_cluster_values(investment_data_web, corp_agg)
 
     ###############################################################################
+    # top_correlation - top 5 correlation
 
     credit_data_web = credit_data_web[
         ~credit_data_web["label_en"].isin(main_fs["label_en"])
@@ -759,6 +757,7 @@ def django_transform(fs):
     top_correlation = pd.DataFrame(corr_df)
 
     ###############################################################################
+    # sector_credit_rating
 
     sector_filter = sector_revenue_aggregation[
         sector_revenue_aggregation["sector"] == sector
