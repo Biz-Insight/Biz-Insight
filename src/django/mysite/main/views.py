@@ -51,27 +51,47 @@ class CompanyInfo(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         company_name = self.request.session.get("context")
-        rating_data = Rating.objects.filter(corp=company_name).first()
-        context["rating_data"] = rating_data
-        context["rating_stars"] = {
-            "rating": self.get_rating_stars(rating_data, "rating"),
-            "paywellfare": self.get_rating_stars(rating_data, "paywellfare"),
-            "worklifebal": self.get_rating_stars(rating_data, "worklifebal"),
-            "culture": self.get_rating_stars(rating_data, "culture"),
-            "opportunity": self.get_rating_stars(rating_data, "opportunity"),
-            "manager": self.get_rating_stars(rating_data, "manager"),
-            "recommend": self.get_rating_stars(rating_data, "recommend"),
-            "ceo": self.get_rating_stars(rating_data, "ceo"),
-            "potential": self.get_rating_stars(rating_data, "potential"),
-        }
 
-        corp_summary = get_corp_summary(company_name)
-        context["corp_summary"] = corp_summary
-        stop_words = ["장점","단점"]
-        wordCloud(pre_df, stop_words, company_name, "up_morphs")
-        wordCloud(pre_df, stop_words, company_name, "down_morphs")
-        context["wordcloud_image_up"] = f"static/wordcloud_images/{company_name}_up_morphs_wordcloud.png"
-        context["wordcloud_image_down"] = f"static/wordcloud_images/{company_name}_down_morphs_wordcloud.png"
+        try:
+            rating_data = Rating.objects.filter(corp=company_name).first()
+            context["rating_data"] = rating_data
+            context["rating_stars"] = {
+                "rating": self.get_rating_stars(rating_data, "rating"),
+                "paywellfare": self.get_rating_stars(rating_data, "paywellfare"),
+                "worklifebal": self.get_rating_stars(rating_data, "worklifebal"),
+                "culture": self.get_rating_stars(rating_data, "culture"),
+                "opportunity": self.get_rating_stars(rating_data, "opportunity"),
+                "manager": self.get_rating_stars(rating_data, "manager"),
+                "recommend": self.get_rating_stars(rating_data, "recommend"),
+                "ceo": self.get_rating_stars(rating_data, "ceo"),
+                "potential": self.get_rating_stars(rating_data, "potential"),
+            }
+        except Exception as e:
+            print(f"Error occurred while fetching ratings: {e}")
+            context["rating_data"] = None
+            context["rating_stars"] = "별점을 불러오는데 실패했습니다."
+
+        try:
+            context["corp_summary"] = get_corp_summary(company_name)
+        except Exception as e:
+            print(f"Error occurred while fetching corp summary: {e}")
+            context["corp_summary"] = "기업 정보 요약을 불러오는데 실패했습니다."
+
+        stop_words = ["장점", "단점"]
+        try:
+            wordCloud(pre_df, stop_words, company_name, "up_morphs")
+            wordCloud(pre_df, stop_words, company_name, "down_morphs")
+            context[
+                "wordcloud_image_up"
+            ] = f"static/wordcloud_images/{company_name}_up_morphs_wordcloud.png"
+            context[
+                "wordcloud_image_down"
+            ] = f"static/wordcloud_images/{company_name}_down_morphs_wordcloud.png"
+        except Exception as e:
+            print(f"Error occurred while generating wordcloud: {e}")
+            context["wordcloud_image_up"] = "워드클라우드를 불러오는데 실패했습니다."
+            context["wordcloud_image_down"] = "워드클라우드를 불러오는데 실패했습니다."
+
         return context
 
     def get_rating_stars(self, rating_data, field):
