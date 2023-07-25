@@ -41,7 +41,7 @@ def django_transform(fs):
 
     engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
 
-    query = "SELECT * FROM Data_Mart.industry_average_investment_year;"
+    query = "SELECT * FROM Data_Mart.industry_average_year;"
     industry_average = pd.read_sql(query, engine)
 
     query = "SELECT * FROM Data_Lake.crb_index;"
@@ -50,10 +50,7 @@ def django_transform(fs):
     query = "SELECT * FROM Data_Lake.economic_indicators;"
     economic_indicators = pd.read_sql(query, engine)
 
-    query = "SELECT * FROM Data_Mart.model_a_processed;"
-    model_a = pd.read_sql(query, engine)
-
-    query = "SELECT * FROM Data_Mart.model_a_processed"
+    query = "SELECT * FROM Data_Mart.credit_model_a;"
     model_a = pd.read_sql(query, engine)
 
     ###############################################################################

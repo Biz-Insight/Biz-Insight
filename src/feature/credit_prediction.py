@@ -14,7 +14,7 @@ database = "Data_Mart"
 
 engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
 
-query = "SELECT * FROM Data_Mart.industry_average_investment_year;"
+query = "SELECT * FROM Data_Mart.industry_average_year;"
 industry_average = pd.read_sql(query, engine)
 
 query = "SELECT * FROM Data_Lake.crb_index;"
@@ -23,11 +23,9 @@ crb_index = pd.read_sql(query, engine)
 query = "SELECT * FROM Data_Lake.economic_indicators;"
 economic_indicators = pd.read_sql(query, engine)
 
-query = "SELECT * FROM credit_analysis_model_a;"
+query = "SELECT * FROM Data_Warehouse.credit_analysis_model_a;"
 model_a = pd.read_sql(query, engine)
 
-query = "SELECT * FROM credit_analysis_model_b;"
-model_b = pd.read_sql(query, engine)
 
 rank_mapping = {
     "AAA": 9,
@@ -44,12 +42,12 @@ rank_mapping = {
 # Comment out this section if need to train model and save it to .pkl
 ###############################################################################
 model_with_y = (
-    model_b[model_b["rank"].notna()]
+    model_a[model_a["rank"].notna()]
     .reset_index(drop=True)
     .drop(["corp", "stock_code", "sector", "year"], axis=1)
 )
 model_without_y = (
-    model_b[model_b["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
+    model_a[model_a["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
 )
 
 # 선정한 모델
@@ -63,14 +61,13 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 clf = RandomForestClassifier(
     criterion="entropy",
-    max_depth=10,
-    max_features="auto",
-    n_estimators=200,
+    max_depth=18,
+    max_features="sqrt",
+    n_estimators=500,
     random_state=42,
 )
 clf.fit(X_train, y_train)
 ###############################################################################
-
 
 # joblib.dump(clf, "credit_prediction.pkl")
 
@@ -162,17 +159,16 @@ quick_ratio = quick_assets / current_liabilities
 cash_and_cash_equivalents = cash_and_equivalents
 short_term_borrowings = short_borrowing
 days_sales_outstanding = accounts_receivable / revenue * 365
-average_accounts_receivable_per_sales_turnover = accounts_receivable / revenue
 market_capitalization = market_capitalization
 
 # 질적데이터 피쳐
-minimum_wage = model_b[model_b["year"] == "2022"]["minimum_wage"].values[0]
-us_kor_exchange_avg = model_b[model_b["year"] == "2022"]["us_kor_exchange_avg"].values[
+minimum_wage = model_a[model_a["year"] == "2022"]["minimum_wage"].values[0]
+us_kor_exchange_avg = model_a[model_a["year"] == "2022"]["us_kor_exchange_avg"].values[
     0
 ]
-ppi_year = model_b[model_b["year"] == "2022"]["ppi_year"].values[0]
-kor_usa_ir_diff = model_b[model_b["year"] == "2022"]["kor_usa_ir_diff"].values[0]
-kr_standard_yield = model_b[model_b["year"] == "2022"]["kr_standard_yield"].values[0]
+ppi_year = model_a[model_a["year"] == "2022"]["ppi_year"].values[0]
+kor_usa_ir_diff = model_a[model_a["year"] == "2022"]["kor_usa_ir_diff"].values[0]
+kr_standard_yield = model_a[model_a["year"] == "2022"]["kr_standard_yield"].values[0]
 crb_index_avg = crb_index[crb_index["year"] == 2023]["crb_index"].mean()
 
 # 리뷰데이터 피쳐
@@ -198,45 +194,45 @@ potential = industry_average[industry_average["sector"] == sector]["potential"].
 ]
 
 # 투자지표 피쳐
-earnings_per_share = net_income / outstanding_shares
-book_value_per_share = total_equity / outstanding_shares
+# earnings_per_share = net_income / outstanding_shares
+# book_value_per_share = total_equity / outstanding_shares
 
-gross_profit_margin = gross_profit / revenue * 100
-operating_profit_margin = operating_income / revenue * 100
-net_profit_margin = net_income / revenue * 100
-ebitda_margin = ebitda / revenue * 100
-return_on_equity = net_income / total_equity * 100
-return_on_assets = net_income / total_assets * 100
-return_on_invested_capital = operating_income / (total_equity + total_liabilities)
+# gross_profit_margin = gross_profit / revenue * 100
+# operating_profit_margin = operating_income / revenue * 100
+# net_profit_margin = net_income / revenue * 100
+# ebitda_margin = ebitda / revenue * 100
+# return_on_equity = net_income / total_equity * 100
+# return_on_assets = net_income / total_assets * 100
+# return_on_invested_capital = operating_income / (total_equity + total_liabilities)
 
-debt_ratio = total_liabilities / total_assets
-current_ratio = current_assets / current_liabilities
-quick_ratio = (current_assets - inventory) / current_liabilities
-non_current_debt_ratio = non_current_liabilities / total_assets
-equity_ratio = total_equity / total_assets
-interest_coverage_ratio = ebit / interest
-debt_to_equity_ratio = total_liabilities / total_equity
-net_debt_ratio = (borrowings - cash_and_equivalents) / total_assets
-retention_ratio = retained_earnings / net_income
+# debt_ratio = total_liabilities / total_assets
+# current_ratio = current_assets / current_liabilities
+# quick_ratio = (current_assets - inventory) / current_liabilities
+# non_current_debt_ratio = non_current_liabilities / total_assets
+# equity_ratio = total_equity / total_assets
+# interest_coverage_ratio = ebit / interest
+# debt_to_equity_ratio = total_liabilities / total_equity
+# net_debt_ratio = (borrowings - cash_and_equivalents) / total_assets
+# retention_ratio = retained_earnings / net_income
 
-earnings_per_share = net_income / outstanding_shares
-book_value_per_share = total_equity / outstanding_shares
-price_earnings_ratio = stock_price / earnings_per_share
-price_to_book_ratio = stock_price / book_value_per_share
-price_cash_flow_ratio = stock_price / (cash_flow_operating / outstanding_shares)
-enterprise_value_to_ebitda = (
-    market_capitalization + borrowings - cash_and_equivalents
-) / ebitda
+# earnings_per_share = net_income / outstanding_shares
+# book_value_per_share = total_equity / outstanding_shares
+# price_earnings_ratio = stock_price / earnings_per_share
+# price_to_book_ratio = stock_price / book_value_per_share
+# price_cash_flow_ratio = stock_price / (cash_flow_operating / outstanding_shares)
+# enterprise_value_to_ebitda = (
+#     market_capitalization + borrowings - cash_and_equivalents
+# ) / ebitda
 
-market_capitalization = market_capitalization
+# market_capitalization = market_capitalization
 
-total_asset_turnover = revenue / total_assets
-return_on_equity = net_income / total_equity * 100
-net_working_capital_turnover = revenue / (current_assets - current_liabilities)
-fixed_asset_turnover = revenue / fixed_assets
-accounts_receivable_turnover = revenue / accounts_receivable
-inventory_turnover = cost_of_sales / inventory
-accounts_payable_turnover = cost_of_sales / accounts_payable
+# total_asset_turnover = revenue / total_assets
+# return_on_equity = net_income / total_equity * 100
+# net_working_capital_turnover = revenue / (current_assets - current_liabilities)
+# fixed_asset_turnover = revenue / fixed_assets
+# accounts_receivable_turnover = revenue / accounts_receivable
+# inventory_turnover = cost_of_sales / inventory
+# accounts_payable_turnover = cost_of_sales / accounts_payable
 
 # 예측을 위한 데이터 데이터프레임으로 변경
 predict_data = pd.DataFrame(
@@ -277,9 +273,6 @@ predict_data = pd.DataFrame(
         "cash_and_cash_equivalents": [cash_and_cash_equivalents],
         "short_term_borrowings": [short_term_borrowings],
         "days_sales_outstanding": [days_sales_outstanding],
-        "average_accounts_receivable_per_sales_turnover": [
-            average_accounts_receivable_per_sales_turnover
-        ],
         "market_capitalization": [market_capitalization],
         "minimum_wage": [minimum_wage],
         "us_kor_exchange_avg": [us_kor_exchange_avg],
@@ -297,33 +290,33 @@ predict_data = pd.DataFrame(
         "ceo": [ceo],
         "potential": [potential],
         "crb_index_avg": [crb_index_avg],
-        "gross_profit_margin": [gross_profit_margin],
-        "operating_profit_margin": [operating_profit_margin],
-        "net_profit_margin": [net_profit_margin],
-        "return_on_equity": [return_on_equity],
-        "return_on_invested_capital": [return_on_invested_capital],
-        "current_ratio": [current_ratio],
-        "non_current_debt_ratio": [non_current_debt_ratio],
-        "equity_ratio": [equity_ratio],
-        "interest_coverage_ratio": [interest_coverage_ratio],
-        "debt_to_equity_ratio": [debt_to_equity_ratio],
-        "net_debt_ratio": [net_debt_ratio],
-        "retention_ratio": [retention_ratio],
-        "earnings_per_share": [earnings_per_share],
-        "book_value_per_share": [book_value_per_share],
-        "price_earnings_ratio": [price_earnings_ratio],
-        "price_to_book_ratio": [price_to_book_ratio],
-        "price_cash_flow_ratio": [price_cash_flow_ratio],
-        "enterprise_value_to_ebitda": [enterprise_value_to_ebitda],
-        "operating_income": [operating_income],
-        "net_income": [net_income],
-        "fixed_assets": [fixed_assets],
-        "total_asset_turnover": [total_asset_turnover],
-        "net_working_capital_turnover": [net_working_capital_turnover],
-        "fixed_asset_turnover": [fixed_asset_turnover],
-        "accounts_receivable_turnover": [accounts_receivable_turnover],
-        "inventory_turnover": [inventory_turnover],
-        "accounts_payable_turnover": [accounts_payable_turnover],
+        # "gross_profit_margin": [gross_profit_margin],
+        # "operating_profit_margin": [operating_profit_margin],
+        # "net_profit_margin": [net_profit_margin],
+        # "return_on_equity": [return_on_equity],
+        # "return_on_invested_capital": [return_on_invested_capital],
+        # "current_ratio": [current_ratio],
+        # "non_current_debt_ratio": [non_current_debt_ratio],
+        # "equity_ratio": [equity_ratio],
+        # "interest_coverage_ratio": [interest_coverage_ratio],
+        # "debt_to_equity_ratio": [debt_to_equity_ratio],
+        # "net_debt_ratio": [net_debt_ratio],
+        # "retention_ratio": [retention_ratio],
+        # "earnings_per_share": [earnings_per_share],
+        # "book_value_per_share": [book_value_per_share],
+        # "price_earnings_ratio": [price_earnings_ratio],
+        # "price_to_book_ratio": [price_to_book_ratio],
+        # "price_cash_flow_ratio": [price_cash_flow_ratio],
+        # "enterprise_value_to_ebitda": [enterprise_value_to_ebitda],
+        # "operating_income": [operating_income],
+        # "net_income": [net_income],
+        # "fixed_assets": [fixed_assets],
+        # "total_asset_turnover": [total_asset_turnover],
+        # "net_working_capital_turnover": [net_working_capital_turnover],
+        # "fixed_asset_turnover": [fixed_asset_turnover],
+        # "accounts_receivable_turnover": [accounts_receivable_turnover],
+        # "inventory_turnover": [inventory_turnover],
+        # "accounts_payable_turnover": [accounts_payable_turnover],
     }
 )
 
@@ -332,4 +325,3 @@ rank_mapping_reverse = {v: k for k, v in rank_mapping.items()}
 prediction = rank_mapping_reverse[rank_prediction[0]]
 
 print(f"신용등급 예측결과: '{prediction}'")
-print(predict_data)
