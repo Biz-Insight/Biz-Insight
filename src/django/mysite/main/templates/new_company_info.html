@@ -1,309 +1,172 @@
-    <!DOCTYPE html>
-    {% load static %}
-    {% with company=company_info.0 %}
+<!DOCTYPE html>
+{% load static %}
 
-    <html lang="en">
-        <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        </head>
-        <body class="sb-nav-fixed">
-            <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <!-- Navbar Brand-->
-                <a class="navbar-brand ps-3" href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i> Home</a>
-                <!-- Sidebar Toggle-->
-                <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+<html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i> Home</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-lg order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
 
-                <!-- Navbar Search-->
-                <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{% url 'search' %}">
-                    <div class="input-group">
-                    <input type="text" name="company_name" class="form-control" placeholder="기업 이름을 입력하세요">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">검색</button>
-                    </div>
-                    </div>
-                </form>
-            </nav>
-            <div id="layoutSidenav">
-                <div id="layoutSidenav_nav">
-                    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                        <div class="sb-sidenav-menu">
-                            <div class="nav"> 
-                                <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
-                                        <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
-                                    </svg>
-                                    기업정보
-                                </div>                              
-                                <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
-                                    <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                    뉴스/공시
-                                </a>
-                                <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
-                                    <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
-                                    </svg>
-                                    기업분석
-                                </div>
-                                <a class="nav-link" href="{% url 'new_financial_analysis' %}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                    재무분석
-                                </a>                             
-                                <a class="nav-link" href="{% url 'new_credit_analysis' %}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    신용분석
-                                </a>
-                                <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
-                                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
-                                    </svg>
-                                    상세지표
-                                </div>
-                                <a class="nav-link" href="{% url 'new_financial_statements' %}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                    재무제표
-                                </a>
-                                <a class="nav-link" href="{% url 'new_investment_indicator' %}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                    투자지표
-                                </a>
-                                <a class="nav-link" href="{% url 'new_credit_indicator'%}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                    신용지표
-                                </a>  
-                            </div>
-                        </div>
-                        <div class="sb-sidenav-footer">
-                            <div class="small">Logged in as:</div>
-                            Start Bootstrap
-                        </div>
-                    </nav>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{% url 'search' %}">
+                <div class="input-group">
+                <input type="text" name="company_name" class="form-control" placeholder="기업 이름을 입력하세요">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">검색</button>
                 </div>
-                <div id="layoutSidenav_content">
-                    <main>
-                        <div class="w-25 px-4" style="margin-bottom: 12px;">
-                            <div class="company-name-box">
-                                <h1 class="company-title">{{ company.corp }}</h1>
-                            </div>
-                        </div>
-                        <div class="container-fluid d-flex">
-                            <div class="w-50 px-2" style="margin-top: 5px;">
-                                <div class="card border-dark mb-4">
-                                    <div class="card-header">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                        <span class="chart-title-unit">기업정보</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">종목코드</th>
-                                                    <td class="vertical-line"> {{ company.stock_code }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">업종</th>
-                                                    <td class="vertical-line"> {{ company.sector }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">주요제품</th>
-                                                    <td class="vertical-line"> {{ company.main_product }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">상장일</th>
-                                                    <td class="vertical-line"> {{ company.listing_date }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">대표자명</th>
-                                                    <td class="vertical-line"> {{ company.representative_name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">홈페이지</th>
-                                                    <td class="vertical-line"> <a href="{{ company.homepage }}" target="_blank">{{ company.homepage }}</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-50 px-2" style="margin-top: 5px;">
-                                <div class="card border-dark mb-4">
-                                    <div class="card-header">
-                                        <i class="fa-solid fa-star"></i>
-                                        <span class="chart-title-unit">별점</span>
-                                    </div>
-                                    <div class="card-body">
-                                    <div class="rating-stars">
-                                        <h4 style="display: inline-block;">총점 {{ rating_data.rating }}</h4>
-                                        {% for _ in rating_stars.rating.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.rating.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.rating.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    
-                                    <div class="rating-stars">
-                                        임금 및 복지 {{ rating_data.paywellfare }}
-                                        {% for _ in rating_stars.paywellfare.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.paywellfare.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.paywellfare.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        업무와 삶의 균형 {{ rating_data.worklifebal }}
-                                        {% for _ in rating_stars.worklifebal.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.worklifebal.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.worklifebal.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        사내 문화 {{ rating_data.culture }}
-                                        {% for _ in rating_stars.culture.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.culture.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.culture.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        승진 가능성 및 기회 {{ rating_data.opportunity }}
-                                        {% for _ in rating_stars.opportunity.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.opportunity.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.opportunity.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        경영진 평 {{ rating_data.manager }}
-                                        {% for _ in rating_stars.manager.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.manager.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.manager.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        기업 추천도 {{ rating_data.recommend }}
-                                        {% for _ in rating_stars.recommend.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.recommend.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.recommend.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        CEO 지지율 {{ rating_data.ceo }}
-                                        {% for _ in rating_stars.ceo.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.ceo.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.ceo.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="rating-stars">
-                                        성장 잠재성 {{ rating_data.potential }}
-                                        {% for _ in rating_stars.potential.full_stars %}
-                                            <i class="fas fa-star filled"></i>
-                                        {% endfor %}
-                                        {% if rating_stars.potential.half_star %}
-                                            <i class="fas fa-star-half-alt filled"></i>
-                                        {% endif %}
-                                        {% for _ in rating_stars.potential.empty_stars %}
-                                            <i class="far fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                    <!-- <p style="margin-bottom: 1px;">승진 가능성 및 기회 {{ rating_data.opportunity }}</p>
-                                    <div class="rating-bar">
-                                        <div class="filled-bar" id="opportunity-bar"></div>
-                                        <div class="empty-bar"></div>
-                                    </div>
-
-                                    <script>
-                                        var opportunityRating = parseFloat("{{ rating_data.opportunity }}");
-                                        var barElement = document.getElementById("opportunity-bar");
-                                        var maxWidth = 200;
-                                        barElement.style.width = (opportunityRating / 5) * maxWidth + "px";
-                                    </script>          -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                        <div class="container-fluid px-3">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="card border-dark mb-4">
-                                        <div class="card-header">
-                                            <i class="fas fa-chart-area me-1"></i>
-                                            <span class="chart-title-unit">주가 그래프</span> <span class="chart-title-unit2">(원)</span>
-                                        </div>
-                                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                    <!-- <footer class="py-4 bg-light mt-auto">
-                        <div class="container-fluid px-4">
-                            <div class="d-flex align-items-center justify-content-between small">
-                                <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                                <div>
-                                    <a href="#">Privacy Policy</a>
-                                    &middot;
-                                    <a href="#">Terms &amp; Conditions</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer> -->
                 </div>
+            </form>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav"> 
+                            <div class="sb-sidenav-menu-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                                기업정보
+                            </div>                              
+                                                                            
+                            <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
+                                <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
+                                뉴스/공시
+                            </a>
+                            <div class="sb-sidenav-menu-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                                </svg>
+                                기업분석
+                            </div>
+                            <a class="nav-link" href="{% url 'new_financial_analysis' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                재무분석
+                            </a>                             
+                            <a class="nav-link" href="{% url 'new_credit_analysis' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                신용분석
+                            </a>
+                            <div class="sb-sidenav-menu-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+                                </svg>
+                                상세지표
+                            </div>
+                            <a class="nav-link" href="{% url 'new_financial_statements' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                재무제표
+                            </a>
+                            <a class="nav-link" href="{% url 'new_investment_indicator' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                투자지표
+                            </a>
+                            <a class="nav-link" href="{% url 'new_credit_indicator'%}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                신용지표
+                            </a>  
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+                </nav>
             </div>
-            
-            <script>                 
-                var company_name = "{{ company.corp }}";
-            </script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-            <script src="{% static 'js/scripts.js' %}"></script>
-            <script src="{% static 'js/datatables-simple.js' %}"></script>
-            <script src="{% static 'assets/js/area.js' %}"></script>
-        </body>
-    </html>
-    {% endwith %}
+            <div id="layoutSidenav_content">
+                <main>
+                  {% if message %}
+                  <h1>{{ message }}</h1>
+                    <p>파일에서 불러온 제무재표 정보입니다.</p>
+                      <style>
+                          table {
+                            border-collapse: collapse;
+                            width: 100%;
+                          }
+                          
+                          th, td {
+                            text-align: left;
+                            padding: 8px;
+                          }
+                          
+                          th {
+                            background-color: #f2f2f2;
+                          }
+                          
+                          tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                          }
+                          
+                          tr:nth-child(odd) {
+                            background-color: #ffffff;
+                          }
+                          
+                          th, td {
+                            border-right: 1px solid #dddddd;
+                            border-bottom: 1px solid #dddddd;
+                          }
+                          
+                          th:last-child, td:last-child {
+                            border-right: none;
+                          }
+                      </style>
+                
+                    <h2>주요 재무 정보</h2>
+                    <p>{{ main_fs }}</p>
+                
+                    <h2>신용 예측</h2>
+                    <p>{{ credit_prediction }}</p>
+                
+                    <h2>신용 데이터 웹</h2>
+                    <p>{{ credit_data_web }}</p>
+                
+                    <h2>투자 데이터 웹</h2>
+                    <p>{{ investment_data_web }}</p>
+                {% endif %}
+                    
+                </main>
+                <!-- <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer> -->
+            </div>
+        </div>
+        
+        <script>                 
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static 'js/datatables-simple.js' %}"></script>
+        <script src="{% static 'assets/js/area.js' %}"></script>
+    </body>
+</html>
+
+
+
+
+
