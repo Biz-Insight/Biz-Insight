@@ -801,25 +801,16 @@ def credit_request(request):
             credit_data_web,
             investment_data_web,
         ) = django_transform(csv_file)
-        request.session["credit_prediction"] = main_fs.to_json(orient="split")
+
+        request.session["credit_prediction"] = credit_prediction
         request.session["main_fs"] = main_fs.to_json(orient="split")
-        request.session["credit_data_web"] = main_fs.to_json(orient="split")
-        request.session["investment_data_web"] = main_fs.to_json(orient="split")
+        request.session["credit_data_web"] = credit_data_web.to_json(orient="split")
+        request.session["investment_data_web"] = investment_data_web.to_json(
+            orient="split"
+        )
 
-        context = {
-            "message": "파일이 성공적으로 처리되었습니다.",
-            "credit_prediction": credit_prediction,
-            "main_fs": main_fs,
-            "credit_data_web": credit_data_web,
-            "investment_data_web": investment_data_web,
-        }
-        return render(request, "csv_upload_result.html", context)
+        return redirect("new_company_info")
     return render(request, "credit_request.html")
-
-
-def show_result(request):
-    context = {"message": "파일이 성공적으로 처리되었습니다."}
-    return render(request, "csv_upload_result.html")
 
 
 def new_company_info(request):
@@ -843,7 +834,6 @@ def new_company_info(request):
     request.session["credit_prediction"] = credit_prediction_json
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
-
     return render(request, "new_company_info.html", context)
 
 
@@ -865,9 +855,10 @@ def new_company_news(request):
         "investment_data_web": investment_data_web_dict,
     }
 
-    request.session["credit_prediction"] = credit_prediction_json
+    request.session["credit_prediction"] = credit_prediction
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
 
     return render(request, "new_company_news.html", context)
 
@@ -878,6 +869,65 @@ def new_credit_analysis(request):
     credit_data_web_json = request.session.get("credit_data_web")
     investment_data_web_json = request.session.get("investment_data_web")
 
+    main_fs_dict = json.loads(main_fs_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)  # 이제 이건 리스트의 리스트
+    investment_data_web_dict = json.loads(investment_data_web_json)
+
+    desired_labels = {
+        "feature_importance": ["총자산", "총자본", "당좌자산", "시가총액", "매출액"],
+        "summary": [
+            "EBITDA마진",
+            "EBITDA/금융비용",
+            "부채비율",
+            "순차입금의존도",
+            "영업현금흐름/총차입금입금",
+            "순차입금/EBITDA",
+        ],
+        "industry_correlation": [
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "EBIT마진",
+            "EBITDA/매출액",
+            "자산총계",
+            "총자산수익률()",
+        ],
+    }
+
+    feature_importance = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["feature_importance"]
+    ]
+
+    summary = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["summary"]
+    ]
+
+    industry_correlation = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["industry_correlation"]
+    ]
+
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
+        "feature_importance": feature_importance,
+        "summary": summary,
+        "industry_correlation": industry_correlation,
+    }
+
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
+=======
     credit_prediction_dict = json.loads(credit_prediction_json)
     main_fs_dict = json.loads(main_fs_json)
     credit_data_web_dict = json.loads(credit_data_web_json)
@@ -895,6 +945,7 @@ def new_credit_analysis(request):
     request.session["credit_data_web"] = credit_data_web_json
 
     return render(request, "new_credit_analysis.html", context)
+
 
 
 def new_credit_indicator(request):
@@ -915,6 +966,16 @@ def new_credit_indicator(request):
         "investment_data_web": investment_data_web_dict,
     }
 
+    request.session["credit_prediction"] = credit_prediction
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
+
+    return render(request, "new_financial_analysis.html", context)
+
+
+def new_financial_statements(request):
+    credit_prediction = request.session.get("credit_prediction")
     request.session["credit_prediction"] = credit_prediction_json
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
@@ -928,6 +989,7 @@ def new_financial_analysis(request):
     credit_data_web_json = request.session.get("credit_data_web")
     investment_data_web_json = request.session.get("investment_data_web")
 
+
     credit_prediction_dict = json.loads(credit_prediction_json)
     main_fs_dict = json.loads(main_fs_json)
     credit_data_web_dict = json.loads(credit_data_web_json)
@@ -940,37 +1002,114 @@ def new_financial_analysis(request):
         "investment_data_web": investment_data_web_dict,
     }
 
-    request.session["credit_prediction"] = credit_prediction_json
+    request.session["credit_prediction"] = credit_prediction
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
+    
+    return render(request, "new_financial_statements.html", context)
 
-    return render(request, "new_financial_analysis.html", context)
 
-
-def new_financial_statements(request):
-    credit_prediction_json = request.session.get("credit_prediction")
+def new_credit_indicator(request):
+    credit_prediction = request.session.get("credit_prediction")
     main_fs_json = request.session.get("main_fs")
     credit_data_web_json = request.session.get("credit_data_web")
     investment_data_web_json = request.session.get("investment_data_web")
 
-    credit_prediction_dict = json.loads(credit_prediction_json)
     main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
+    credit_data_web_dict = json.loads(credit_data_web_json)  # 이제 이건 리스트의 리스트
     investment_data_web_dict = json.loads(investment_data_web_json)
 
+
+    desired_labels = {
+        "stability": [
+            "자산총계",
+            "부채총계",
+            "자본총계",
+            "총차입금",
+            "순차입금",
+            "부채비율",
+            "차입금의존도",
+            "순차입금의존도",
+            "총차입금/EBITDA",
+            "순차입금/EBITDA",
+            "EBITDA/금융비용",
+            "영업활동현금흐름/총차입금",
+            "총자산레버리지",
+            "유동부채금액",
+            "유동부채비율",
+            "운전자본",
+            "당좌자산",
+        ],
+        "liquidity": [
+            "현금성자산",
+            "단기성차입금",
+            "현금성자산/단기성차입금",
+            "단기성차입금/총차입금",
+            "매출채권회전일수",
+        ],
+        "profitability": [
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "EBIT마진",
+            "EBITDA/매출액",
+            "자산총계",
+            "총자산수익률()",
+        ],
+        "cash_flow": [
+            "영업활동현금흐름",
+            "잉여현금흐름",
+            "금융비용",
+            "EBITDA",
+            "법인세납부",
+        ],
+    }
+
+    stability = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["stability"]
+    ]
+
+    liquidity = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["liquidity"]
+    ]
+
+    profitability = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["profitability"]
+    ]
+
+    cash_flow = [
+        data
+        for data in credit_data_web_dict["data"]
+        if data[3] in desired_labels["cash_flow"]
+    ]
+
+
     context = {
-        "credit_prediction": credit_prediction_dict,
+        "credit_prediction": credit_prediction,
         "main_fs": main_fs_dict,
         "credit_data_web": credit_data_web_dict,
         "investment_data_web": investment_data_web_dict,
+
+        "stability": stability,
+        "liquidity": liquidity,
+        "profitability": profitability,
+        "cash_flow": cash_flow,
     }
 
-    request.session["credit_prediction"] = credit_prediction_json
+    request.session["credit_prediction"] = credit_prediction
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
     request.session["investment_data_web"] = investment_data_web_json
 
-    return render(request, "new_financial_statements.html", context)
+    return render(request, "new_credit_indicator.html", context)
 
 
 def new_investment_indicator(request):
@@ -983,6 +1122,76 @@ def new_investment_indicator(request):
     main_fs_dict = json.loads(main_fs_json)
     credit_data_web_dict = json.loads(credit_data_web_json)
     investment_data_web_dict = json.loads(investment_data_web_json)
+
+    desired_labels = {
+        "profitability": [
+            "매출총이익률",
+            "영업이익률",
+            "순이익률",
+            "EBITDA마진율",
+            "ROE",
+            "ROA",
+            "ROIC",
+        ],
+        "stability": [
+            "부채비율",
+            "유동비율",
+            "당좌비율",
+            "비유동부채비율",
+            "자기자본비율",
+            "이자보상배율",
+            "차입금비율",
+            "순부채비율",
+            "자본유보율",
+        ],
+        "activity": [
+            "총자산회전율",
+            "자기자본회전율",
+            "순운전자본회전율",
+            "유형자산회전율",
+            "매출채권회전율",
+            "재고자산회전율",
+            "매입채무회전율",
+        ],
+        "valuation": ["EPS", "BPS", "PER", "PBR", "PCR", "EV/EBITDA"],
+    }
+
+    profitability = [
+        data
+        for data in investment_data_web_dict["data"]
+        if data[3] in desired_labels["profitability"]
+    ]
+
+    stability = [
+        data
+        for data in investment_data_web_dict["data"]
+        if data[3] in desired_labels["stability"]
+    ]
+
+    activity = [
+        data
+        for data in investment_data_web_dict["data"]
+        if data[3] in desired_labels["activity"]
+    ]
+
+    valuation = [
+        data
+        for data in investment_data_web_dict["data"]
+        if data[3] in desired_labels["valuation"]
+    ]
+
+    context = {
+        "credit_prediction": credit_prediction,
+        "main_fs": main_fs_dict,
+        "credit_data_web": credit_data_web_dict,
+        "investment_data_web": investment_data_web_dict,
+        "investment_indicator_profitability": profitability,
+        "investment_indicator_stability": stability,
+        "investment_indicator_activity": activity,
+        "investment_indicator_valuation": valuation,
+    }
+
+    request.session["credit_prediction"] = credit_prediction
 
     context = {
         "credit_prediction": credit_prediction_dict,
