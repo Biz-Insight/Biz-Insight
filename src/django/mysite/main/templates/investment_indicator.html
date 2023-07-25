@@ -105,7 +105,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -117,7 +117,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for investment_data in investment_indicator_profitability %}
-                                                <tr>
+                                                <tr class="bold-text">
                                                     <td scope="row"> {{ investment_data.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2018|div:"1" }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2019|div:"1" }}</td>
@@ -142,7 +142,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
                                                 <th scope="col" class="vertical-line text-end">2020</th>
@@ -153,7 +153,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for investment_data in investment_indicator_growth %}
-                                                <tr>
+                                                <tr class="bold-text">
                                                     <td scope="row"> {{ investment_data.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2019|div:"1" }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2020|div:"1" }}</td>
@@ -176,7 +176,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -188,7 +188,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for investment_data in investment_indicator_stability %}
-                                                <tr>
+                                                <tr class="bold-text">
                                                     <td scope="row"> {{ investment_data.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2018|div:"1" }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2019|div:"1" }}</td>
@@ -213,7 +213,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -225,7 +225,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for investment_data in investment_indicator_activity %}
-                                                <tr>
+                                                <tr class="bold-text">
                                                     <td scope="row"> {{ investment_data.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2018|div:"1" }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2019|div:"1" }}</td>
@@ -250,7 +250,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -262,7 +262,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for investment_data in investment_indicator_valuation %}
-                                                <tr>
+                                                <tr class="bold-text">
                                                     <td scope="row"> {{ investment_data.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2018|div:"1" }}</td>
                                                     <td scope="row" class="vertical-line text-end"> {{ investment_data.number_2019|div:"1" }}</td>
