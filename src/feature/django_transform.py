@@ -776,14 +776,3 @@ def django_transform(fs):
         top_correlation,
         sector_credit_rating,
     )
-
-
-fs = pd.read_excel("Credit_Prediction.xlsx", sheet_name=None)
-(
-    credit_group_prediction,
-    main_fs,
-    credit_data_web,
-    investment_data_web,
-    top_correlation,
-    sector_credit_rating,
-) = django_transform(fs)
