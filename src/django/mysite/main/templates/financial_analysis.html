@@ -94,14 +94,14 @@
                         </div>
                     </div>
                     <div class="container-fluid d-flex"> 
-                        <div class="indicator-title w-100 text-center py-1">
+                        <div class="indicator-title indicator-title-special w-100 text-center py-1">
                             산업내 기업 위치
                         </div>     
-                    </div>                 
+                    </div>                                  
                     
                     <div class="container-fluid d-flex"> 
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">주요항목 방사형 그래프</span> 
@@ -110,15 +110,15 @@
                                 <div class="card-body"><canvas id="industry" width="100%" height="60"></canvas></div>
                             </div>  
                         </div> 
-                        <div class="w-50 px-2 mt-5">
-                            <div class="card border-dark mb-4">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
                                     <span class="chart-title-unit">상세지표</span>
                                     <span class="chart-title-unit2">(0 ~ 1)</span>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table" id="data-table">
+                                    <table class="table bold-text" id="drawIndustryTable">
                                         <thead>
                                             <tr>
                                                 <th>항목</th>
@@ -139,9 +139,9 @@
                         </div>     
                     </div>                 
                     
-                    <div class="container-fluid d-flex">
+                    <div class="container-fluid d-flex align-items-stretch">
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">수익성지표</span> 
@@ -151,7 +151,33 @@
                             </div>  
                         </div>   
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(억원 / %)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawProfitabilityIndicatorTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">투자수익률</span> 
@@ -160,8 +186,31 @@
                                 <div class="card-body"><canvas id="return_investment" width="100%" height="45"></canvas></div>
                             </div>  
                         </div>  
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(억원/%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawReturnInvestmentTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
                     <div class="container-fluid d-flex">
                         <div class="indicator-title w-100 text-center py-1">
                             성장성
@@ -170,7 +219,7 @@
                     
                     <div class="container-fluid d-flex">
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">수익성장성지표</span> 
@@ -180,7 +229,32 @@
                             </div>  
                         </div>   
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawProfitabilityGrowthTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">자산성장성지표</span> 
@@ -188,22 +262,39 @@
                                 </div>
                                 <div class="card-body"><canvas id="asset_growth" width="100%" height="45"></canvas></div>
                             </div>  
-                        </div>  
+                        </div>   
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawAssetGrowthTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="container-fluid d-flex">
-                        <div class="indicator-title w-50 text-center py-1">
+                        <div class="indicator-title w-100 text-center py-1">
                             안전성
-                        </div>     
-                        <div class="indicator-title w-50 text-center py-1">
-                            활동성
-                        </div>    
-                    </div>    
-                    
-                    
+                        </div>   
+                    </div> 
                     <div class="container-fluid d-flex">
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">안전성지표</span> 
@@ -214,7 +305,40 @@
                         </div>   
 
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawStabilityTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid d-flex">     
+                        <div class="indicator-title w-100 text-center py-1">
+                            활동성
+                        </div>    
+                    </div>    
+
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">활동성지표</span> 
@@ -222,8 +346,35 @@
                                 </div>
                                 <div class="card-body"><canvas id="turnover" width="100%" height="45"></canvas></div>
                             </div>  
-                        </div>   
+                        </div>  
+
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawTurnoverTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
                     </div>
+                    
+    
 
                     <div class="container-fluid d-flex">
                         <div class="indicator-title w-100 text-center py-1">
@@ -233,7 +384,7 @@
                     
                     <div class="container-fluid d-flex">
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">주당지표</span> 
@@ -243,7 +394,33 @@
                             </div>  
                         </div>   
                         <div class="w-50 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawPerShareTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="container-fluid d-flex">
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
                                 <div class="card-header">
                                     <i class="fa-solid fa-chart-line"></i>
                                     <span class="chart-title-unit">가치지표</span> 
@@ -251,7 +428,31 @@
                                 </div>
                                 <div class="card-body"><canvas id="value" width="100%" height="45"></canvas></div>
                             </div>  
-                        </div>  
+                        </div>     
+                        <div class="w-50 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">상세지표</span>
+                                    <span class="chart-title-unit2">(%)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table bold-text" id="drawValueTable">
+                                        <thead>
+                                            <tr>
+                                                <th>항목</th>
+                                                <th>2018</th>
+                                                <th>2019</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>   
                     </div>
                     
                 </main>
