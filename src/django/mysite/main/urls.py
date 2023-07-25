@@ -8,7 +8,7 @@ urlpatterns = [
     path("get_gpt_summary/", views.get_gpt_summary_view, name="get_gpt_summary"),
     path(
         "company_info/<str:company_name>/",
-        views.CompanyInfo.as_view(),
+        views.CompanyInfoWeb.as_view(),
         name="company_info",
     ),
     path(
