@@ -12,20 +12,28 @@ function fetchChartData(company_name, chart_type) {
         success: function(data) {
             if (chart_type === 'profitability_indicator') {
                 drawProfitabilityIndicatorChart(data);
+                drawProfitabilityIndicatorTable(data);
             } else if (chart_type === 'return_investment') {
                 drawReturnInvestmentChart(data);
+                drawReturnInvestmentTable(data);
             } else if (chart_type === 'profitability_growth') {
                 drawProfitabilityGrowthChart(data);
+                drawProfitabilityGrowthTable(data);
             } else if (chart_type === 'asset_growth') {
                 drawAssetGrowthChart(data);
+                drawAssetGrowthTable(data);
             } else if (chart_type === 'stability') {
                 drawStabilityChart(data);
+                drawStabilityTable(data);
             } else if (chart_type === 'turnover') {
                 drawTurnoverChart(data);
+                drawTurnoverTable(data);
             } else if (chart_type === 'per_share') {
                 drawPerShareChart(data); 
+                drawPerShareTable(data); 
             } else if (chart_type === 'value') {
                 drawValueChart(data); 
+                drawValueTable(data); 
             } else if (chart_type === 'industry') {
                 drawIndustryChart(data);
                 drawIndustryTable(data); 
@@ -1093,8 +1101,222 @@ function drawValueChart(data) {
     });
 }
 
+
+function drawProfitabilityIndicatorTable(data) {
+    const tableBody = document.querySelector("#drawProfitabilityIndicatorTable tbody");
+ 
+    const labelsInKorean = {
+        "sales": "매출액",
+        "profit_margin": "영업이익률",
+        "net_profit_margin": "순이익률"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+ 
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            
+            if(label === "sales") {
+                valueCell.textContent = (data[label][0][year] / 100000000).toFixed(1);
+            } else {
+                valueCell.textContent = data[label][0][year].toFixed(2);
+            }
+            
+            row.appendChild(valueCell);
+        }); 
+        tableBody.appendChild(row);
+    }
+}
+
+function drawReturnInvestmentTable(data) {
+    const tableBody = document.querySelector("#drawReturnInvestmentTable tbody");
+
+    const labelsInKorean = {
+        "roe": "ROE",
+        "roa": "ROA",
+        "roic": "ROIC",
+        "net_income": "당기순이익"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            
+            if(label === "net_income") {
+                valueCell.textContent = (data[label][0][year] / 100000000).toFixed(1); 
+            } else {
+                valueCell.textContent = data[label][0][year].toFixed(2); 
+            }
+            
+            row.appendChild(valueCell);
+        }); 
+
+        tableBody.appendChild(row);
+    }
+}
+
+function drawProfitabilityGrowthTable(data) {
+    const tableBody = document.querySelector("#drawProfitabilityGrowthTable tbody");
+ 
+    // 한국어 라벨 설정
+    const labelsInKorean = {
+        "revenue_growth": "매출액증가율",
+        "operating_income": "영업이익증가율",
+        "net_income": "순이익증가율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawAssetGrowthTable(data) {
+    const tableBody = document.querySelector("#drawAssetGrowthTable tbody");
+
+    const labelsInKorean = {
+        "asset_growth": "총자산증가율",
+        "tangible_asset": "유형자산증가율",
+        "total_equity": "자기자본증가율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawStabilityTable(data) {
+    const tableBody = document.querySelector("#drawStabilityTable tbody");
+
+    const labelsInKorean = {
+        "debt": "부채비율",
+        "current_liabilities": "유동부채비율",
+        "non_current_liabilities": "비유동부채비율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawTurnoverTable(data) {
+    const tableBody = document.querySelector("#drawTurnoverTable tbody");
+
+    const labelsInKorean = {
+        "asset": "총자산회전율",
+        "accounts_receivable": "매출채권회전율",
+        "inventory": "재고자산회전율",
+        "accounts_payable": "매입채무회전율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+        tableBody.appendChild(row);
+    }
+}
+function drawPerShareTable(data) {
+    const tableBody = document.querySelector("#drawPerShareTable tbody");
+    const labelsInKorean = {
+        "eps": "EPS",
+        "bps": "BPS"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = (data[label][0][year]).toFixed(2);
+
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawValueTable(data) {
+    const tableBody = document.querySelector("#drawValueTable tbody");
+ 
+    const labelsInKorean = {
+        "per": "PER",
+        "pbr": "PBR",
+        "pcr": "PCR"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2); 
+            row.appendChild(valueCell);
+        }); 
+        tableBody.appendChild(row);
+    }
+}
+
+
+
+
+
 function drawIndustryTable(data) {
-    const tableBody = document.querySelector("#data-table tbody");
+    const tableBody = document.querySelector("#drawIndustryTable tbody");
 
     const categoriesInKorean = {
         "profitability": "수익성",

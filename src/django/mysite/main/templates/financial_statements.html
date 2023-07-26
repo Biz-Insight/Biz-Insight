@@ -104,7 +104,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -117,7 +117,7 @@
                                         <tbody class="table-group-divider">
                                             {% for statement in financial_statements %}
                                                 {% if statement.fs_type == 'bs' %}
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <td scope="row" > {{ statement.label_ko }}</td>
                                                         <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
                                                         <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>
@@ -142,7 +142,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -155,7 +155,7 @@
                                         <tbody class="table-group-divider">
                                             {% for statement in financial_statements %}
                                                 {% if statement.fs_type == 'incs' %}
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <td scope="row"> {{ statement.label_ko }}</td>
                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>
@@ -180,7 +180,7 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
-                                            <tr>
+                                            <tr class="bold-text">
                                                 <th scope="col">항목</th>
                                                 <th scope="col" class="vertical-line text-end">2018</th>
                                                 <th scope="col" class="vertical-line text-end">2019</th>
@@ -193,7 +193,7 @@
                                         <tbody class="table-group-divider">
                                             {% for statement in financial_statements %}
                                                 {% if statement.fs_type == 'cf' %}
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <td scope="row"> {{ statement.label_ko }}</td>
                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2018|div:"100000000" }}</td>
                                                        <td scope="row" class="vertical-line text-end"> {{ statement.number_2019|div:"100000000"}}</td>

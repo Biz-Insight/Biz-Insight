@@ -40,14 +40,14 @@ class CompanyList(ListView):
     context_object_name = "company_list"
 
 
-class CompanyInfo(ListView):
-    model = KospiCompanyInfo
+class CompanyInfoWeb(ListView):
+    model = CompanyInfo
     template_name = "company_info.html"
     context_object_name = "company_info"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = KospiCompanyInfo.objects.filter(corp=company_name)
+        queryset = CompanyInfo.objects.filter(corp=company_name)
         return queryset
 
     def get_context_data(self, **kwargs):
