@@ -34,7 +34,7 @@ def get_gpt_summary_view(request):
 
 
 class CompanyList(ListView):
-    model = CompanyName
+    model = CompanyInfo
     template_name = "company_list.html"
     context_object_name = "company_list"
 
@@ -153,7 +153,7 @@ class CreditAnalysis(ListView):
         company_info = CompanyInfo.objects.filter(corp=company_name).first()
         rank = company_info.rank
         predicted_rank = company_info.predicted_rank
-    
+
         context["rank"] = rank
         context["predicted_rank"] = predicted_rank
 
@@ -928,7 +928,7 @@ def credit_request(request):
 
         request.session["credit_group_prediction"] = credit_group_prediction
         request.session["main_fs"] = main_fs.to_json(orient="columns")
-        request.session["main_fs"] = main_fs.to_json(orient="columns")
+        request.session["credit_data_web"] = credit_data_web.to_json(orient="columns")
         request.session["investment_data_web"] = investment_data_web.to_json(
             orient="columns"
         )
@@ -1060,9 +1060,36 @@ def new_credit_analysis(request):
     feature_importance_main_fs_df = main_fs_df[
         main_fs_df["label_ko"].isin(desired_labels["feature_importance"])
     ]
+    feature_importance_main_fs_df = feature_importance_main_fs_df.drop(
+        columns=["fs_type"]
+    )
 
+    feature_importance_credit_data_web_df.reset_index(drop=True, inplace=True)
+    feature_importance_main_fs_df.reset_index(drop=True, inplace=True)
+
+    # 컬럼 순서 정의
+    columns_order = [
+        "corp",
+        "sector",
+        "label_en",
+        "label_ko",
+        "current_year",
+        "industry_avg",
+        "cluster_max",
+        "cluster_median",
+        "cluster_min",
+    ]
+
+    # 각 데이터프레임의 컬럼 순서를 조정
+    feature_importance_credit_data_web_df = feature_importance_credit_data_web_df[
+        columns_order
+    ]
+    feature_importance_main_fs_df = feature_importance_main_fs_df[columns_order]
+
+    # 두 데이터프레임을 행 방향으로 결합
     feature_importance = pd.concat(
         [feature_importance_credit_data_web_df, feature_importance_main_fs_df],
+        axis=0,
         ignore_index=True,
     )
 

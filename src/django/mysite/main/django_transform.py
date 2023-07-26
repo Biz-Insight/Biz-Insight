@@ -459,7 +459,7 @@ def django_transform(fs):
 
     main_fs = pd.DataFrame(
         main_fs_data,
-        columns=["fs_type", "corp", "sector", "label_en", "label_ko", "current year"],
+        columns=["fs_type", "corp", "sector", "label_en", "label_ko", "current_year"],
     )
 
     # main_fs['industry_avg'] = industry_average[industry_average['sector']==sector][main_fs[label_en]]
