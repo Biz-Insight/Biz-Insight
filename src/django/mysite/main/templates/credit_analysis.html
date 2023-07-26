@@ -85,195 +85,215 @@
                 </div>
                 <div id="layoutSidenav_content">
                     <main>
-                        <div class="w-25 px-4" style="margin-bottom: 12px;">
-                            <div class="company-name-box">
-
+                        <div class="w-100 px-4 d-flex align-items-center" style="margin-bottom: 12px;">
+                            <div class="company-name-box w-25">
                                 <h1 class="company-title">{{ company.corp }}</h1>
                             </div>
+                            <div class="d-flex align-items-center mx-5 larger-text">                    
+                                {% if rank != null %}
+                                    <p class="mb-0" style="font-size: 1.3em;">실제 신용 등급 :</p>
+                                    <div class="rank-circle ml-2" data-rank="{{ rank }}">
+                                        {{ rank }}
+                                    </div>
+                                {% else %}
+                                    <p class="mb-0" style="font-size: 1.3em;">예측 신용 등급 : </p>
+                                    <div class="rank-circle ml-2" data-rank="{{ predicted_rank }}">
+                                        {{ predicted_rank }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <p class="flex-shrink-0 mx-1 italic-text" style="font-size: 1.2em;">"실제 신용 등급이 없을 시, 예측하여 제공해드립니다"</p>
                         </div>
 
-
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
-                                <span class="chart-title-unit2"></span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key in sector_credit_rating.0.keys %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                        {% for column in sector_credit_rating %}
-                                            <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for value in column.values %}
-                                                    <td>{{ value }}</td>
+                        <div class="container-fluid d-flex"> 
+                            <div class="w-50 px-2" style="margin-top: 5px;">        
+                                <div class="card border-dark mb-4 card-equal-height">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
+                                        <span class="chart-title-unit2"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
+                                                {% for key in sector_credit_rating.0.keys %}
+                                                    <th>{{ key }}</th>
                                                 {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">상관관계 테이블</span>
-                                <span class="chart-title-unit2"></span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key in top_correlation.0.keys %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                        {% for column in top_correlation %}
-                                            <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for value in column.values %}
-                                                    <td>{{ value }}</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                                {% for column in sector_credit_rating %}
+                                                    <tr class="bold-text">
+                                                        <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                                        {% for value in column.values %}
+                                                            <td>{{ value }}</td>
+                                                        {% endfor %}
+                                                    </tr>
                                                 {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="w-50 px-2" style="margin-top: 5px;">      
+                                <div class="card border-dark mb-4 card-equal-height">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">상관관계 테이블</span>
+                                        <span class="chart-title-unit2"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                {% for key in top_correlation.0.keys %}
+                                                    <th>{{ key }}</th>
+                                                {% endfor %}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for column in top_correlation %}
+                                                    <tr class="bold-text">
+                                                        {% for key, value in column.items %}
+                                                            {% if key == "correlation" %}
+                                                                <td>{{ value|floatformat:2 }}</td>
+                                                            {% else %}
+                                                                <td>{{ value }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        
+                        </div>        
+                        <div class="container-fluid d-flex">
+                            <div class="w-100 px-2" style="margin-top: 5px;">
+                                <div class="card border-dark mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">모델 예측 시 중요했던 값</span>
+                                        <span class="chart-title-unit2">(억원/%/%p)</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                    <th scope="col">항목</th>
+                                                    <th scope="col" class="vertical-line text-end">2018</th>
+                                                    <th scope="col" class="vertical-line text-end">2019</th>
+                                                    <th scope="col" class="vertical-line text-end">2020</th>
+                                                    <th scope="col" class="vertical-line text-end">2021</th>
+                                                    <th scope="col" class="vertical-line text-end">2022</th>
+                                                    <th scope="col" class="vertical-line text-end">전년대비 %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                {% for credit_data in feature_importance %}
+                                                    <tr class="bold-text">
+                                                        <td scope="row"> {{ credit_data.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>                                               
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>    
 
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">모델 예측 시 중요했던 것</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line text-end">2018</th>
-                                            <th scope="col" class="vertical-line text-end">2019</th>
-                                            <th scope="col" class="vertical-line text-end">2020</th>
-                                            <th scope="col" class="vertical-line text-end">2021</th>
-                                            <th scope="col" class="vertical-line text-end">2022</th>
-                                            <th scope="col" class="vertical-line text-end">전년대비 %</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for credit_data in feature_importance %}
-                                            <tr>
-                                                <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                
-                                </table>
-                            </div>
-                        </div>
-
-
-
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">신용 summary</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line text-end">2018</th>
-                                            <th scope="col" class="vertical-line text-end">2019</th>
-                                            <th scope="col" class="vertical-line text-end">2020</th>
-                                            <th scope="col" class="vertical-line text-end">2021</th>
-                                            <th scope="col" class="vertical-line text-end">2022</th>
-                                            <th scope="col" class="vertical-line text-end">전년대비 %</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for credit_data in summary %}
-                                            <tr>
-                                                <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                
-                                </table>
-                            </div>
-                        </div>
-
-                        
-
-
-
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">상관관계 높은 것</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">항목</th>
-                                            <th scope="col" class="vertical-line text-end">2018</th>
-                                            <th scope="col" class="vertical-line text-end">2019</th>
-                                            <th scope="col" class="vertical-line text-end">2020</th>
-                                            <th scope="col" class="vertical-line text-end">2021</th>
-                                            <th scope="col" class="vertical-line text-end">2022</th>
-                                            <th scope="col" class="vertical-line text-end">전년대비 %</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for credit_data in industry_correlation %}
-                                            <tr>
-                                                <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
-                                                <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                                                
-                                </table>
-                            </div>
+                        <div class="container-fluid d-flex">
+                            <div class="w-100 px-2" style="margin-top: 5px;">
+                                <div class="card border-dark mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">신용 summary</span>
+                                        <span class="chart-title-unit2">(억원/%/%p)</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                    <th scope="col">항목</th>
+                                                    <th scope="col" class="vertical-line text-end">2018</th>
+                                                    <th scope="col" class="vertical-line text-end">2019</th>
+                                                    <th scope="col" class="vertical-line text-end">2020</th>
+                                                    <th scope="col" class="vertical-line text-end">2021</th>
+                                                    <th scope="col" class="vertical-line text-end">2022</th>
+                                                    <th scope="col" class="vertical-line text-end">전년대비 %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                {% for credit_data in summary %}
+                                                    <tr class="bold-text">
+                                                        <td scope="row"> {{ credit_data.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
 
-    
+
+                        <div class="container-fluid d-flex">
+                            <div class="w-100 px-2" style="margin-top: 5px;">
+                                <div class="card border-dark mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">상관관계 높은 것</span>
+                                        <span class="chart-title-unit2">(억원/%/%p)</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                    <th scope="col">항목</th>
+                                                    <th scope="col" class="vertical-line text-end">2018</th>
+                                                    <th scope="col" class="vertical-line text-end">2019</th>
+                                                    <th scope="col" class="vertical-line text-end">2020</th>
+                                                    <th scope="col" class="vertical-line text-end">2021</th>
+                                                    <th scope="col" class="vertical-line text-end">2022</th>
+                                                    <th scope="col" class="vertical-line text-end">전년대비 %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                {% for credit_data in industry_correlation %}
+                                                    <tr class="bold-text">
+                                                        <td scope="row"> {{ credit_data.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
+                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

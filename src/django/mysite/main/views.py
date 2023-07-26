@@ -40,13 +40,13 @@ class CompanyList(ListView):
 
 
 class CompanyInfoWeb(ListView):
-    model = KospiCompanyInfo
+    model = CompanyInfo
     template_name = "company_info.html"
     context_object_name = "company_info"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = KospiCompanyInfo.objects.filter(corp=company_name)
+        queryset = CompanyInfo.objects.filter(corp=company_name)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -78,16 +78,16 @@ class CompanyInfoWeb(ListView):
             print(f"Error occurred while fetching corp summary: {e}")
             context["corp_summary"] = "기업 정보 요약을 불러오는데 실패했습니다."
 
-        stop_words = ["장점", "단점"]
+        stop_words = ["단점", "장점", "회사", "사람"]
         try:
-            wordCloud(pre_df, stop_words, company_name, "up_morphs")
-            wordCloud(pre_df, stop_words, company_name, "down_morphs")
+            wordCloud(pre_df, stop_words, company_name, "up_pos")
+            wordCloud(pre_df, stop_words, company_name, "down_pos")
             context[
                 "wordcloud_image_up"
-            ] = f"static/wordcloud_images/{company_name}_up_morphs_wordcloud.png"
+            ] = f"static/wordcloud_images/{company_name}_up_pos_wordcloud.png"
             context[
                 "wordcloud_image_down"
-            ] = f"static/wordcloud_images/{company_name}_down_morphs_wordcloud.png"
+            ] = f"static/wordcloud_images/{company_name}_down_pos_wordcloud.png"
         except Exception as e:
             print(f"Error occurred while generating wordcloud: {e}")
             context["wordcloud_image_up"] = "워드클라우드를 불러오는데 실패했습니다."
@@ -150,6 +150,12 @@ class CreditAnalysis(ListView):
         company_credit = CreditData.objects.filter(corp=company_name).first()
         sector_name = company_credit.sector
         credit_indicator = context["credit_analysis"]
+        company_info = CompanyInfo.objects.filter(corp=company_name).first()
+        rank = company_info.rank
+        predicted_rank = company_info.predicted_rank
+    
+        context["rank"] = rank
+        context["predicted_rank"] = predicted_rank
 
         # 클래스 인스턴스
         revenue_temp = [data for data in credit_indicator if data.label_ko == "매출액"]
