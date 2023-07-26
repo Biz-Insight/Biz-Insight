@@ -33,7 +33,7 @@ def get_gpt_summary_view(request):
 
 
 class CompanyList(ListView):
-    model = CompanyName
+    model = CompanyInfo
     template_name = "company_list.html"
     context_object_name = "company_list"
 
