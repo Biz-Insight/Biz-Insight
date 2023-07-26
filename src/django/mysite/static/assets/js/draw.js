@@ -157,7 +157,7 @@ function drawProfitabilityIndicatorChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -303,7 +303,7 @@ function drawReturnInvestmentChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -417,7 +417,7 @@ function drawProfitabilityGrowthChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -533,7 +533,7 @@ function drawAssetGrowthChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -652,7 +652,7 @@ function drawStabilityChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -790,7 +790,7 @@ function drawTurnoverChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -879,7 +879,7 @@ function drawPerShareChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -997,7 +997,7 @@ function drawValueChart(data) {
                 intersect: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
@@ -1080,7 +1080,7 @@ function drawValueChart(data) {
                 displayColors: false,
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        const label = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
                         if (label) {
                             label += ': ';
                         }
