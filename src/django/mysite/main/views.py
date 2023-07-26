@@ -10,8 +10,7 @@ from .django_transform import django_transform
 from .utils.openai_utils import get_corp_summary
 from .utils.wordcloud_utils import *
 import json
-
-# import django_transform_2 import django_transform_2
+from .django_info import django_info
 
 
 def home(request):
@@ -35,19 +34,19 @@ def get_gpt_summary_view(request):
 
 
 class CompanyList(ListView):
-    model = CompanyInfo
+    model = CompanyName
     template_name = "company_list.html"
     context_object_name = "company_list"
 
 
 class CompanyInfoWeb(ListView):
-    model = CompanyInfo
+    model = KospiCompanyInfo
     template_name = "company_info.html"
     context_object_name = "company_info"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = CompanyInfo.objects.filter(corp=company_name)
+        queryset = KospiCompanyInfo.objects.filter(corp=company_name)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -147,14 +146,29 @@ class CreditAnalysis(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         company_name = self.request.session.get("context")
+        mainfs_data = MainFs.objects.filter(corp=company_name)
+        company_credit = CreditData.objects.filter(corp=company_name).first()
+        sector_name = company_credit.sector
         credit_indicator = context["credit_analysis"]
 
-        # df = pd.DataFrame.from_records(credit_indicator.values())
+        # 클래스 인스턴스
+        revenue_temp = [data for data in credit_indicator if data.label_ko == "매출액"]
 
-        # revenue_2022 = df.loc[df["label_ko"] == "매출액", "2022"].values[0]
-        # value_sector = df.loc[df["label_ko"] == "매출액", "sector"].values[0]
+        revenue_2022 = revenue_temp[0].number_2022
 
-        # cluster_label, top_correlation,    sector_credit_rating = django_transform2(value_sector,revenue_2022)
+        cluster_label, top_correlation, sector_credit_rating = django_info(
+            revenue_2022, sector_name
+        )
+
+        sector_credit_rating_dict = sector_credit_rating.to_dict("records")
+        top_correlation_dict = top_correlation.to_dict("records")
+
+        context["cluster_label"] = cluster_label
+        context["top_correlation"] = top_correlation_dict
+        context["sector_credit_rating"] = sector_credit_rating_dict
+
+        top_correlation_list = top_correlation["feature"].to_list()
+        context["temp"] = top_correlation_list
 
         labels_to_divide = [
             "자산총계",
@@ -198,16 +212,7 @@ class CreditAnalysis(ListView):
                 "영업현금흐름/총차입금입금",
                 "순차입금/EBITDA",
             ],
-            "industry_correlation": [
-                "매출액",
-                "매출원가",
-                "판매관리비",
-                "EBIT",
-                "EBIT마진",
-                "EBITDA/매출액",
-                "자산총계",
-                "총자산수익률()",
-            ],
+            "industry_correlation": top_correlation_list,
         }
         context["feature_importance"] = [
             data
@@ -224,7 +229,7 @@ class CreditAnalysis(ListView):
         context["industry_correlation"] = [
             data
             for data in credit_indicator
-            if data.label_ko in desired_labels["industry_correlation"]
+            if data.label_en in desired_labels["industry_correlation"]
         ]
 
         context["feature_importance"] = sorted(
@@ -240,7 +245,7 @@ class CreditAnalysis(ListView):
         context["industry_correlation"] = sorted(
             context["industry_correlation"],
             key=lambda data: desired_labels["industry_correlation"].index(
-                data.label_ko
+                data.label_en
             ),
         )
 
