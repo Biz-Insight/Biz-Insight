@@ -23,3 +23,5 @@ __pycache__/
 
 # Django staticfiles
 staticfiles/
+
+src/django/mysite/static/wordcloud_images/*
