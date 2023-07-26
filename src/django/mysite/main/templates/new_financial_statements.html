@@ -41,11 +41,7 @@
                                 <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                 </svg>
                                 기업분석
-                            </div>
-                            <a class="nav-link" href="{% url 'new_financial_analysis' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                재무분석
-                            </a>                             
+                            </div>                        
                             <a class="nav-link" href="{% url 'new_credit_analysis' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
@@ -56,7 +52,7 @@
                                 </svg>
                                 상세지표
                             </div>
-                            <a class="nav-link" href="{% url 'new_financial_statements' %}">
+                            <a class="nav-link" href="{% url 'new_financial_statements' %}" style="color: red; font-weight: bold; font-size: 22px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 재무제표
                             </a>
