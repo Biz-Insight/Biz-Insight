@@ -79,16 +79,16 @@ class CompanyInfoWeb(ListView):
             print(f"Error occurred while fetching corp summary: {e}")
             context["corp_summary"] = "기업 정보 요약을 불러오는데 실패했습니다."
 
-        stop_words = ["장점", "단점"]
+        stop_words = ["단점", "장점", "회사", "사람"]
         try:
-            wordCloud(pre_df, stop_words, company_name, "up_morphs")
-            wordCloud(pre_df, stop_words, company_name, "down_morphs")
+            wordCloud(pre_df, stop_words, company_name, "up_pos")
+            wordCloud(pre_df, stop_words, company_name, "down_pos")
             context[
                 "wordcloud_image_up"
-            ] = f"static/wordcloud_images/{company_name}_up_morphs_wordcloud.png"
+            ] = f"static/wordcloud_images/{company_name}_up_pos_wordcloud.png"
             context[
                 "wordcloud_image_down"
-            ] = f"static/wordcloud_images/{company_name}_down_morphs_wordcloud.png"
+            ] = f"static/wordcloud_images/{company_name}_down_pos_wordcloud.png"
         except Exception as e:
             print(f"Error occurred while generating wordcloud: {e}")
             context["wordcloud_image_up"] = "워드클라우드를 불러오는데 실패했습니다."
