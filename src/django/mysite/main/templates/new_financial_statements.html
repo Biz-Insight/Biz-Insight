@@ -52,7 +52,7 @@
                                 </svg>
                                 상세지표
                             </div>
-                            <a class="nav-link" href="{% url 'new_financial_statements' %}" style="color: red; font-weight: bold; font-size: 22px;">
+                            <a class="nav-link" href="{% url 'new_financial_statements' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 재무제표
                             </a>
@@ -79,35 +79,42 @@
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    <span class="chart-title-unit">포괄손익계산서</span>
+                                    <span class="chart-title-unit">재무상태표</span>
                                     <span class="chart-title-unit2">(억원)</span>
                                 </div>
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                        
-                                            {% for key, value in financial_statements.0.items %}
-                                                <th>{{ key }}</th>
-                                            {% endfor %}
+                                                <th scope="col" class="vertical-line text-end">계정명(한글)</th>
+                                                <th scope="col" class="vertical-line text-end">계정값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최소값</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                            {% for column in financial_statements %}
-                                                <tr>
-                                                    {% for key, value in column.items %}
-                                                        <td>{{ value }}</td>
-                                                    {% endfor %}
-                                                </tr>
+                                        <tbody class="table-group-divider">
+                                            {% for column in bs %}
+                                                    <tr>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.current_year }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.industry_avg }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_max }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_median }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_min }}</td>
+                                                    </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                        </div>   
+                            
 
 
 
+                        <div class="px-4">
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
@@ -119,26 +126,31 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                                <th scope="col" class="vertical-line text-end">계정명(영문)</th>
                                                 <th scope="col" class="vertical-line text-end">계정값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최소값</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                                
-                                            {% for column in main_fs.data %}
-                                                {% if column.0 == "incs" %}
+                                            {% for column in incs %}
                                                     <tr>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.3}}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.5}}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.current_year }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.industry_avg }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_max }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_median }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_min }}</td>
                                                     </tr>
-                                                {% endif %}                                                
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                        </div>
                               
+                        <div class="px-4">
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
@@ -150,29 +162,30 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                                <th scope="col" class="vertical-line text-end">계정명(영문)</th>
                                                 <th scope="col" class="vertical-line text-end">계정값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">매출그룹 내 최소값</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            {% for column in main_fs.data %}
-                                                {% if column.0 == "cf" %}
+                                            {% for column in cf %}
                                                     <tr>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.3}}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.5}}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.label_ko }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.current_year }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.industry_avg }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_max }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_median }}</td>
+                                                        <td scope="row" class="vertical-line text-end"> {{ column.cluster_min }}</td>
                                                     </tr>
-                                                {% endif %}                                                
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        
-
-                        </div>
-                    </div>
+                    
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
