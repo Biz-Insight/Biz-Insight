@@ -937,74 +937,8 @@ def credit_request(request):
             orient="columns"
         )
 
-        return redirect("new_company_news")
+        return redirect("new_credit_analysis")
     return render(request, "credit_request.html")
-
-
-def new_company_info(request):
-    credit_group_prediction = request.session["credit_group_prediction"]
-    main_fs_json = request.session["main_fs"]
-    credit_data_web_json = request.session["credit_data_web"]
-    investment_data_web_json = request.session["investment_data_web"]
-    top_correlation_json = request.session["top_correlation"]
-    sector_credit_rating_json = request.session["sector_credit_rating"]
-
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
-    investment_data_web_dict = json.loads(investment_data_web_json)
-    top_correlation_dict = json.loads(top_correlation_json)
-    sector_credit_rating_dict = json.loads(sector_credit_rating_json)
-
-    context = {
-        "credit_group_prediction": credit_group_prediction,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-        "top_correlation": top_correlation_dict,
-        "sector_credit_rating": sector_credit_rating_dict,
-    }
-
-    request.session["credit_group_prediction"] = credit_group_prediction
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
-    request.session["investment_data_web"] = investment_data_web_json
-    request.session["top_correlation"] = top_correlation_json
-    request.session["sector_credit_rating"] = sector_credit_rating_json
-
-    return render(request, "new_company_info.html", context)
-
-
-def new_company_news(request):
-    credit_group_prediction = request.session["credit_group_prediction"]
-    main_fs_json = request.session["main_fs"]
-    credit_data_web_json = request.session["credit_data_web"]
-    investment_data_web_json = request.session["investment_data_web"]
-    top_correlation_json = request.session["top_correlation"]
-    sector_credit_rating_json = request.session["sector_credit_rating"]
-
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
-    investment_data_web_dict = json.loads(investment_data_web_json)
-    top_correlation_dict = json.loads(top_correlation_json)
-    sector_credit_rating_dict = json.loads(sector_credit_rating_json)
-
-    context = {
-        "credit_group_prediction": credit_group_prediction,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-        "top_correlation": top_correlation_dict,
-        "sector_credit_rating": sector_credit_rating_dict,
-    }
-
-    request.session["credit_group_prediction"] = credit_group_prediction
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
-    request.session["investment_data_web"] = investment_data_web_json
-    request.session["top_correlation"] = top_correlation_json
-    request.session["sector_credit_rating"] = sector_credit_rating_json
-
-    return render(request, "new_company_news.html", context)
 
 
 def new_credit_analysis(request):
