@@ -104,21 +104,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
-                                       {{credit_data_web}}
-                                        {% for row in investment_indicator_profitability %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
-                                            </tr>                                          
+                                    <tbody>
+                                        {% for column in investment_indicator_profitability %}
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody>                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

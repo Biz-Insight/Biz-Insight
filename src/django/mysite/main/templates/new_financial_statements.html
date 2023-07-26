@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
 {% load filters %}
-{% with company=financial_statements.0 %}
 <html lang="en">
     <head>
     <meta charset="utf-8" />
@@ -94,33 +93,35 @@
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
-                                    <span class="chart-title-unit">재무상태표</span>
+                                    <span class="chart-title-unit">포괄손익계산서</span>
                                     <span class="chart-title-unit2">(억원)</span>
                                 </div>
                                 <div class="card-body">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                                <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                                <th scope="col" class="vertical-line text-end">계정값</th>
+                                        
+                                            {% for key, value in financial_statements.0.items %}
+                                                <th>{{ key }}</th>
+                                            {% endfor %}
                                             </tr>
                                         </thead>
-                                        <tbody class="table-group-divider">
-                                            {% for column in main_fs.data %}
-                                                {% if column.0 == "bs" %}
-                                                    <tr>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.3}}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ column.5}}</td>
-                                                    </tr>
-                                                {% endif %}                                                
+                                        <tbody>
+                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                            {% for column in financial_statements %}
+                                                <tr>
+                                                    {% for key, value in column.items %}
+                                                        <td>{{ value }}</td>
+                                                    {% endfor %}
+                                                </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            
+
+
+
                             <div class="card border-dark mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
@@ -214,5 +215,4 @@
         <script src="{% static 'assets/js/area.js' %}"></script>
     </body>
 </html>
-{% endwith %}
 

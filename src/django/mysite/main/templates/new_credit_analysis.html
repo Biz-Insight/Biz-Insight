@@ -13,6 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .current-year {
+            color: red;
+        }
+    </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -37,30 +42,12 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav"> 
                             <div class="sb-sidenav-menu-heading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
-                                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
-                                </svg>
-                                기업정보    
-                            </div>
-                            <a class="nav-link" href="{% url 'new_company_info'|urlencode %}">
-                                <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                기업개요
-                            </a>                                                                                                                                          
-                            <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
-                                <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                뉴스/공시
-                            </a>
-                            <div class="sb-sidenav-menu-heading">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                                 <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                 </svg>
                                 기업분석
-                            </div>
-                            <a class="nav-link" href="{% url 'new_financial_analysis' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                재무분석
-                            </a>                             
-                            <a class="nav-link" href="{% url 'new_credit_analysis' %}">
+                            </div>                           
+                            <a class="nav-link" href="{% url 'new_credit_analysis' %}" style="color: red; font-weight: bold; font-size: 22px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
                             </a>
@@ -88,172 +75,192 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <p>신용분석 페이지입니다.
-                        <style>
-                            table {
-                              border-collapse: collapse;
-                              width: 100%;
-                            }
-                            
-                            th, td {
-                              text-align: left;
-                              padding: 8px;
-                            }
-                            
-                            th {
-                              background-color: #f2f2f2;
-                            }
-                            
-                            tr:nth-child(even) {
-                              background-color: #f9f9f9;
-                            }
-                            
-                            tr:nth-child(odd) {
-                              background-color: #ffffff;
-                            }
-                            
-                            th, td {
-                              border-right: 1px solid #dddddd;
-                              border-bottom: 1px solid #dddddd;
-                            }
-                            
-                            th:last-child, td:last-child {
-                              border-right: none;
-                            }
-                          </style>
-                          
-                          <table>
-                            <tr>
-                              <th>신용등급 예측결과 Result</th>
-                            </tr>
-                            <tr>
-                              <td>{{ credit_group_prediction }}</td>
-                            </tr>
-                          </table>                               
-                    </p>  
+                    <table>
+                    <tr class="bold-text">
+                        <th>신용등급 예측결과 Result</th>
+                    </tr>
+                    <tr class="bold-text">
+                        <td>{{ credit_group_prediction }}</td>
+                    </tr>
+                    </table>                               
 
 
-                    <div class="card border-dark mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
-                            <span class="chart-title-unit2"></span>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                    {% for key, value in sector_credit_rating.0.items %}
-                                        <th>{{ key }}</th>
-                                    {% endfor %}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                    {% for column in sector_credit_rating %}
-                                        <tr>
-                                            <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                            {% for key, value in column.items %}
-                                                <td>{{ value }}</td>
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
+                                    <span class="chart-title-unit2"></span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>산업</th>
+                                                <th>매출액 규모그룹</th>
+                                                <th>해당그룹 신용등급 중앙값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                            {% for column in sector_credit_rating %}
+                                                <tr>
+                                                    <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                                    {% for key, value in column.items %}
+                                                        <td>{{ value }}</td>
+                                                    {% endfor %}
+                                                </tr>
                                             {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">등급 판별에 중요한 영향을 준 요소들</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key, value in feature_importance.0.items %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                        {% for column in feature_importance %}
-                                            <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for key, value in column.items %}
-                                                    <td>{{ value }}</td>
-                                                {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">summary(상대비교) 테이블</span>
-                                <span class="chart-title-unit2">(비율 %)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key, value in summary.0.items %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                        {% for column in summary %}
-                                            <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for key, value in column.items %}
-                                                    <td>{{ value }}</td>
-                                                {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
 
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">산업 상관관계 TOP5</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key, value in top_correlation.0.items %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                        {% for column in top_correlation %}
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">등급 판별에 중요한 영향을 준 요소들</span>
+                                    <span class="chart-title-unit2">(억원/%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for key, value in column.items %}
-                                                    <td>{{ value }}</td>
-                                                {% endfor %}
+                                                <th>계정명</th>
+                                                <th>기업값</th>
+                                                <th>산업평균</th>
+                                                <th>같은 매출액그룹 내 최대값</th>
+                                                <th>같은 매출액그룹 내 중앙값</th>
+                                                <th>같은 매출액그룹 내 최소값</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {% for column in feature_importance %}
+                                                <tr class="{% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                    <td>{{ column.label_ko }}</td>
+                                                    <td>{{ column.current_year }}</td>
+                                                    <td>{{ column.industry_avg }}</td>
+                                                    <td>{{ column.cluster_max }}</td>
+                                                    <td>{{ column.cluster_median }}</td>
+                                                    <td>{{ column.cluster_min }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">summary(상대비교) 테이블</span>
+                                    <span class="chart-title-unit2">(비율 %)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>계정명</th>
+                                                <th>기업값</th>
+                                                <th>산업평균</th>
+                                                <th>같은 매출액그룹 내 최대값</th>
+                                                <th>같은 매출액그룹 내 중앙값</th>
+                                                <th>같은 매출액그룹 내 최소값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for column in summary %}
+                                                <tr class="{% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                    <td>{{ column.label_ko }}</td>
+                                                    <td>{{ column.current_year }}</td>
+                                                    <td>{{ column.industry_avg }}</td>
+                                                    <td>{{ column.cluster_max }}</td>
+                                                    <td>{{ column.cluster_median }}</td>
+                                                    <td>{{ column.cluster_min }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">    
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">산업 상관관계 TOP5</span>
+                                    <span class="chart-title-unit2">(억원/%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>상관관계가 높은 계정값</th>
+                                                <th>상관계수</th>
+                                                <th>섹터</th>
+                                                <th>매출액 군집</th>
+                                                <th>기업값</th>
+                                                <th>산업평균</th>
+                                                <th>같은 매출액그룹 내 최대값</th>
+                                                <th>같은 매출액그룹 내 중앙값</th>
+                                                <th>같은 매출액그룹 내 최소값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                            {% for column in top_correlation %}
+                                                <tr>
+                                                    <td>{{ column.feature }}</td>
+                                                    <td>{{ column.correlation }}</td>
+                                                    <td>{{ column.sector }}</td>
+                                                    <td>{{ column.revenue_group }}</td>
+                                                    <td>{{ column.corp_value }}</td>
+                                                    <td>{{ column.industry_average }}</td>
+                                                    <td>{{ column.cluster_max }}</td>
+                                                    <td>{{ column.cluster_median }}</td>
+                                                    <td>{{ column.cluster_min }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+
+
+                        
+                        
+                        
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
