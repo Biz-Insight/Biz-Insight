@@ -124,19 +124,25 @@
                           }
                       </style>
                 
-                    <h2>주요 재무 정보</h2>
-                    <p>{{ main_fs }}</p>
+                    <h2>신용그룹예측</h2>
+                    <p>{{ credit_group_prediction }}</p>
                 
-                    <h2>신용 예측</h2>
-                    <p>{{ credit_prediction }}</p>
+                    <h2>재무제표</h2>
+                    <p>{{ main_fs }}</p>
                 
                     <h2>신용 데이터 웹</h2>
                     <p>{{ credit_data_web }}</p>
                 
-                    <h2>투자 데이터 웹</h2>
+                    <h2>투자웹데이터</h2>
                     <p>{{ investment_data_web }}</p>
+
+                    <h2>상관관계</h2>
+                    <p>{{ top_correlation }}</p>
+
+                    <h2>섹터 투자 평가</h2>
+                    <p>{{ sector_credit_rating }}</p>
+
                 {% endif %}
-                    
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

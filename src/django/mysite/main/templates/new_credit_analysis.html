@@ -127,45 +127,69 @@
                               <th>신용등급 예측결과 Result</th>
                             </tr>
                             <tr>
-                              <td>{{ credit_prediction }}</td>
+                              <td>{{ credit_group_prediction }}</td>
                             </tr>
                           </table>                               
                     </p>  
 
+
+                    <div class="card border-dark mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
+                            <span class="chart-title-unit2"></span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
+                                    {% for key, value in sector_credit_rating.0.items %}
+                                        <th>{{ key }}</th>
+                                    {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                    {% for column in sector_credit_rating %}
+                                        <tr>
+                                            <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                            {% for key, value in column.items %}
+                                                <td>{{ value }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="card border-dark mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">피쳐임포턴스 결과</span>
+                                <span class="chart-title-unit">등급 판별에 중요한 영향을 준 요소들</span>
                                 <span class="chart-title-unit2">(억원/%/%p)</span>
                             </div>
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
+                                        {% for key, value in feature_importance.0.items %}
+                                            <th>{{ key }}</th>
+                                        {% endfor %}
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for column in main_fs.data %}
-                                            {% if column.4 == "자산총계" or column.4 == "자본총계"  %}
-                                                <tr>
-                                                    <td scope="row" class="vertical-line text-end"> {{ column.4  }}</td>
-                                                    <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                    <td scope="row" class="vertical-line text-end"> {{ column.5 |div:"100000000"  }}</td>
-                                                </tr>
-                                            {% endif %}                                                
-                                        {% endfor %}
+                                    <tbody>
+                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
                                         {% for column in feature_importance %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 |div:"100000000"  }}</td>
-                                            </tr>                                          
+                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                                {% for key, value in column.items %}
+                                                    <td>{{ value }}</td>
+                                                {% endfor %}
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -179,21 +203,23 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
+                                        {% for key, value in summary.0.items %}
+                                            <th>{{ key }}</th>
+                                        {% endfor %}
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
+                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
                                         {% for column in summary %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
+                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                                {% for key, value in column.items %}
+                                                    <td>{{ value }}</td>
+                                                {% endfor %}
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -208,21 +234,23 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
+                                        {% for key, value in top_correlation.0.items %}
+                                            <th>{{ key }}</th>
+                                        {% endfor %}
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for column in industry_correlation %}
+                                    <tbody>
+                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
+                                        {% for column in top_correlation %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
-                                        {% endfor %}    
-                                    </tbody> 
-                                                                
+                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
+                                                {% for key, value in column.items %}
+                                                    <td>{{ value }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

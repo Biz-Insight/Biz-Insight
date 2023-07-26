@@ -127,13 +127,15 @@
                     <p>{{ main_fs }}</p>
                 
                     <h2>신용 예측</h2>
-                    <p>{{ credit_prediction }}</p>
+                    <p>{{ credit_group_prediction }}</p>
                 
                     <h2>신용 데이터 웹</h2>
                     <p>{{ credit_data_web }}</p>
                 
                     <h2>투자 데이터 웹</h2>
-                    <p>{{ investment_data_web }}</p>
+                    {% for row in investment_data_web.data %}
+                        <p>{{ row }}</p>  <!-- 'key'라는 키를 가진 데이터를 출력합니다 -->
+                    {% endfor %}
                     
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
