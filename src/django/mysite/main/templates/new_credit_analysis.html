@@ -13,6 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .current-year {
+            color: red;
+        }
+    </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -203,26 +208,30 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                        <!-- 첫 번째 요소의 모든 키를 가져와서 테이블 헤더를 만듭니다. -->
-                                        {% for key, value in summary.0.items %}
-                                            <th>{{ key }}</th>
-                                        {% endfor %}
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
                                         {% for column in summary %}
-                                            <tr>
-                                                <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                {% for key, value in column.items %}
-                                                    <td>{{ value }}</td>
-                                                {% endfor %}
+                                            <tr class="{% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        
 
                         <div class="card border-dark mb-4">
                             <div class="card-header">

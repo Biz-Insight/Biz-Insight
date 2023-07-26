@@ -1094,39 +1094,71 @@ def new_credit_analysis(request):
     return render(request, "new_credit_analysis.html", context)
 
 
-def new_credit_indicator(request):
-    credit_prediction_json = request.session.get("credit_prediction")
-    main_fs_json = request.session.get("main_fs")
-    credit_data_web_json = request.session.get("credit_data_web")
-    investment_data_web_json = request.session.get("investment_data_web")
+def new_financial_statements(request):
+    # 현재 json 자료형
+    credit_group_prediction = request.session["credit_group_prediction"]
+    main_fs_json = request.session["main_fs"]
+    credit_data_web_json = request.session["credit_data_web"]
+    investment_data_web_json = request.session["investment_data_web"]
+    top_correlation_json = request.session["top_correlation"]
+    sector_credit_rating_json = request.session["sector_credit_rating"]
 
-    credit_prediction_dict = json.loads(credit_prediction_json)
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
-    investment_data_web_dict = json.loads(investment_data_web_json)
-
-    context = {
-        "credit_prediction": credit_prediction_dict,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-    }
-
-    request.session["credit_prediction"] = credit_prediction
+    # 새션 재 전송
+    request.session["credit_group_prediction"] = credit_group_prediction
     request.session["main_fs"] = main_fs_json
     request.session["credit_data_web"] = credit_data_web_json
     request.session["investment_data_web"] = investment_data_web_json
+    request.session["top_correlation"] = top_correlation_json
+    request.session["sector_credit_rating"] = sector_credit_rating_json
 
-    return render(request, "new_financial_analysis.html", context)
+    main_fs_df = pd.read_json(main_fs_json, orient="columns")
 
+    desired_labels = {
+        "feature_importance": ["자산총계", "자본총계", "당좌자산", "시가총액", "매출액"],
+        "summary": [
+            "EBITDA마진",
+            "EBITDA/금융비용",
+            "부채비율",
+            "순차입금의존도",
+            "영업현금흐름/총차입금입금",
+            "순차입금/EBITDA",
+        ],
+        "industry_correlation": [
+            "매출액",
+            "매출원가",
+            "판매관리비",
+            "EBIT",
+            "EBIT마진",
+            "EBITDA/매출액",
+            "자산총계",
+            "총자산수익률()",
+        ],
+    }
 
-def new_financial_statements(request):
-    credit_prediction = request.session.get("credit_prediction")
-    request.session["credit_prediction"] = credit_prediction_json
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
+    # feature_importance_credit_data_web_df = credit_data_web_df[
+    #     credit_data_web_df["label_ko"].isin(desired_labels["feature_importance"])
+    # ]
 
-    return render(request, "new_credit_indicator.html", context)
+    # feature_importance_main_fs_df = main_fs_df[
+    #     main_fs_df["label_ko"].isin(desired_labels["feature_importance"])
+    # ]
+
+    # feature_importance = pd.concat(
+    #     [feature_importance_credit_data_web_df, feature_importance_main_fs_df],
+    #     ignore_index=True,
+    # )
+
+    # summary = credit_data_web_df[
+    #     credit_data_web_df["label_ko"].isin(desired_labels["summary"])
+    # ]
+
+    main_fs_dict = main_fs_df.to_dict("records")
+
+    context = {
+        "financial_statements": main_fs_dict,
+    }
+
+    return render(request, "new_financial_statements.html", context)
 
 
 def new_financial_analysis(request):
@@ -1152,18 +1184,29 @@ def new_financial_analysis(request):
     request.session["credit_data_web"] = credit_data_web_json
     request.session["investment_data_web"] = investment_data_web_json
 
-    return render(request, "new_financial_statements.html", context)
+    return render(request, "new_financial_analysis.html", context)
 
 
 def new_credit_indicator(request):
-    credit_prediction = request.session.get("credit_prediction")
-    main_fs_json = request.session.get("main_fs")
-    credit_data_web_json = request.session.get("credit_data_web")
-    investment_data_web_json = request.session.get("investment_data_web")
+    # 현재 json 자료형
+    credit_group_prediction = request.session["credit_group_prediction"]
+    main_fs_json = request.session["main_fs"]
+    credit_data_web_json = request.session["credit_data_web"]
+    investment_data_web_json = request.session["investment_data_web"]
+    top_correlation_json = request.session["top_correlation"]
+    sector_credit_rating_json = request.session["sector_credit_rating"]
 
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)  # 이제 이건 리스트의 리스트
-    investment_data_web_dict = json.loads(investment_data_web_json)
+    # 새션 재 전송
+    request.session["credit_group_prediction"] = credit_group_prediction
+    request.session["main_fs"] = main_fs_json
+    request.session["credit_data_web"] = credit_data_web_json
+    request.session["investment_data_web"] = investment_data_web_json
+    request.session["top_correlation"] = top_correlation_json
+    request.session["sector_credit_rating"] = sector_credit_rating_json
+
+    # pandas df로 불러오기
+    credit_data_web_df = pd.read_json(credit_data_web_json, orient="columns")
+    main_fs_df = pd.read_json(main_fs_json, orient="columns")
 
     desired_labels = {
         "stability": [
@@ -1211,39 +1254,32 @@ def new_credit_indicator(request):
         ],
     }
 
-    stability = [
-        data for data in credit_data_web_dict if data[3] in desired_labels["stability"]
+    stability_df = credit_data_web_df[
+        credit_data_web_df["label_ko"].isin(desired_labels["stability"])
     ]
 
-    liquidity = [
-        data for data in credit_data_web_dict if data[3] in desired_labels["liquidity"]
+    liquidity_df = credit_data_web_df[
+        credit_data_web_df["label_ko"].isin(desired_labels["liquidity"])
     ]
 
-    profitability = [
-        data
-        for data in credit_data_web_dict
-        if data[3] in desired_labels["profitability"]
+    profitability_df = credit_data_web_df[
+        credit_data_web_df["label_ko"].isin(desired_labels["profitability"])
     ]
 
-    cash_flow = [
-        data for data in credit_data_web_dict if data[3] in desired_labels["cash_flow"]
+    cash_flow_df = credit_data_web_df[
+        credit_data_web_df["label_ko"].isin(desired_labels["cash_flow"])
     ]
+    stability_web = stability_df.to_dict("records")
+    liquidity_web = liquidity_df.to_dict("records")
+    profitability_web = profitability_df.to_dict("records")
+    cash_flow_web = cash_flow_df.to_dict("records")
 
     context = {
-        "credit_prediction": credit_prediction,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-        "stability": stability,
-        "liquidity": liquidity,
-        "profitability": profitability,
-        "cash_flow": cash_flow,
+        "stability": stability_web,
+        "liquidity": liquidity_web,
+        "profitability": profitability_web,
+        "cash_flow": cash_flow_web,
     }
-
-    request.session["credit_prediction"] = credit_prediction
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
-    request.session["investment_data_web"] = investment_data_web_json
 
     return render(request, "new_credit_indicator.html", context)
 
@@ -1266,11 +1302,8 @@ def new_investment_indicator(request):
     request.session["sector_credit_rating"] = sector_credit_rating_json
 
     # pandas df로 불러오기
-    main_fs_df = pd.read_json(main_fs_json, orient="columns")
     credit_data_web_df = pd.read_json(credit_data_web_json, orient="columns")
     investment_data_web_df = pd.read_json(investment_data_web_json, orient="columns")
-    top_correlation_df = pd.read_json(top_correlation_json, orient="columns")
-    sector_credit_rating_df = pd.read_json(sector_credit_rating_json, orient="columns")
 
     desired_labels = {
         "profitability": [

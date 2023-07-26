@@ -110,11 +110,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in stability %}
+                                        {% for row in stability %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody>                                                
@@ -138,11 +138,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in liquidity %}
+                                        {% for row in liquidity %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
@@ -166,11 +166,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in profitability %}
+                                        {% for row in profitability %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
@@ -195,11 +195,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in cash_flow %}
+                                        {% for row in cash_flow %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
