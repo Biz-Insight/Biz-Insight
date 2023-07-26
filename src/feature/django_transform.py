@@ -5,7 +5,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import joblib
 import numpy as np
-import lightgbm as lgb
+import pickle
+from scipy import stats
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
@@ -27,7 +28,6 @@ def django_transform(fs):
     # cf = df_dict["cf"]
     ###############################################################################
     # No Django fs
-
     corp_info = fs["corp_info"]
     bs = fs["bs"]
     incs = fs["incs"]
@@ -35,7 +35,7 @@ def django_transform(fs):
     ###############################################################################
     # initialization
     user = "multi"
-    password = "*****!"
+    password = "Campus123!"
     host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
     database = "Data_Mart"
 
@@ -47,14 +47,84 @@ def django_transform(fs):
     query = "SELECT * FROM Data_Lake.crb_index;"
     crb_index = pd.read_sql(query, engine)
 
-    query = "SELECT * FROM Data_Lake.economic_indicators;"
+    query = "SELECT * FROM Data_Warehouse.economic_indicators;"
     economic_indicators = pd.read_sql(query, engine)
 
     query = "SELECT * FROM Data_Mart.credit_model_a;"
     model_a = pd.read_sql(query, engine)
 
+    query = "SELECT * FROM Data_Mart.sector_revenue_top_features;"
+    sector_revenue_top_features = pd.read_sql(query, engine)
+
+    query = "SELECT * FROM Data_Mart.sector_revenue_aggregation;"
+    sector_revenue_aggregation = pd.read_sql(query, engine)
+
     ###############################################################################
-    # credit_prediction
+
+    sector = corp_info["산업"][0]
+    revenue = incs["Value"][0]
+
+    input_sectors = [sector]
+    new_data = {sector: revenue}
+
+    clustered_sectors = [
+        "서비스업",
+        "기타금융",
+        "운수창고업",
+        "음식료품",
+        "화학",
+        "전기전자",
+        "유통업",
+        "기계",
+        "운수장비",
+        "의약품",
+        "철강금속",
+    ]
+
+    percentile_sectors = [
+        "건설업",
+        "섬유의복",
+        "통신업",
+        "전기가스업",
+        "종이목재",
+        "농업, 임업 및 어업",
+        "비금속광물",
+        "기타제조업",
+    ]
+
+    with open("cluster_label_mappings.pkl", "rb") as f:
+        cluster_label_mappings = pickle.load(f)
+
+    with open("sector_revenue_data.pkl", "rb") as f:
+        sector_revenue_data = pickle.load(f)
+
+    for sector in input_sectors:
+        if sector in clustered_sectors:
+            with open(f"{sector}_kmeans_model.pkl", "rb") as file:
+                model = pickle.load(file)
+
+            data = new_data[sector]
+            data_array = np.array([[data]])
+            cluster_label = model.predict(data_array)[0]
+            revenue_group = cluster_label_mappings[sector][cluster_label]
+        elif sector in percentile_sectors:
+            data = new_data[sector]
+            data_of_sector = np.array(sector_revenue_data[sector])
+            percentile = stats.percentileofscore(data_of_sector, data)
+            if percentile < 33:
+                print(f"The data of {sector} belongs to group 하위")
+                revenue_group = "하위"
+            elif percentile < 67:
+                print(f"The data of {sector} belongs to group 중위")
+                revenue_group = "중위"
+            else:
+                print(f"The data of {sector} belongs to group 상위")
+                revenue_group = "상위"
+        else:
+            print(f"Unknown sector: {sector}")
+
+    ###############################################################################
+    # credit_group_prediction
     rank_mapping = {
         "AAA": 9,
         "AA+": 8,
@@ -66,33 +136,41 @@ def django_transform(fs):
         "BBB": 2,
         "JB": 1,
     }
+    ###############################################################################
+    # model_with_y = (
+    #     model_a[model_a["rank"].notna()]
+    #     .reset_index(drop=True)
+    #     .drop(["corp", "stock_code", "sector", "year"], axis=1)
+    # )
+    # model_without_y = (
+    #     model_a[model_a["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
+    # )
 
-    model_with_y = (
-        model_a[model_a["rank"].notna()]
-        .reset_index(drop=True)
-        .drop(["corp", "stock_code", "sector", "year"], axis=1)
-    )
-    model_without_y = (
-        model_a[model_a["rank"].isna()].reset_index(drop=True).drop(["rank"], axis=1)
-    )
+    # # 선정한 모델
+    # X = model_with_y.drop("rank", axis=1)
+    # y = model_with_y["rank"]
+    # y = y.map(rank_mapping)
 
-    # 선정한 모델
-    X = model_with_y.drop("rank", axis=1)
-    y = model_with_y["rank"]
-    y = y.map(rank_mapping)
+    # X_train, X_test, y_train, y_test = train_test_split(
+    #     X, y, test_size=0.2, random_state=42
+    # )
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
+    # clf = RandomForestClassifier(
+    #     criterion="entropy",
+    #     max_depth=18,
+    #     max_features="sqrt",
+    #     n_estimators=500,
+    #     random_state=42,
+    # )
+    # clf.fit(X_train, y_train)
 
-    clf = RandomForestClassifier(
-        criterion="entropy",
-        max_depth=18,
-        max_features="sqrt",
-        n_estimators=500,
-        random_state=42,
-    )
-    clf.fit(X_train, y_train)
+    # with open('rf_model.pkl', 'wb') as file:
+    #     pickle.dump(clf, file)
+    ###############################################################################
+    with open("rf_model.pkl", "rb") as file:
+        clf = pickle.load(file)
+
+    ###############################################################################
 
     # 액셀에서 계정 값 받아오기
     corp_name = corp_info["기업이름"][0]
@@ -257,7 +335,7 @@ def django_transform(fs):
     accounts_payable_turnover = cost_of_sales / accounts_payable * 100
 
     # 예측을 위한 데이터 데이터프레임으로 변경
-    prediction_data = pd.DataFrame(
+    group_prediction_data = pd.DataFrame(
         {
             "ebitda_margin": [ebitda_margin],
             "ebitda_to_interest_expense": [ebitda_to_interest_expense],
@@ -315,9 +393,9 @@ def django_transform(fs):
         }
     )
 
-    rank_prediction = clf.predict(prediction_data)
+    rank_group_prediction = clf.predict(group_prediction_data)
     rank_mapping_reverse = {v: k for k, v in rank_mapping.items()}
-    credit_prediction = rank_mapping_reverse[rank_prediction[0]]
+    credit_group_prediction = rank_mapping_reverse[rank_group_prediction[0]]
 
     ###############################################################################
     # main_fs
@@ -371,6 +449,8 @@ def django_transform(fs):
         main_fs_data,
         columns=["fs_type", "corp", "sector", "label_en", "label_ko", "current year"],
     )
+
+    # main_fs['industry_avg'] = industry_average[industry_average['sector']==sector][main_fs[label_en]]
 
     ###############################################################################
     # credit_data_web
@@ -561,5 +641,151 @@ def django_transform(fs):
         )
 
     ###############################################################################
+    # update main_fs, credit_data_web, investment_data_web
 
-    return credit_prediction, main_fs, credit_data_web, investment_data_web
+    corp_average = industry_average[industry_average["sector"] == sector]
+
+    corp_average = corp_average.set_index("sector")
+
+    def get_value(row):
+        sector, label = row["sector"], row["label_en"]
+        if label in corp_average.columns:
+            return corp_average.at[sector, label]
+        return None
+
+    main_fs["industry_avg"] = main_fs.apply(get_value, axis=1)
+    credit_data_web["industry_avg"] = credit_data_web.apply(get_value, axis=1)
+    investment_data_web["industry_avg"] = investment_data_web.apply(get_value, axis=1)
+
+    sector_revenue_aggregation.columns = sector_revenue_aggregation.columns.str.lower()
+
+    corp_agg = sector_revenue_aggregation[
+        (sector_revenue_aggregation["sector"] == sector)
+        & (sector_revenue_aggregation["revenue_group"] == revenue_group)
+    ]
+
+    def populate_cluster_values(
+        main_df: pd.DataFrame, agg_df: pd.DataFrame
+    ) -> pd.DataFrame:
+        main_df["cluster_max"] = np.nan
+        main_df["cluster_median"] = np.nan
+        main_df["cluster_min"] = np.nan
+
+        for label in main_df["label_en"].unique():
+            max_col = label + "_max"
+            median_col = label + "_median"
+            min_col = label + "_min"
+
+            if (
+                max_col not in agg_df.columns
+                or median_col not in agg_df.columns
+                or min_col not in agg_df.columns
+            ):
+                continue
+
+            temp_df = main_df[main_df["label_en"] == label].merge(
+                agg_df[["sector", max_col, median_col, min_col]],
+                on="sector",
+                how="left",
+            )
+
+            main_df.loc[main_df["label_en"] == label, "cluster_max"] = temp_df[
+                max_col
+            ].values
+            main_df.loc[main_df["label_en"] == label, "cluster_median"] = temp_df[
+                median_col
+            ].values
+            main_df.loc[main_df["label_en"] == label, "cluster_min"] = temp_df[
+                min_col
+            ].values
+
+        return main_df
+
+    main_fs = populate_cluster_values(main_fs, corp_agg)
+    credit_data_web = populate_cluster_values(credit_data_web, corp_agg)
+    investment_data_web = populate_cluster_values(investment_data_web, corp_agg)
+
+    ###############################################################################
+    # top_correlation - top 5 correlation
+
+    credit_data_web = credit_data_web[
+        ~credit_data_web["label_en"].isin(main_fs["label_en"])
+    ]
+    investment_data_web = investment_data_web[
+        ~investment_data_web["label_en"].isin(main_fs["label_en"])
+    ]
+
+    combined_df = pd.concat([credit_data_web, investment_data_web], ignore_index=True)
+
+    combined_df_unique = combined_df.drop_duplicates(subset="label_en", keep="first")
+
+    cluster_df = pd.concat([main_fs, combined_df_unique], ignore_index=True)
+
+    corp_row = sector_revenue_top_features[
+        (sector_revenue_top_features["Sector"] == sector)
+        & (sector_revenue_top_features["Revenue_Group"] == revenue_group)
+    ]
+
+    corr_df = []
+
+    for idx, row in corp_row.iterrows():
+        for i in range(1, 6):
+            feature = row[f"Top{i}"]
+            correlation = row[f"Correlation{i}"]
+
+            corr_df.append(
+                {
+                    "feature": feature.lower(),
+                    "correlation": correlation,
+                    "sector": row["Sector"],
+                    "revenue_group": row["Revenue_Group"],
+                    "corp_value": locals().get(feature.lower(), None),
+                    "industry_average": industry_average[
+                        industry_average["sector"] == sector
+                    ][feature.lower()].values[0],
+                    "cluster_max": cluster_df[
+                        cluster_df["label_en"] == feature.lower()
+                    ]["cluster_max"].values[0],
+                    "cluster_median": cluster_df[
+                        cluster_df["label_en"] == feature.lower()
+                    ]["cluster_median"].values[0],
+                    "cluster_min": cluster_df[
+                        cluster_df["label_en"] == feature.lower()
+                    ]["cluster_min"].values[0],
+                }
+            )
+    top_correlation = pd.DataFrame(corr_df)
+
+    ###############################################################################
+    # sector_credit_rating
+
+    sector_filter = sector_revenue_aggregation[
+        sector_revenue_aggregation["sector"] == sector
+    ]
+    sector_credit_rating = sector_filter[
+        ["sector", "revenue_group", "rank_value_median"]
+    ].reset_index(drop=True)
+
+    ###############################################################################
+    return (
+        credit_group_prediction,
+        main_fs,
+        credit_data_web,
+        investment_data_web,
+        top_correlation,
+        sector_credit_rating,
+    )
+
+
+fs = pd.read_excel("Credit_Prediction.xlsx", sheet_name=None)
+
+(
+    credit_group_prediction,
+    main_fs,
+    credit_data_web,
+    investment_data_web,
+    top_correlation,
+    sector_credit_rating,
+) = django_transform(fs)
+
+print(credit_group_prediction)
