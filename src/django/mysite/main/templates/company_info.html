@@ -6,7 +6,7 @@
         <head>
         {% csrf_token %}
         <script>
-            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         </script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -46,24 +46,20 @@
                         <div class="sb-sidenav-menu">
                             <div class="nav"> 
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
                                         <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
                                     </svg>
-                                    기업정보
+                                    <span style="color: #00BFFF;">기업정보</span>
                                 </div>                              
                                 <a class="nav-link" href="{% url 'company_info' company.corp|urlencode %}" style="color: red; font-weight: bold; font-size: 22px;">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     기업개요    
                                 </a>                                                                                                                 
-                                <a class="nav-link" href="{% url 'company_news' company.corp|urlencode %}">
-                                    <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                    뉴스/공시
-                                </a>
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                                     <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                     </svg>
-                                    기업분석
+                                    <span style="color: #00BFFF;">기업분석</span>
                                 </div>
                                 <a class="nav-link" href="{% url 'financial_analysis' company.corp|urlencode %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -74,10 +70,10 @@
                                     신용분석
                                 </a>
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-table" viewBox="0 0 16 16">
                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
                                     </svg>
-                                    상세지표
+                                    <span style="color: #00BFFF;">상세지표</span>
                                 </div>
                                 <a class="nav-link" href="{% url 'financial_statements' company.corp|urlencode %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -234,7 +230,7 @@
                                                 
 
                                                 <script>
-                                                    var ratings = {
+                                                    const ratings = {
                                                         potential: parseFloat("{{ rating_data.potential }}"),
                                                         opportunity: parseFloat("{{ rating_data.opportunity }}"),
                                                         paywellfare: parseFloat("{{ rating_data.paywellfare }}"),
@@ -245,9 +241,9 @@
                                                         ceo: parseFloat("{{ rating_data.ceo }}"),
                                                     };
                                                     
-                                                    var maxWidth = 150;
+                                                    const maxWidth = 150;
                                                     for (let [key, value] of Object.entries(ratings)) {
-                                                        var barElement = document.getElementById(key + "-bar");
+                                                        const barElement = document.getElementById(key + "-bar");
                                                         barElement.style.width = (value / 5) * maxWidth + "px";
                                                     }
                                                 </script>     
@@ -267,7 +263,7 @@
                                             <strong>장점 워드클라우드</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_up_morphs_wordcloud.png' %}" alt="장점 워드클라우드">
+                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_up_pos_wordcloud.png' %}" alt="장점 워드클라우드">
                                         </div>
                                     </div>
                                 </div>
@@ -278,7 +274,7 @@
                                             <strong>단점 워드클라우드</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_down_morphs_wordcloud.png' %}" alt="단점 워드클라우드">
+                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_down_pos_wordcloud.png' %}" alt="단점 워드클라우드">
                                         </div>
                                     </div>
                                 </div>
@@ -293,9 +289,9 @@
                                             <strong>GPT 한마디</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <div id="corpSummary" class="bold-text mb-3">
-                                            </div>
-                                            <button id="loadSummaryBtn" class="btn toned-green-btn">
+                                            <div id="corpSummary" class="bold-text mb-3" style="max-width: 800px; margin: auto;">
+                                            </div>                                            
+                                            <button id="loadSummaryBtn" class="btn toned-green-btn d-block mx-auto" style="width: 150px;">
                                                 <i class="fas fa-sync-alt"></i> 요약 불러오기
                                             </button>                                            
                                         </div>
@@ -303,6 +299,7 @@
                                 </div>
                             </div>
                         </div>
+                        
 
 
                         <div class="container-fluid px-3">
@@ -357,7 +354,7 @@
                 
             </script>
             <script>                 
-                var company_name = "{{ company.corp }}";
+                const company_name = "{{ company.corp }}";
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>

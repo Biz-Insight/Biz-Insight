@@ -110,11 +110,12 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in investment_indicator_profitability %}
+                                       {{credit_data_web}}
+                                        {% for row in investment_indicator_profitability %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody>                                                
@@ -139,11 +140,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in investment_indicator_stability %}
+                                        {% for row in investment_indicator_stability %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
@@ -168,11 +169,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in investment_indicator_activity %}
+                                        {% for row in investment_indicator_activity %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
@@ -198,11 +199,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        {% for column in investment_indicator_valuation %}
+                                        {% for row in investment_indicator_valuation %}
                                             <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
+                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
                                             </tr>                                          
                                         {% endfor %}
                                     </tbody> 
