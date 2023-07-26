@@ -35,7 +35,7 @@ def django_transform(fs):
     ###############################################################################
     # initialization
     user = "multi"
-    password = "*****"
+    password = "Campus123!"
     host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
     database = "Data_Mart"
 
@@ -47,7 +47,7 @@ def django_transform(fs):
     query = "SELECT * FROM Data_Lake.crb_index;"
     crb_index = pd.read_sql(query, engine)
 
-    query = "SELECT * FROM Data_Lake.economic_indicators;"
+    query = "SELECT * FROM Data_Warehouse.economic_indicators;"
     economic_indicators = pd.read_sql(query, engine)
 
     query = "SELECT * FROM Data_Mart.credit_model_a;"
@@ -775,3 +775,17 @@ def django_transform(fs):
         top_correlation,
         sector_credit_rating,
     )
+
+
+fs = pd.read_excel("Credit_Prediction.xlsx", sheet_name=None)
+
+(
+    credit_group_prediction,
+    main_fs,
+    credit_data_web,
+    investment_data_web,
+    top_correlation,
+    sector_credit_rating,
+) = django_transform(fs)
+
+print(credit_group_prediction)
