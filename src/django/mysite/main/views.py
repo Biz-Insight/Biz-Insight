@@ -40,13 +40,13 @@ class CompanyList(ListView):
 
 
 class CompanyInfoWeb(ListView):
-    model = KospiCompanyInfo
+    model = CompanyInfo
     template_name = "company_info.html"
     context_object_name = "company_info"
 
     def get_queryset(self):
         company_name = self.request.session.get("context")
-        queryset = KospiCompanyInfo.objects.filter(corp=company_name)
+        queryset = CompanyInfo.objects.filter(corp=company_name)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -150,6 +150,12 @@ class CreditAnalysis(ListView):
         company_credit = CreditData.objects.filter(corp=company_name).first()
         sector_name = company_credit.sector
         credit_indicator = context["credit_analysis"]
+        company_info = CompanyInfo.objects.filter(corp=company_name).first()
+        rank = company_info.rank
+        predicted_rank = company_info.predicted_rank
+    
+        context["rank"] = rank
+        context["predicted_rank"] = predicted_rank
 
         # 클래스 인스턴스
         revenue_temp = [data for data in credit_indicator if data.label_ko == "매출액"]
