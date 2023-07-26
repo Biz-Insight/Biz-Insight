@@ -11335,7 +11335,7 @@ body {
   width: 210px;
   height: 25px;
   background: linear-gradient(90deg, #f0f0f0, #dcdcdc);
-  border-radius: 13px;
+  border-radius: 5px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 0px 2px 5px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
@@ -11346,12 +11346,12 @@ body {
 /* Filled part of the rating bar */
 .filled-bar {
   height: 100%;
-  background: linear-gradient(90deg, #32CD32, #228B22, #006400);
+  background-color: #228B22;
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 15px 0px 0px 15px;
-  transition: width 0.3s;
+  border-radius: 0px 0px 0px 0px;
+
 
   /* Added outer shadow for depth */
   box-shadow: 
@@ -11421,7 +11421,7 @@ p {
 }
 
 .table-group-divider tr:last-child {
-    border-bottom: none;
+    border-bottom: 2px solid currentcolor;
 }
 
 .card {
@@ -11457,6 +11457,8 @@ p {
 .toned-green-btn {
   background-color: #008040 !important;
   border-color: #00632b !important;
+  padding: 5px 10px;
+  color: #ffffff;
 }
 
 .toned-green-btn:hover, .toned-green-btn:focus {
