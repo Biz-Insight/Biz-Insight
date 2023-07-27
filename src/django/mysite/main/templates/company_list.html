@@ -25,20 +25,20 @@
         <div class="card-body">
             <table class="table table-light">
                 <thead class="thead-light">
-                    <tr>
-                        <th scope="col">표준코드</th>
-                        <th scope="col">요약코드</th>
-                        <th scope="col">기업명</th>
-                        <th scope="col">기업약명</th>
+                    <tr class="bold-text">
+                        <th scope="col">기업명 (클릭 시 분석페이지로 이동합니다)</th>
+                        <th scope="col">산업명</th>
+                        <th scope="col">주식코드</th>
+                        <th scope="col">홈페이지</th>
                     </tr>
                 </thead>
-                <tbody class="text-dark">
+                <tbody class="table-group-divider">
                     {% for company in company_list %}
-                    <tr>
-                        <td scope="row"> {{ company.standard_code }}</td>
-                        <td scope="row"> {{ company.short_code }}</td>
-                        <td scope="row"> {{ company.company_full_name }}</td>
-                        <td scope="row"> <a href="{% url 'search' %}?company_name={{ company.company_name }}">{{ company.company_name }}</a></td>
+                    <tr class="bold-text">
+                        <td scope="row"> <a href="{% url 'search' %}?company_name={{ company.corp }}">{{ company.corp }}</a></td>
+                        <td class="vertical-line"> {{ company.sector }}</td>
+                        <td class="vertical-line"> {{ company.stock_code }}</td>
+                        <td class="vertical-line">  <a href="{{ company.homepage }}" target="_blank">{{ company.homepage }}</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

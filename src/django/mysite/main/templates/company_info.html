@@ -6,7 +6,7 @@
         <head>
         {% csrf_token %}
         <script>
-            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         </script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -46,24 +46,20 @@
                         <div class="sb-sidenav-menu">
                             <div class="nav"> 
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
                                         <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
                                     </svg>
-                                    기업정보
+                                    <span style="color: #00BFFF;">기업정보</span>
                                 </div>                              
                                 <a class="nav-link" href="{% url 'company_info' company.corp|urlencode %}" style="color: red; font-weight: bold; font-size: 22px;">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     기업개요    
                                 </a>                                                                                                                 
-                                <a class="nav-link" href="{% url 'company_news' company.corp|urlencode %}">
-                                    <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                    뉴스/공시
-                                </a>
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                                     <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                     </svg>
-                                    기업분석
+                                    <span style="color: #00BFFF;">기업분석</span>
                                 </div>
                                 <a class="nav-link" href="{% url 'financial_analysis' company.corp|urlencode %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -74,10 +70,10 @@
                                     신용분석
                                 </a>
                                 <div class="sb-sidenav-menu-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-table" viewBox="0 0 16 16">
                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
                                     </svg>
-                                    상세지표
+                                    <span style="color: #00BFFF;">상세지표</span>
                                 </div>
                                 <a class="nav-link" href="{% url 'financial_statements' company.corp|urlencode %}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -97,15 +93,32 @@
                 </div>
                 <div id="layoutSidenav_content">
                     <main>
-                        <div class="w-25 px-4" style="margin-bottom: 12px;">
-                            <div class="company-name-box">
+                        <div class="w-100 px-4 d-flex align-items-center" style="margin-bottom: 12px;">
+                            <div class="company-name-box w-25">
                                 <h1 class="company-title">{{ company.corp }}</h1>
                             </div>
+                            <div class="d-flex align-items-center mx-5 larger-text">                    
+                                {% if company.rank != null %}
+                                    <p class="mb-0" style="font-size: 1.3em;">실제 신용 등급 : </p>
+                                    <div class="rank-circle ml-2" data-rank="{{ company.rank }}">
+                                        {{ company.rank }}
+                                    </div>
+                                {% else %}
+                                    <p class="mb-0" style="font-size: 1.3em;">예측 신용 등급 : </p>
+                                    <div class="rank-circle ml-2" data-rank="{{ company.predicted_rank }}">
+                                        {{ company.predicted_rank }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <p class="flex-shrink-0 mx-1 italic-text" style="font-size: 1.2em;">"실제 신용 등급이 없을 시, 예측하여 제공해드립니다"</p>
                         </div>
+                        
+
+                        
                         <div class="container-fluid">
                             <div class="row d-flex align-items-stretch">
-                                <div class="col-lg-6 px-2 mb-4">
-                                    <div class="card border-dark h-100">
+                                <div class="col-lg-6 px-2 mb-2">
+                                    <div class="card border-dark h-100 card-equal-height">
                                         <div class="card-header">
                                             <i class="fa-solid fa-circle-info"></i>
                                             <span class="chart-title-unit">기업정보</span>
@@ -113,27 +126,27 @@
                                         <div class="card-body">
                                             <table class="table table-striped">
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">종목코드</th>
                                                         <td class="vertical-line"> {{ company.stock_code }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">업종</th>
                                                         <td class="vertical-line"> {{ company.sector }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">주요제품</th>
                                                         <td class="vertical-line"> {{ company.main_product }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">상장일</th>
                                                         <td class="vertical-line"> {{ company.listing_date }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">대표자명</th>
                                                         <td class="vertical-line"> {{ company.representative_name }}</td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bold-text">
                                                         <th scope="row">홈페이지</th>
                                                         <td class="vertical-line"> <a href="{{ company.homepage }}" target="_blank">{{ company.homepage }}</a></td>
                                                     </tr>
@@ -142,134 +155,99 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 px-2 mb-4">
+                                <div class="col-lg-6 px-2 mb-2">
                                     <div class="card border-dark h-100">
                                         <div class="card-header">
                                             <i class="fa-solid fa-star"></i>
                                             <span class="chart-title-unit">별점</span>
                                         </div>
-                                        <div class="card-body">
-                                        <div class="rating-stars">
-                                            <h4 style="display: inline-block;">총점 {{ rating_data.rating }}</h4>
-                                            {% for _ in rating_stars.rating.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.rating.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.rating.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        
-                                        <div class="rating-stars">
-                                            임금 및 복지 {{ rating_data.paywellfare }}
-                                            {% for _ in rating_stars.paywellfare.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.paywellfare.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.paywellfare.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            업무와 삶의 균형 {{ rating_data.worklifebal }}
-                                            {% for _ in rating_stars.worklifebal.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.worklifebal.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.worklifebal.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            사내 문화 {{ rating_data.culture }}
-                                            {% for _ in rating_stars.culture.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.culture.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.culture.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            승진 가능성 및 기회 {{ rating_data.opportunity }}
-                                            {% for _ in rating_stars.opportunity.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.opportunity.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.opportunity.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            경영진 평 {{ rating_data.manager }}
-                                            {% for _ in rating_stars.manager.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.manager.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.manager.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            기업 추천도 {{ rating_data.recommend }}
-                                            {% for _ in rating_stars.recommend.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.recommend.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.recommend.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            CEO 지지율 {{ rating_data.ceo }}
-                                            {% for _ in rating_stars.ceo.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.ceo.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.ceo.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="rating-stars">
-                                            성장 잠재성 {{ rating_data.potential }}
-                                            {% for _ in rating_stars.potential.full_stars %}
-                                                <i class="fas fa-star filled"></i>
-                                            {% endfor %}
-                                            {% if rating_stars.potential.half_star %}
-                                                <i class="fas fa-star-half-alt filled"></i>
-                                            {% endif %}
-                                            {% for _ in rating_stars.potential.empty_stars %}
-                                                <i class="far fa-star"></i>
-                                            {% endfor %}
-                                        </div>
-                                        <!-- <p style="margin-bottom: 1px;">승진 가능성 및 기회 {{ rating_data.opportunity }}</p>
-                                        <div class="rating-bar">
-                                            <div class="filled-bar" id="opportunity-bar"></div>
-                                            <div class="empty-bar"></div>
-                                        </div>
+                                            <div class="card-body">
+                                                <div class="total-rating">
+                                                    <h4 style="font-size: 30px; font-weight: bold;">총점 {{ rating_data.rating }}</h4>
+                                                    {% for _ in rating_stars.rating.full_stars %}
+                                                        <i class="fas fa-star filled" style="font-size: 30px;"></i>
+                                                    {% endfor %}
+                                                    {% if rating_stars.rating.half_star %}
+                                                        <i class="fas fa-star-half-alt filled" style="font-size: 30px;"></i>
+                                                    {% endif %}
+                                                    {% for _ in rating_stars.rating.empty_stars %}
+                                                        <i class="far fa-star" style="font-size: 30px;"></i>
+                                                    {% endfor %}  
+                                                    <hr>
+                                            </div>                      
+                                            <div class="ratings-container">
+                                                <div class="left-ratings">
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">임금 및 복지 {{ rating_data.paywellfare }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="paywellfare-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">업무와 삶의 균형 {{ rating_data.worklifebal }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="worklifebal-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">사내 문화 {{ rating_data.culture }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="culture-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">경영진 평 {{ rating_data.manager }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="manager-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">기업 추천도 {{ rating_data.recommend }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="recommend-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">CEO 지지율 {{ rating_data.ceo }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="ceo-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">성장 잠재성 {{ rating_data.potential }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="potential-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-section">
+                                                        <p style="margin-bottom: 1px;">승진 가능성 및 기회 {{ rating_data.opportunity }}</p>
+                                                        <div class="rating-bar">
+                                                            <div class="filled-bar" id="opportunity-bar"></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
 
-                                        <script>
-                                            var opportunityRating = parseFloat("{{ rating_data.opportunity }}");
-                                            var barElement = document.getElementById("opportunity-bar");
-                                            var maxWidth = 200;
-                                            barElement.style.width = (opportunityRating / 5) * maxWidth + "px";
-                                        </script>          -->
+                                                <script>
+                                                    const ratings = {
+                                                        potential: parseFloat("{{ rating_data.potential }}"),
+                                                        opportunity: parseFloat("{{ rating_data.opportunity }}"),
+                                                        paywellfare: parseFloat("{{ rating_data.paywellfare }}"),
+                                                        worklifebal: parseFloat("{{ rating_data.worklifebal }}"),
+                                                        culture: parseFloat("{{ rating_data.culture }}"),
+                                                        manager: parseFloat("{{ rating_data.manager }}"),
+                                                        recommend: parseFloat("{{ rating_data.recommend }}"),
+                                                        ceo: parseFloat("{{ rating_data.ceo }}"),
+                                                    };
+                                                    
+                                                    const maxWidth = 150;
+                                                    for (let [key, value] of Object.entries(ratings)) {
+                                                        const barElement = document.getElementById(key + "-bar");
+                                                        barElement.style.width = (value / 5) * maxWidth + "px";
+                                                    }
+                                                </script>     
+                                            </div>    
                                         </div>
                                     </div>
                                 </div>
@@ -278,35 +256,30 @@
 
                         <div class="container-fluid px-3 my-4">
                             <div class="row">
-                                <!-- 장점 워드클라우드 카드 -->
                                 <div class="col-lg-6 mb-4 mb-lg-0">
                                     <div class="card border-dark">
                                         <div class="card-header bg-primary text-white">
+                                            <i class="fas fa-cloud me-2"></i>
                                             <strong>장점 워드클라우드</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_up_morphs_wordcloud.png' %}" alt="장점 워드클라우드">
+                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_up_pos_wordcloud.png' %}" alt="장점 워드클라우드">
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- 단점 워드클라우드 카드 -->
                                 <div class="col-lg-6">
                                     <div class="card border-dark">
                                         <div class="card-header bg-danger text-white">
+                                            <i class="fas fa-cloud me-2"></i>
                                             <strong>단점 워드클라우드</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_down_morphs_wordcloud.png' %}" alt="단점 워드클라우드">
+                                            <img class="img-fluid" src="{% static 'wordcloud_images/'|add:company.corp|add:'_down_pos_wordcloud.png' %}" alt="단점 워드클라우드">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        
-                        
-                        
+                        </div>         
                         <div class="container-fluid px-3">
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
@@ -316,9 +289,9 @@
                                             <strong>GPT 한마디</strong>
                                         </div>
                                         <div class="card-body text-center">
-                                            <div id="corpSummary" class="mb-3">
-                                            </div>
-                                            <button id="loadSummaryBtn" class="btn toned-green-btn">
+                                            <div id="corpSummary" class="bold-text mb-3" style="max-width: 800px; margin: auto;">
+                                            </div>                                            
+                                            <button id="loadSummaryBtn" class="btn toned-green-btn d-block mx-auto" style="width: 150px;">
                                                 <i class="fas fa-sync-alt"></i> 요약 불러오기
                                             </button>                                            
                                         </div>
@@ -326,6 +299,7 @@
                                 </div>
                             </div>
                         </div>
+                        
 
 
                         <div class="container-fluid px-3">
@@ -380,7 +354,7 @@
                 
             </script>
             <script>                 
-                var company_name = "{{ company.corp }}";
+                const company_name = "{{ company.corp }}";
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>

@@ -12,20 +12,28 @@ function fetchChartData(company_name, chart_type) {
         success: function(data) {
             if (chart_type === 'profitability_indicator') {
                 drawProfitabilityIndicatorChart(data);
+                drawProfitabilityIndicatorTable(data);
             } else if (chart_type === 'return_investment') {
                 drawReturnInvestmentChart(data);
+                drawReturnInvestmentTable(data);
             } else if (chart_type === 'profitability_growth') {
                 drawProfitabilityGrowthChart(data);
+                drawProfitabilityGrowthTable(data);
             } else if (chart_type === 'asset_growth') {
                 drawAssetGrowthChart(data);
+                drawAssetGrowthTable(data);
             } else if (chart_type === 'stability') {
                 drawStabilityChart(data);
+                drawStabilityTable(data);
             } else if (chart_type === 'turnover') {
                 drawTurnoverChart(data);
+                drawTurnoverTable(data);
             } else if (chart_type === 'per_share') {
                 drawPerShareChart(data); 
+                drawPerShareTable(data); 
             } else if (chart_type === 'value') {
                 drawValueChart(data); 
+                drawValueTable(data); 
             } else if (chart_type === 'industry') {
                 drawIndustryChart(data);
                 drawIndustryTable(data); 
@@ -38,34 +46,34 @@ function fetchChartData(company_name, chart_type) {
 }
 
 function drawProfitabilityIndicatorChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var salesData = [];
-    var profitMarginData = [];
-    var netProfitMarginData = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const salesData = [];
+    const profitMarginData = [];
+    const netProfitMarginData = [];
 
-    var salesItem = data.sales[0];
+    const salesItem = data.sales[0];
     salesData.push(salesItem.number_2018 / 100000000);
     salesData.push(salesItem.number_2019 / 100000000);
     salesData.push(salesItem.number_2020 / 100000000);
     salesData.push(salesItem.number_2021 / 100000000);
     salesData.push(salesItem.number_2022 / 100000000);
 
-    var profitMarginItem = data.profit_margin[0];
+    const profitMarginItem = data.profit_margin[0];
     profitMarginData.push(profitMarginItem.number_2018);
     profitMarginData.push(profitMarginItem.number_2019);
     profitMarginData.push(profitMarginItem.number_2020);
     profitMarginData.push(profitMarginItem.number_2021);
     profitMarginData.push(profitMarginItem.number_2022);
 
-    var netProfitMarginItem = data.net_profit_margin[0];
+    const netProfitMarginItem = data.net_profit_margin[0];
     netProfitMarginData.push(netProfitMarginItem.number_2018);
     netProfitMarginData.push(netProfitMarginItem.number_2019);
     netProfitMarginData.push(netProfitMarginItem.number_2020);
     netProfitMarginData.push(netProfitMarginItem.number_2021);
     netProfitMarginData.push(netProfitMarginItem.number_2022);
 
-    var ctx = document.getElementById('profitability_indicator');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('profitability_indicator');
+    const myLineChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -163,42 +171,42 @@ function drawProfitabilityIndicatorChart(data) {
 };
 
 function drawReturnInvestmentChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var netIncomeData = [];
-    var roeData = [];
-    var roaData = [];
-    var roicData = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const netIncomeData = [];
+    const roeData = [];
+    const roaData = [];
+    const roicData = [];
 
-    var netIncomeItem = data.net_income[0];
+    const netIncomeItem = data.net_income[0];
     netIncomeData.push(netIncomeItem.number_2018 / 100000000);
     netIncomeData.push(netIncomeItem.number_2019 / 100000000);
     netIncomeData.push(netIncomeItem.number_2020 / 100000000);
     netIncomeData.push(netIncomeItem.number_2021 / 100000000);
     netIncomeData.push(netIncomeItem.number_2022 / 100000000);
 
-    var roeItem = data.roe[0];
+    const roeItem = data.roe[0];
     roeData.push(roeItem.number_2018);
     roeData.push(roeItem.number_2019);
     roeData.push(roeItem.number_2020);
     roeData.push(roeItem.number_2021);
     roeData.push(roeItem.number_2022);
 
-    var roaItem = data.roa[0];
+    const roaItem = data.roa[0];
     roaData.push(roaItem.number_2018);
     roaData.push(roaItem.number_2019);
     roaData.push(roaItem.number_2020);
     roaData.push(roaItem.number_2021);
     roaData.push(roaItem.number_2022);
 
-    var roicItem = data.roic[0];
+    const roicItem = data.roic[0];
     roicData.push(roicItem.number_2018);
     roicData.push(roicItem.number_2019);
     roicData.push(roicItem.number_2020);
     roicData.push(roicItem.number_2021);
     roicData.push(roicItem.number_2022);
 
-    var ctx = document.getElementById('return_investment');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('return_investment');
+    const myLineChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -309,31 +317,31 @@ function drawReturnInvestmentChart(data) {
 };
 
 function drawProfitabilityGrowthChart(data) {
-    var labels = ["2019", "2020", "2021", "2022"];
-    var revenue_growth_data = [];
-    var operating_income_data = [];
-    var netIncomeData = [];
+    const labels = ["2019", "2020", "2021", "2022"];
+    const revenue_growth_data = [];
+    const operating_income_data = [];
+    const netIncomeData = [];
 
-    var revenueGrowthItem = data.revenue_growth[0];
+    const revenueGrowthItem = data.revenue_growth[0];
     revenue_growth_data.push(revenueGrowthItem.number_2019 );
     revenue_growth_data.push(revenueGrowthItem.number_2020 );
     revenue_growth_data.push(revenueGrowthItem.number_2021 );
     revenue_growth_data.push(revenueGrowthItem.number_2022 );
 
-    var operatingIncomeItem = data.operating_income[0];
+    const operatingIncomeItem = data.operating_income[0];
     operating_income_data.push(operatingIncomeItem.number_2019);
     operating_income_data.push(operatingIncomeItem.number_2020);
     operating_income_data.push(operatingIncomeItem.number_2021);
     operating_income_data.push(operatingIncomeItem.number_2022);
 
-    var netIncomeItem = data.net_income[0];
+    const netIncomeItem = data.net_income[0];
     netIncomeData.push(netIncomeItem.number_2019);
     netIncomeData.push(netIncomeItem.number_2020);
     netIncomeData.push(netIncomeItem.number_2021);
     netIncomeData.push(netIncomeItem.number_2022);
 
-    var ctx = document.getElementById('profitability_growth');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('profitability_growth');
+    const myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -423,31 +431,31 @@ function drawProfitabilityGrowthChart(data) {
 };
 
 function drawAssetGrowthChart(data) {
-    var labels = ["2019", "2020", "2021", "2022"];
-    var asset_growth_data = [];
-    var tangible_asset_data = [];
-    var total_equity_data = [];
+    const labels = ["2019", "2020", "2021", "2022"];
+    const asset_growth_data = [];
+    const tangible_asset_data = [];
+    const total_equity_data = [];
 
-    var assetGrowthItem = data.asset_growth[0];
+    const assetGrowthItem = data.asset_growth[0];
     asset_growth_data.push(assetGrowthItem.number_2019 );
     asset_growth_data.push(assetGrowthItem.number_2020 );
     asset_growth_data.push(assetGrowthItem.number_2021 );
     asset_growth_data.push(assetGrowthItem.number_2022 );
 
-    var tangibleAssetItem = data.tangible_asset[0];
+    const tangibleAssetItem = data.tangible_asset[0];
     tangible_asset_data.push(tangibleAssetItem.number_2019);
     tangible_asset_data.push(tangibleAssetItem.number_2020);
     tangible_asset_data.push(tangibleAssetItem.number_2021);
     tangible_asset_data.push(tangibleAssetItem.number_2022);
 
-    var totalEquityItem = data.total_equity[0];
+    const totalEquityItem = data.total_equity[0];
     total_equity_data.push(totalEquityItem.number_2019);
     total_equity_data.push(totalEquityItem.number_2020);
     total_equity_data.push(totalEquityItem.number_2021);
     total_equity_data.push(totalEquityItem.number_2022);
 
-    var ctx = document.getElementById('asset_growth');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('asset_growth');
+    const myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -540,34 +548,34 @@ function drawAssetGrowthChart(data) {
 
 
 function drawStabilityChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var debt_data = [];
-    var current_liabilities_data = [];
-    var non_current_liabilities_data = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const debt_data = [];
+    const current_liabilities_data = [];
+    const non_current_liabilities_data = [];
 
-    var debtItem = data.debt[0];
+    const debtItem = data.debt[0];
     debt_data.push(debtItem.number_2018 );
     debt_data.push(debtItem.number_2019 );
     debt_data.push(debtItem.number_2020 );
     debt_data.push(debtItem.number_2021 );
     debt_data.push(debtItem.number_2022 );
 
-    var currentLiabilitiesItem = data.current_liabilities[0];
+    const currentLiabilitiesItem = data.current_liabilities[0];
     current_liabilities_data.push(currentLiabilitiesItem.number_2018);
     current_liabilities_data.push(currentLiabilitiesItem.number_2019);
     current_liabilities_data.push(currentLiabilitiesItem.number_2020);
     current_liabilities_data.push(currentLiabilitiesItem.number_2021);
     current_liabilities_data.push(currentLiabilitiesItem.number_2022);
 
-    var nonCurrentLiabilitiesItem = data.non_current_liabilities[0];
+    const nonCurrentLiabilitiesItem = data.non_current_liabilities[0];
     non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2018);
     non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2019);
     non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2020);
     non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2021);
     non_current_liabilities_data.push(nonCurrentLiabilitiesItem.number_2022);
 
-    var ctx = document.getElementById('stability');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('stability');
+    const myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -658,42 +666,42 @@ function drawStabilityChart(data) {
 };
 
 function drawTurnoverChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var asset_data = [];
-    var accounts_receivable_data = [];
-    var inventory_data = [];
-    var accounts_payable_data = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const asset_data = [];
+    const accounts_receivable_data = [];
+    const inventory_data = [];
+    const accounts_payable_data = [];
 
-    var assetItem = data.asset[0];
+    const assetItem = data.asset[0];
     asset_data.push(assetItem.number_2018 );
     asset_data.push(assetItem.number_2019 );
     asset_data.push(assetItem.number_2020 );
     asset_data.push(assetItem.number_2021 );
     asset_data.push(assetItem.number_2022 );
 
-    var accountsReceivableItem = data.accounts_receivable[0];
+    const accountsReceivableItem = data.accounts_receivable[0];
     accounts_receivable_data.push(accountsReceivableItem.number_2018);
     accounts_receivable_data.push(accountsReceivableItem.number_2019);
     accounts_receivable_data.push(accountsReceivableItem.number_2020);
     accounts_receivable_data.push(accountsReceivableItem.number_2021);
     accounts_receivable_data.push(accountsReceivableItem.number_2022);
 
-    var inventoryItem = data.inventory[0];
+    const inventoryItem = data.inventory[0];
     inventory_data.push(inventoryItem.number_2018);
     inventory_data.push(inventoryItem.number_2019);
     inventory_data.push(inventoryItem.number_2020);
     inventory_data.push(inventoryItem.number_2021);
     inventory_data.push(inventoryItem.number_2022);
 
-    var accountsPayableItem = data.accounts_payable[0];
+    const accountsPayableItem = data.accounts_payable[0];
     accounts_payable_data.push(accountsPayableItem.number_2018);
     accounts_payable_data.push(accountsPayableItem.number_2019);
     accounts_payable_data.push(accountsPayableItem.number_2020);
     accounts_payable_data.push(accountsPayableItem.number_2021);
     accounts_payable_data.push(accountsPayableItem.number_2022);
 
-    var ctx = document.getElementById('turnover');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('turnover');
+    const myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -795,26 +803,26 @@ function drawTurnoverChart(data) {
     }); 
 };
 function drawPerShareChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var eps_data = [];
-    var bps_data = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const eps_data = [];
+    const bps_data = [];
 
-    var epsItem = data.eps[0];
+    const epsItem = data.eps[0];
     eps_data.push(epsItem.number_2018 );
     eps_data.push(epsItem.number_2019 );
     eps_data.push(epsItem.number_2020 );
     eps_data.push(epsItem.number_2021 );
     eps_data.push(epsItem.number_2022 );
 
-    var bpsItem = data.bps[0];
+    const bpsItem = data.bps[0];
     bps_data.push(bpsItem.number_2018);
     bps_data.push(bpsItem.number_2019);
     bps_data.push(bpsItem.number_2020);
     bps_data.push(bpsItem.number_2021);
     bps_data.push(bpsItem.number_2022);
 
-    var ctx = document.getElementById('per_share');
-    var myBarChart = new Chart(ctx, {
+    const ctx = document.getElementById('per_share');
+    const myBarChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -885,34 +893,34 @@ function drawPerShareChart(data) {
 };
 
 function drawValueChart(data) {
-    var labels = ["2018", "2019", "2020", "2021", "2022"];
-    var per_data = [];
-    var pbr_data = [];
-    var pcr_data = [];
+    const labels = ["2018", "2019", "2020", "2021", "2022"];
+    const per_data = [];
+    const pbr_data = [];
+    const pcr_data = [];
   
-    var perItem = data.per[0];
+    const perItem = data.per[0];
     per_data.push(perItem.number_2018 );
     per_data.push(perItem.number_2019 );
     per_data.push(perItem.number_2020 );
     per_data.push(perItem.number_2021 );
     per_data.push(perItem.number_2022 );
   
-    var pbrItem = data.pbr[0];
+    const pbrItem = data.pbr[0];
     pbr_data.push(pbrItem.number_2018);
     pbr_data.push(pbrItem.number_2019);
     pbr_data.push(pbrItem.number_2020);
     pbr_data.push(pbrItem.number_2021);
     pbr_data.push(pbrItem.number_2022);
   
-    var pcrItem = data.pcr[0];
+    const pcrItem = data.pcr[0];
     pcr_data.push(pcrItem.number_2018);
     pcr_data.push(pcrItem.number_2019);
     pcr_data.push(pcrItem.number_2020);
     pcr_data.push(pcrItem.number_2021);
     pcr_data.push(pcrItem.number_2022);
   
-    var ctx = document.getElementById('value');
-    var myLineChart = new Chart(ctx, {
+    const ctx = document.getElementById('value');
+    const myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -1003,9 +1011,9 @@ function drawValueChart(data) {
   };
 
   function drawIndustryChart(data) {
-    var ctx = document.getElementById('industry').getContext('2d');
+    const ctx = document.getElementById('industry').getContext('2d');
 
-    var chartData = {
+    const chartData = {
         labels: ['수익성', '성장성', '안정성', '활동성', '가치지표'],
         datasets: [{
             label: data.company_name,
@@ -1039,7 +1047,7 @@ function drawValueChart(data) {
         },]
     };
 
-    var radarChart = new Chart(ctx, {
+    const radarChart = new Chart(ctx, {
         type: 'radar',
         data: chartData,
         options: {
@@ -1093,8 +1101,222 @@ function drawValueChart(data) {
     });
 }
 
+
+function drawProfitabilityIndicatorTable(data) {
+    const tableBody = document.querySelector("#drawProfitabilityIndicatorTable tbody");
+ 
+    const labelsInKorean = {
+        "sales": "매출액",
+        "profit_margin": "영업이익률",
+        "net_profit_margin": "순이익률"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+ 
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            
+            if(label === "sales") {
+                valueCell.textContent = (data[label][0][year] / 100000000).toFixed(1);
+            } else {
+                valueCell.textContent = data[label][0][year].toFixed(2);
+            }
+            
+            row.appendChild(valueCell);
+        }); 
+        tableBody.appendChild(row);
+    }
+}
+
+function drawReturnInvestmentTable(data) {
+    const tableBody = document.querySelector("#drawReturnInvestmentTable tbody");
+
+    const labelsInKorean = {
+        "roe": "ROE",
+        "roa": "ROA",
+        "roic": "ROIC",
+        "net_income": "당기순이익"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            
+            if(label === "net_income") {
+                valueCell.textContent = (data[label][0][year] / 100000000).toFixed(1); 
+            } else {
+                valueCell.textContent = data[label][0][year].toFixed(2); 
+            }
+            
+            row.appendChild(valueCell);
+        }); 
+
+        tableBody.appendChild(row);
+    }
+}
+
+function drawProfitabilityGrowthTable(data) {
+    const tableBody = document.querySelector("#drawProfitabilityGrowthTable tbody");
+ 
+    // 한국어 라벨 설정
+    const labelsInKorean = {
+        "revenue_growth": "매출액증가율",
+        "operating_income": "영업이익증가율",
+        "net_income": "순이익증가율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawAssetGrowthTable(data) {
+    const tableBody = document.querySelector("#drawAssetGrowthTable tbody");
+
+    const labelsInKorean = {
+        "asset_growth": "총자산증가율",
+        "tangible_asset": "유형자산증가율",
+        "total_equity": "자기자본증가율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawStabilityTable(data) {
+    const tableBody = document.querySelector("#drawStabilityTable tbody");
+
+    const labelsInKorean = {
+        "debt": "부채비율",
+        "current_liabilities": "유동부채비율",
+        "non_current_liabilities": "비유동부채비율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawTurnoverTable(data) {
+    const tableBody = document.querySelector("#drawTurnoverTable tbody");
+
+    const labelsInKorean = {
+        "asset": "총자산회전율",
+        "accounts_receivable": "매출채권회전율",
+        "inventory": "재고자산회전율",
+        "accounts_payable": "매입채무회전율"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2);
+            row.appendChild(valueCell);
+        });
+        tableBody.appendChild(row);
+    }
+}
+function drawPerShareTable(data) {
+    const tableBody = document.querySelector("#drawPerShareTable tbody");
+    const labelsInKorean = {
+        "eps": "EPS",
+        "bps": "BPS"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = (data[label][0][year]).toFixed(2);
+
+            row.appendChild(valueCell);
+        });
+
+        tableBody.appendChild(row);
+    }
+}
+function drawValueTable(data) {
+    const tableBody = document.querySelector("#drawValueTable tbody");
+ 
+    const labelsInKorean = {
+        "per": "PER",
+        "pbr": "PBR",
+        "pcr": "PCR"
+    };
+
+    for (let label in labelsInKorean) {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = labelsInKorean[label];
+        row.appendChild(nameCell);
+
+        ["number_2018", "number_2019", "number_2020", "number_2021", "number_2022"].forEach(year => {
+            const valueCell = document.createElement('td');
+            valueCell.textContent = data[label][0][year].toFixed(2); 
+            row.appendChild(valueCell);
+        }); 
+        tableBody.appendChild(row);
+    }
+}
+
+
+
+
+
 function drawIndustryTable(data) {
-    const tableBody = document.querySelector("#data-table tbody");
+    const tableBody = document.querySelector("#drawIndustryTable tbody");
 
     const categoriesInKorean = {
         "profitability": "수익성",

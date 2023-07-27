@@ -29,10 +29,6 @@ def wordCloud(text_df, stop_words, val, token):
     # for val in iter_value_list:
     print(val, "WordCloud")
     FEATURE_POS = [
-        # 부사
-        "MAG",
-        "MAJ",
-        "MM",
         # 명사
         "NNB",
         "NNBC",
@@ -64,24 +60,24 @@ def wordCloud(text_df, stop_words, val, token):
         font_path=os.path.join(
             settings.BASE_DIR, "static/fonts/NanumSquareNeo-cBd.ttf"
         ),
-        width=700,  # 워드클라우드의 너비
-        height=350,  # 워드클라우드의 높이
+        width=700,
+        height=350,
         relative_scaling=0.2,
         background_color="white",
         max_words=300,
         colormap="Set2",
     ).generate_from_frequencies(df_tfidf.T.sum(axis=1))
 
-    fig, ax = plt.subplots()  # 변경된 부분
+    fig, ax = plt.subplots()
     ax.imshow(Cloud, interpolation="bilinear")
     ax.axis("off")
-    ax.set_position([0, 0, 1, 1])  # 여백 제거
+    ax.set_position([0, 0, 1, 1])
 
     save_path = os.path.join(
         settings.BASE_DIR, "static", f"wordcloud_images/{val}_{token}_wordcloud.png"
     )
-    plt.savefig(save_path, bbox_inches="tight", pad_inches=0)  # 여백 제거
-    # plt.show()  # 이 부분은 필요없으면 주석 처리합니다.
+    plt.savefig(save_path, bbox_inches="tight", pad_inches=0)
+    # plt.show()
     plt.close()
     return
 

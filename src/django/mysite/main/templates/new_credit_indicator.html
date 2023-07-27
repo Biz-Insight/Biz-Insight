@@ -37,29 +37,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav"> 
                             <div class="sb-sidenav-menu-heading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
-                                    <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
-                                </svg>
-                                기업정보    
-                            </div>
-                            <a class="nav-link" href="{% url 'new_company_info'|urlencode %}">
-                                <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                기업개요
-                            </a>                                                                                                                                          
-                            <a class="nav-link" href="{% url 'new_company_news'|urlencode %}">
-                                <div class="sb-nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
-                                뉴스/공시
-                            </a>
-                            <div class="sb-sidenav-menu-heading">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                                 <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                 </svg>
                                 기업분석
-                            </div>
-                            <a class="nav-link" href="{% url 'new_financial_analysis' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                재무분석
-                            </a>                             
+                            </div>                         
                             <a class="nav-link" href="{% url 'new_credit_analysis' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
@@ -78,7 +60,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 투자지표
                             </a>
-                            <a class="nav-link" href="{% url 'new_credit_indicator'%}">
+                            <a class="nav-link" href="{% url 'new_credit_indicator'%}" style="color: red; font-weight: bold; font-size: 22px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 신용지표
                             </a>  
@@ -97,27 +79,32 @@
                         <div class="card border-dark mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">안전성</span>
+                                <span class="chart-title-unit">안정성</span>
                                 <span class="chart-title-unit2">(억원/%/%p)</span>
                             </div>
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
                                         {% for column in stability %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody>                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -132,21 +119,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
                                         {% for column in liquidity %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -160,21 +151,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
                                         {% for column in profitability %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -189,21 +184,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
                                         {% for column in cash_flow %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.3 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.2 }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ column.4 }}</td>
-                                            </tr>                                          
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
