@@ -67,4 +67,5 @@ urlpatterns = [
         views.new_investment_indicator,
         name="new_investment_indicator",
     ),
+    path("new_credit_data/", views.NewCreditData.as_view(), name="new_credit_data"),
 ]
