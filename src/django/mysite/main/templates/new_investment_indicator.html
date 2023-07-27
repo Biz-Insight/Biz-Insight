@@ -80,7 +80,7 @@
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 <span class="chart-title-unit">수익성</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
+                                <span class="chart-title-unit2">(%)</span>
                             </div>
                             <div class="card-body">
                                 <table class="table">
@@ -114,30 +114,68 @@
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 <span class="chart-title-unit">안정성</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
+                                <span class="chart-title-unit2">(%)</span>
                             </div>
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for row in investment_indicator_stability %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
-                                            </tr>                                          
+                                    <tbody>
+                                        {% for column in investment_indicator_stability %}
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
+
+                        <div class="card border-dark mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                <span class="chart-title-unit">활동성</span>
+                                <span class="chart-title-unit2">(%)</span>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for column in investment_indicator_activity %}
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
 
                         <div class="card border-dark mb-4">
                             <div class="card-header">
@@ -149,51 +187,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
+                                            <th>계정명</th>
+                                            <th>기업값</th>
+                                            <th>산업평균</th>
+                                            <th>같은 매출액그룹 내 최대값</th>
+                                            <th>같은 매출액그룹 내 중앙값</th>
+                                            <th>같은 매출액그룹 내 최소값</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for row in investment_indicator_activity %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
-                                            </tr>                                          
+                                    <tbody>
+                                        {% for column in investment_indicator_valuation %}
+                                                <td>{{ column.label_ko }}</td>
+                                                <td>{{ column.current_year }}</td>
+                                                <td>{{ column.industry_avg }}</td>
+                                                <td>{{ column.cluster_max }}</td>
+                                                <td>{{ column.cluster_median }}</td>
+                                                <td>{{ column.cluster_min }}</td>
+                                            </tr>
                                         {% endfor %}
-                                    </tbody> 
-                                                                
-                                </table>
-                            </div>
-                        </div>
-
-
-                        <div class="card border-dark mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <span class="chart-title-unit">가치지표</span>
-                                <span class="chart-title-unit2">(억원/%/%p)</span>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="vertical-line text-end">계정명(한글)</th>
-                                            <th scope="col" class="vertical-line text-end">계정명(영문)</th>
-                                            <th scope="col" class="vertical-line text-end">계정값</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        {% for row in investment_indicator_valuation %}
-                                            <tr>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_ko }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.label_en }}</td>
-                                                <td scope="row" class="vertical-line text-end"> {{ row.current_year }}</td>
-                                            </tr>                                          
-                                        {% endfor %}
-                                    </tbody> 
-                                                                
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
