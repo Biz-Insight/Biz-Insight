@@ -36,16 +36,12 @@ def get_credit_rank(input_excel_data):
         pred_rank = dl_model(
             sequences_up_reviews, sequences_down_reviews, scaled_data_jaemu
         )
-        print(data_total["corp"].unique(), pred_rank)
-        print("리뷰 있음")
+        print(f"신용등급 예측결과: '{pred_rank}'")
 
     elif len(data_total.columns) == 52:
-        # jaemu data preprocessing
-        scaled_data_jaemu = jaemu_data_preprocessing(data_total)
-
-        pred_rank = rf_model(scaled_data_jaemu)
-        print(data_total["corp"].unique(), pred_rank)
-        print("리뷰 없음")
+        data_jamu = data_total.drop("corp", axis=1)
+        pred_rank = rf_model(data_jamu)
+        print(f"신용등급 예측결과: '{pred_rank}'")
 
     else:
         print("error")
