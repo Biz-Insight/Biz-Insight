@@ -937,74 +937,8 @@ def credit_request(request):
             orient="columns"
         )
 
-        return redirect("new_company_news")
+        return redirect("new_credit_analysis")
     return render(request, "credit_request.html")
-
-
-def new_company_info(request):
-    credit_group_prediction = request.session["credit_group_prediction"]
-    main_fs_json = request.session["main_fs"]
-    credit_data_web_json = request.session["credit_data_web"]
-    investment_data_web_json = request.session["investment_data_web"]
-    top_correlation_json = request.session["top_correlation"]
-    sector_credit_rating_json = request.session["sector_credit_rating"]
-
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
-    investment_data_web_dict = json.loads(investment_data_web_json)
-    top_correlation_dict = json.loads(top_correlation_json)
-    sector_credit_rating_dict = json.loads(sector_credit_rating_json)
-
-    context = {
-        "credit_group_prediction": credit_group_prediction,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-        "top_correlation": top_correlation_dict,
-        "sector_credit_rating": sector_credit_rating_dict,
-    }
-
-    request.session["credit_group_prediction"] = credit_group_prediction
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
-    request.session["investment_data_web"] = investment_data_web_json
-    request.session["top_correlation"] = top_correlation_json
-    request.session["sector_credit_rating"] = sector_credit_rating_json
-
-    return render(request, "new_company_info.html", context)
-
-
-def new_company_news(request):
-    credit_group_prediction = request.session["credit_group_prediction"]
-    main_fs_json = request.session["main_fs"]
-    credit_data_web_json = request.session["credit_data_web"]
-    investment_data_web_json = request.session["investment_data_web"]
-    top_correlation_json = request.session["top_correlation"]
-    sector_credit_rating_json = request.session["sector_credit_rating"]
-
-    main_fs_dict = json.loads(main_fs_json)
-    credit_data_web_dict = json.loads(credit_data_web_json)
-    investment_data_web_dict = json.loads(investment_data_web_json)
-    top_correlation_dict = json.loads(top_correlation_json)
-    sector_credit_rating_dict = json.loads(sector_credit_rating_json)
-
-    context = {
-        "credit_group_prediction": credit_group_prediction,
-        "main_fs": main_fs_dict,
-        "credit_data_web": credit_data_web_dict,
-        "investment_data_web": investment_data_web_dict,
-        "top_correlation": top_correlation_dict,
-        "sector_credit_rating": sector_credit_rating_dict,
-    }
-
-    request.session["credit_group_prediction"] = credit_group_prediction
-    request.session["main_fs"] = main_fs_json
-    request.session["credit_data_web"] = credit_data_web_json
-    request.session["investment_data_web"] = investment_data_web_json
-    request.session["top_correlation"] = top_correlation_json
-    request.session["sector_credit_rating"] = sector_credit_rating_json
-
-    return render(request, "new_company_news.html", context)
 
 
 def new_credit_analysis(request):
@@ -1146,67 +1080,31 @@ def new_financial_statements(request):
 
     main_fs_df = pd.read_json(main_fs_json, orient="columns")
 
-    desired_labels = {
-        "feature_importance": ["자산총계", "자본총계", "당좌자산", "시가총액", "매출액"],
-        "summary": [
-            "EBITDA마진",
-            "EBITDA/금융비용",
-            "부채비율",
-            "순차입금의존도",
-            "영업현금흐름/총차입금입금",
-            "순차입금/EBITDA",
-        ],
-        "industry_correlation": [
-            "매출액",
-            "매출원가",
-            "판매관리비",
-            "EBIT",
-            "EBIT마진",
-            "EBITDA/매출액",
-            "자산총계",
-            "총자산수익률()",
-        ],
-    }
+    bs = main_fs_df[main_fs_df["fs_type"] == "bs"]
+    incs = main_fs_df[main_fs_df["fs_type"] == "incs"]
+    cf = main_fs_df[main_fs_df["fs_type"] == "cf"]
 
-    # feature_importance_credit_data_web_df = credit_data_web_df[
-    #     credit_data_web_df["label_ko"].isin(desired_labels["feature_importance"])
-    # ]
+    bs_dict = bs.to_dict("records")
+    incs_dict = incs.to_dict("records")
+    cf_dict = cf.to_dict("records")
 
-    # feature_importance_main_fs_df = main_fs_df[
-    #     main_fs_df["label_ko"].isin(desired_labels["feature_importance"])
-    # ]
-
-    # feature_importance = pd.concat(
-    #     [feature_importance_credit_data_web_df, feature_importance_main_fs_df],
-    #     ignore_index=True,
-    # )
-
-    # summary = credit_data_web_df[
-    #     credit_data_web_df["label_ko"].isin(desired_labels["summary"])
-    # ]
-
-    main_fs_dict = main_fs_df.to_dict("records")
-
-    context = {
-        "financial_statements": main_fs_dict,
-    }
+    context = {"bs": bs_dict, "incs": incs_dict, "cf": cf_dict}
 
     return render(request, "new_financial_statements.html", context)
 
 
 def new_financial_analysis(request):
-    credit_prediction_json = request.session.get("credit_prediction")
+    credit_prediction = request.session.get("credit_prediction")
     main_fs_json = request.session.get("main_fs")
     credit_data_web_json = request.session.get("credit_data_web")
     investment_data_web_json = request.session.get("investment_data_web")
 
-    credit_prediction_dict = json.loads(credit_prediction_json)
     main_fs_dict = json.loads(main_fs_json)
     credit_data_web_dict = json.loads(credit_data_web_json)
     investment_data_web_dict = json.loads(investment_data_web_json)
 
     context = {
-        "credit_prediction": credit_prediction_dict,
+        "credit_prediction": credit_prediction,
         "main_fs": main_fs_dict,
         "credit_data_web": credit_data_web_dict,
         "investment_data_web": investment_data_web_dict,

@@ -11568,10 +11568,23 @@ p {
 [data-rank="A-"]  { background-color: #FF6347; } /* Tomato */
 [data-rank="BBB"] { background-color: #FF7F50; } /* Coral */
 [data-rank="JB"]  { background-color: #FFA07A; } /* LightSalmon */
+[data-rank="상위"] { background-color: #8B0000; } /* Dark Red */
+[data-rank="중위"]   { background-color: #FF4500; } /* OrangeRed */
+[data-rank="하위"] { background-color: #FF7F50; } /* Coral */
 
 .larger-text {
   font-size: 1.2em; /* Adjust this value as needed */
 }
 .italic-text {
   font-style: italic;
+}
+
+
+.highlighted-text {
+    color: red;
+}
+
+.centered-and-large-text {
+    text-align: center;
+    font-size: 1.5em; /* 또는 원하는 크기로 조절 */
 }
