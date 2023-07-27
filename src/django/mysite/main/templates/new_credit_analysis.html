@@ -74,122 +74,73 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main>
-                    <table>
-                    <tr class="bold-text">
-                        <th>신용등급 예측결과 Result</th>
-                    </tr>
-                    <tr class="bold-text">
-                        <td>{{ credit_group_prediction }}</td>
-                    </tr>
-                    </table>                               
+                <main>  
+                    <div class="w-100 px-4 d-flex align-items-center" style="margin-bottom: 12px;">
+                        <div class="company-name-box w-25">
+                            <h1 class="company-title">{{ summary.0.corp }}</h1>
+                        </div>
+                    </div>                           
 
-
-                    <div class="container-fluid d-flex align-items-stretch">
-                        <div class="w-100 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    <span class="chart-title-unit">산업-매출액 규모별 판별 정도</span>
-                                    <span class="chart-title-unit2"></span>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>산업</th>
-                                                <th>매출액 규모그룹</th>
-                                                <th>해당그룹 신용등급 중앙값</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
-                                            {% for column in sector_credit_rating %}
-                                                <tr>
-                                                    <!-- 각 키-값 쌍에 대해 테이블 데이터를 만듭니다. -->
-                                                    {% for key, value in column.items %}
-                                                        <td>{{ value }}</td>
-                                                    {% endfor %}
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                    
+                    <div class="container-fluid">
+                        <div class="row d-flex align-items-stretch">
+                            <div class="col-lg-6 px-3 mb-3 mt-3">
+                                <div class="card border-dark h-100 card-equal-height">
+                                    <div class="card-header bg-danger text-white">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">"{{ summary.0.corp }}" 기업 평가</span>
+                                        <span class="chart-title-unit2"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                            <p class="mb-0" style="font-size: 1.4em;">산업 분류: "{{ summary.0.sector }}"</p>
+                                        </div>
+                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                            <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">매출액</span> 판정 결과 : </p>
+                                            <div class="rank-circle ml-2" data-rank="{{ top_correlation.0.revenue_group }}">
+                                                {{ top_correlation.0.revenue_group }}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                            <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">신용등급</span> 예측 결과 : </p>
+                                            <div class="rank-circle ml-2" data-rank="{{ credit_group_prediction }}">
+                                                {{ credit_group_prediction }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div class="container-fluid d-flex align-items-stretch">
-                        <div class="w-100 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    <span class="chart-title-unit">등급 판별에 중요한 영향을 준 요소들</span>
-                                    <span class="chart-title-unit2">(억원/%/%p)</span>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>계정명</th>
-                                                <th>기업값</th>
-                                                <th>산업평균</th>
-                                                <th>같은 매출액그룹 내 최대값</th>
-                                                <th>같은 매출액그룹 내 중앙값</th>
-                                                <th>같은 매출액그룹 내 최소값</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for column in feature_importance %}
-                                                <tr class="{% if 'current_year' in column.label_en %}current-year{% endif %}">
-                                                    <td>{{ column.label_ko }}</td>
-                                                    <td>{{ column.current_year }}</td>
-                                                    <td>{{ column.industry_avg }}</td>
-                                                    <td>{{ column.cluster_max }}</td>
-                                                    <td>{{ column.cluster_median }}</td>
-                                                    <td>{{ column.cluster_min }}</td>
+                            <div class="col-lg-6 px-3 mb-3 mt-3">
+                                <div class="card border-dark h-100">
+                                    <div class="card-header">
+                                        <i class="fas fa-table me-1"></i>
+                                        <span class="chart-title-unit">"{{ summary.0.sector }}" 산업-매출액 규모별 판별 정도</span>
+                                        <span class="chart-title-unit2"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="bold-text">
+                                                    <th scope="row">동일산업</th>
+                                                    <th scope="col" class="vertical-line text-end">매출액 규모그룹</th>
+                                                    <th scope="col" class="vertical-line text-end">해당그룹 신용등급 중앙값</th>
                                                 </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid d-flex align-items-stretch">
-                        <div class="w-100 px-2" style="margin-top: 5px;">
-                            <div class="card border-dark mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                    <span class="chart-title-unit">summary(상대비교) 테이블</span>
-                                    <span class="chart-title-unit2">(비율 %)</span>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>계정명</th>
-                                                <th>기업값</th>
-                                                <th>산업평균</th>
-                                                <th>같은 매출액그룹 내 최대값</th>
-                                                <th>같은 매출액그룹 내 중앙값</th>
-                                                <th>같은 매출액그룹 내 최소값</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for column in summary %}
-                                                <tr class="{% if 'current_year' in column.label_en %}current-year{% endif %}">
-                                                    <td>{{ column.label_ko }}</td>
-                                                    <td>{{ column.current_year }}</td>
-                                                    <td>{{ column.industry_avg }}</td>
-                                                    <td>{{ column.cluster_max }}</td>
-                                                    <td>{{ column.cluster_median }}</td>
-                                                    <td>{{ column.cluster_min }}</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                {% for column in sector_credit_rating %}
+                                                    <tr class="bold-text">
+                                                        {% for key, value in column.items %}
+                                                            {% if forloop.first %}
+                                                                <td scope="row">{{ value }}</td>
+                                                            {% else %}
+                                                                <td scope="row" class="vertical-line text-end">{{ value }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -203,33 +154,34 @@
                                     <span class="chart-title-unit2">(억원/%/%p)</span>
                                 </div>
                                 <div class="card-body">
+                                    <p class="centered-and-large-text">
+                                        매출액 판정 <span class="highlighted-text">{{ top_correlation.0.revenue_group }}</span> 그룹 
+                                        <span class="highlighted-text">{{ top_correlation.0.sector }}</span> 산업의, 신용등급과 상관관계가 높은 항목입니다.
+                                    </p>
+                                    <hr style="border-top: 3px solid black; margin: 1px 0;">
                                     <table class="table">
                                         <thead>
-                                            <tr>
-                                                <th>상관관계가 높은 계정값</th>
-                                                <th>상관계수</th>
-                                                <th>섹터</th>
-                                                <th>매출액 군집</th>
-                                                <th>기업값</th>
-                                                <th>산업평균</th>
-                                                <th>같은 매출액그룹 내 최대값</th>
-                                                <th>같은 매출액그룹 내 중앙값</th>
-                                                <th>같은 매출액그룹 내 최소값</th>
+                                            <tr class="bold-text">
+                                                <th scope="row">상관관계가 높은 계정값</th>
+                                                <th scope="col" class="vertical-line text-end">상관계수</th>
+                                                <th scope="col" class="vertical-line text-end">기업값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최소값</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="table-group-divider">
                                             <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
                                             {% for column in top_correlation %}
-                                                <tr>
-                                                    <td>{{ column.feature }}</td>
-                                                    <td>{{ column.correlation }}</td>
-                                                    <td>{{ column.sector }}</td>
-                                                    <td>{{ column.revenue_group }}</td>
-                                                    <td>{{ column.corp_value }}</td>
-                                                    <td>{{ column.industry_average }}</td>
-                                                    <td>{{ column.cluster_max }}</td>
-                                                    <td>{{ column.cluster_median }}</td>
-                                                    <td>{{ column.cluster_min }}</td>
+                                                <tr class="bold-text">
+                                                    <td scope="row">{{ column.feature }}</td> 
+                                                    <td scope="row" class="vertical-line text-end">{{ column.correlation|div:"1" }}</td>                                           
+                                                    <td scope="row" class="vertical-line text-end">{{ column.corp_value|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_average|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"100000000" }}</td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -239,7 +191,82 @@
                         </div>
                     </div>
 
-                    
+                
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">신용 지표 테이블</span>
+                                    <span class="chart-title-unit2">(비율 %)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="bold-text">
+                                                <th scope="row">계정명</th>
+                                                <th scope="col" class="vertical-line text-end">기업값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최소값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for column in summary %}
+                                                <tr class="bold-text {% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                    <td scope="row">{{ column.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.current_year|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_avg|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"1" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">신용 등급 판별에 중요한 영향을 준 피쳐</span>
+                                    <span class="chart-title-unit2">(억원/%/%p)</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="bold-text">
+                                                <th scope="row">계정명</th>
+                                                <th scope="col" class="vertical-line text-end">기업값</th>
+                                                <th scope="col" class="vertical-line text-end">산업평균</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최대값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 중앙값</th>
+                                                <th scope="col" class="vertical-line text-end">같은 매출액그룹 내 최소값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for column in feature_importance %}
+                                                <tr class="bold-text {% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                    <td scope="row">{{ column.label_ko }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.current_year|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_avg|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"100000000" }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
