@@ -42,20 +42,20 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav"> 
                             <div class="sb-sidenav-menu-heading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                                 <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                                 </svg>
-                                기업분석
+                                <span style="color: #00BFFF;">기업분석</span>
                             </div>                           
                             <a class="nav-link" href="{% url 'new_credit_analysis' %}" style="color: red; font-weight: bold; font-size: 22px;">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 신용분석
                             </a>
                             <div class="sb-sidenav-menu-heading">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#00BFFF" class="bi bi-table" viewBox="0 0 16 16">
                                     <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
                                 </svg>
-                                상세지표
+                                <span style="color: #00BFFF;">상세지표</span>
                             </div>
                             <a class="nav-link" href="{% url 'new_financial_statements' %}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -80,67 +80,63 @@
                             <h1 class="company-title">{{ summary.0.corp }}</h1>
                         </div>
                     </div>                           
-
-                    
-                    <div class="container-fluid">
-                        <div class="row d-flex align-items-stretch">
-                            <div class="col-lg-6 px-3 mb-3 mt-3">
-                                <div class="card border-dark h-100 card-equal-height">
-                                    <div class="card-header bg-danger text-white">
-                                        <i class="fas fa-table me-1"></i>
-                                        <span class="chart-title-unit">"{{ summary.0.corp }}" 기업 평가</span>
-                                        <span class="chart-title-unit2"></span>
+                    <div class="container-fluid d-flex"> 
+                        <div class="w-50 px-2" style="margin-top: 5px;">        
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header bg-danger text-white">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">"{{ summary.0.corp }}" 기업 평가</span>
+                                    <span class="chart-title-unit2"></span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                        <p class="mb-0" style="font-size: 1.4em;">산업 분류: "{{ summary.0.sector }}"</p>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
-                                            <p class="mb-0" style="font-size: 1.4em;">산업 분류: "{{ summary.0.sector }}"</p>
+                                    <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                        <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">매출액</span> 판정 결과 : </p>
+                                        <div class="rank-circle ml-2" data-rank="{{ top_correlation.0.revenue_group }}">
+                                            {{ top_correlation.0.revenue_group }}
                                         </div>
-                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
-                                            <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">매출액</span> 판정 결과 : </p>
-                                            <div class="rank-circle ml-2" data-rank="{{ top_correlation.0.revenue_group }}">
-                                                {{ top_correlation.0.revenue_group }}
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
-                                            <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">신용등급</span> 예측 결과 : </p>
-                                            <div class="rank-circle ml-2" data-rank="{{ credit_group_prediction }}">
-                                                {{ credit_group_prediction }}
-                                            </div>
+                                    </div>
+                                    <div class="d-flex align-items-center mx-3 mt-1 larger-text">                    
+                                        <p class="mb-0" style="font-size: 1.4em;"><span class="highlighted-text">신용등급</span> 예측 결과 : </p>
+                                        <div class="rank-circle ml-2" data-rank="{{ credit_group_prediction }}">
+                                            {{ credit_group_prediction }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 px-3 mb-3 mt-3">
-                                <div class="card border-dark h-100">
-                                    <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
-                                        <span class="chart-title-unit">"{{ summary.0.sector }}" 산업-매출액 규모별 판별 정도</span>
-                                        <span class="chart-title-unit2"></span>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <thead>
+                        </div>
+                        <div class="w-50 px-2" style="margin-top: 5px;">      
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    <span class="chart-title-unit">"{{ summary.0.sector }}" 산업-매출액 규모별 판별 정도</span>
+                                    <span class="chart-title-unit2"></span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="bold-text">
+                                                <th scope="row">동일산업</th>
+                                                <th scope="col" class="vertical-line text-end">매출액 규모그룹</th>
+                                                <th scope="col" class="vertical-line text-end">해당그룹 신용등급 중앙값</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for column in sector_credit_rating %}
                                                 <tr class="bold-text">
-                                                    <th scope="row">동일산업</th>
-                                                    <th scope="col" class="vertical-line text-end">매출액 규모그룹</th>
-                                                    <th scope="col" class="vertical-line text-end">해당그룹 신용등급 중앙값</th>
+                                                    {% for key, value in column.items %}
+                                                        {% if forloop.first %}
+                                                            <td scope="row">{{ value }}</td>
+                                                        {% else %}
+                                                            <td scope="row" class="vertical-line text-end">{{ value }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </tr>
-                                            </thead>
-                                            <tbody class="table-group-divider">
-                                                {% for column in sector_credit_rating %}
-                                                    <tr class="bold-text">
-                                                        {% for key, value in column.items %}
-                                                            {% if forloop.first %}
-                                                                <td scope="row">{{ value }}</td>
-                                                            {% else %}
-                                                                <td scope="row" class="vertical-line text-end">{{ value }}</td>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>                                        
-                                        </table>
-                                    </div>
+                                            {% endfor %}
+                                        </tbody>                                        
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -172,16 +168,15 @@
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <!-- 각 요소에 대해 테이블 행을 만듭니다. -->
                                             {% for column in top_correlation %}
                                                 <tr class="bold-text">
                                                     <td scope="row">{{ column.feature }}</td> 
                                                     <td scope="row" class="vertical-line text-end">{{ column.correlation|div:"1" }}</td>                                           
-                                                    <td scope="row" class="vertical-line text-end">{{ column.corp_value|div:"100000000" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_average|div:"100000000" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"100000000" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"100000000" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"100000000" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.corp_value|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_average|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"1" }}</td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -189,6 +184,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">신용지표 비교 그래프</span> 
+                                </div>
+                                <div class="card-body"><canvas id="creditSummaryChart" width="100%" height="20"></canvas></div>
+                            </div>  
+                        </div> 
                     </div>
 
                 
@@ -229,6 +235,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="container-fluid d-flex align-items-stretch">
+                        <div class="w-100 px-2" style="margin-top: 5px;">
+                            <div class="card border-dark mb-4 card-equal-height">
+                                <div class="card-header">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    <span class="chart-title-unit">신용 등급 판별에 중요한 영향을 준 피쳐 비교 그래프</span> 
+                                </div>
+                                <div class="card-body"><canvas id="featureImportanceChart" width="100%" height="20"></canvas></div>
+                            </div>  
+                        </div> 
+                    </div>
+
                 
                     <div class="container-fluid d-flex align-items-stretch">
                         <div class="w-100 px-2" style="margin-top: 5px;">
@@ -252,7 +271,7 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             {% for column in feature_importance %}
-                                                <tr class="bold-text {% if 'current_year' in column.label_en %}current-year{% endif %}">
+                                                <tr class="bold-text {% if 'current_year' in column.label_ko %}current-year{% endif %}">
                                                     <td scope="row">{{ column.label_ko }}</td>
                                                     <td scope="row" class="vertical-line text-end">{{ column.current_year|div:"100000000" }}</td>
                                                     <td scope="row" class="vertical-line text-end">{{ column.industry_avg|div:"100000000" }}</td>
@@ -267,28 +286,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-                        
-                        
-                        
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </main>
                 <!-- <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -314,6 +311,7 @@
         <script src="{% static 'js/scripts.js' %}"></script>
         <script src="{% static 'js/datatables-simple.js' %}"></script>
         <script src="{% static 'assets/js/area.js' %}"></script>
+        <script src="{% static 'assets/js/newdraw.js' %}"></script>
     </body>
 </html>
 
