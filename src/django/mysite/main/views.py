@@ -1061,6 +1061,129 @@ def new_credit_analysis(request):
     return render(request, "new_credit_analysis.html", context)
 
 
+class NewCreditData(View):
+    def get(self, request):
+        # 현재 json 자료형
+        credit_group_prediction = request.session["credit_group_prediction"]
+        main_fs_json = request.session["main_fs"]
+        credit_data_web_json = request.session["credit_data_web"]
+        investment_data_web_json = request.session["investment_data_web"]
+        top_correlation_json = request.session["top_correlation"]
+        sector_credit_rating_json = request.session["sector_credit_rating"]
+
+        # pandas df로 불러오기
+        main_fs_df = pd.read_json(main_fs_json, orient="columns")
+        credit_data_web_df = pd.read_json(credit_data_web_json, orient="columns")
+        investment_data_web_df = pd.read_json(
+            investment_data_web_json, orient="columns"
+        )
+        top_correlation_df = pd.read_json(top_correlation_json, orient="columns")
+        sector_credit_rating_df = pd.read_json(
+            sector_credit_rating_json, orient="columns"
+        )
+
+        desired_labels = {
+            "feature_importance": ["자산총계", "자본총계", "당좌자산", "시가총액", "매출액"],
+            "summary": [
+                "EBITDA마진",
+                "EBITDA/금융비용",
+                "부채비율",
+                "순차입금의존도",
+                "영업현금흐름/총차입금입금",
+                "순차입금/EBITDA",
+            ],
+            "industry_correlation": [
+                "매출액",
+                "매출원가",
+                "판매관리비",
+                "EBIT",
+                "EBIT마진",
+                "EBITDA/매출액",
+                "자산총계",
+                "총자산수익률()",
+            ],
+        }
+
+        feature_importance_credit_data_web_df = credit_data_web_df[
+            credit_data_web_df["label_ko"].isin(desired_labels["feature_importance"])
+        ]
+
+        feature_importance_main_fs_df = main_fs_df[
+            main_fs_df["label_ko"].isin(desired_labels["feature_importance"])
+        ]
+        feature_importance_main_fs_df = feature_importance_main_fs_df.drop(
+            columns=["fs_type"]
+        )
+
+        feature_importance_credit_data_web_df.reset_index(drop=True, inplace=True)
+        feature_importance_main_fs_df.reset_index(drop=True, inplace=True)
+
+        # 컬럼 순서 정의
+        columns_order = [
+            "corp",
+            "sector",
+            "label_en",
+            "label_ko",
+            "current_year",
+            "industry_avg",
+            "cluster_max",
+            "cluster_median",
+            "cluster_min",
+        ]
+
+        # 각 데이터프레임의 컬럼 순서를 조정
+        feature_importance_credit_data_web_df = feature_importance_credit_data_web_df[
+            columns_order
+        ]
+        feature_importance_main_fs_df = feature_importance_main_fs_df[columns_order]
+
+        # 두 데이터프레임을 행 방향으로 결합
+        feature_importance = pd.concat(
+            [feature_importance_credit_data_web_df, feature_importance_main_fs_df],
+            axis=0,
+            ignore_index=True,
+        )
+
+        summary = credit_data_web_df[
+            credit_data_web_df["label_ko"].isin(desired_labels["summary"])
+        ]
+
+        industry_correlation = credit_data_web_df[
+            credit_data_web_df["label_ko"].isin(desired_labels["industry_correlation"])
+        ]
+
+        # 데이터프레임을 사전 형태로 변환
+        # 데이터프레임을 사전 형태로 변환하고 JSON 문자열로 변환
+        main_fs = main_fs_df.to_dict("records")
+        credit_data_web = credit_data_web_df.to_dict("records")
+        investment_data_web = investment_data_web_df.to_dict("records")
+        top_correlation = top_correlation_df.to_dict("records")
+        sector_credit_rating = sector_credit_rating_df.to_dict("records")
+        feature_importance = feature_importance.to_dict("records")
+        summary = summary.to_dict("records")
+        industry_correlation = industry_correlation.to_dict("records")
+
+        # summary = credit_data_web_df[
+        #     credit_data_web_df["label_ko"].isin(desired_labels["summary"])
+        # ].to_dict("records")
+
+        # feature_importance = credit_data_web_df[
+        #     credit_data_web_df["label_ko"].isin(desired_labels["feature_importance"])
+        # ].to_dict("records")
+
+        # top_correlation = credit_data_web_df[
+        #     credit_data_web_df["label_ko"].isin(desired_labels["top_correlation"])
+        # ].to_dict("records")
+
+        data = {
+            "summary": summary,
+            "feature_importance": feature_importance,
+            "top_correlation": top_correlation,
+        }
+
+        return JsonResponse(data, safe=False)
+
+
 def new_financial_statements(request):
     # 현재 json 자료형
     credit_group_prediction = request.session["credit_group_prediction"]
@@ -1138,6 +1261,37 @@ def new_credit_indicator(request):
     # pandas df로 불러오기
     credit_data_web_df = pd.read_json(credit_data_web_json, orient="columns")
     main_fs_df = pd.read_json(main_fs_json, orient="columns")
+
+    labels_to_divide = [
+        "자산총계",
+        "부채총계",
+        "자본총계",
+        "총차입금",
+        "순차입금",
+        "유동부채금액",
+        "운전자본",
+        "당좌자산",
+        "현금성자산",
+        "단기성차입금",
+        "매출액",
+        "매출원가",
+        "판매관리비",
+        "EBIT",
+        "자산총계",
+        "영업활동현금흐름",
+        "잉여현금흐름",
+        "금융비용",
+        "EBITDA",
+        "법인세납부",
+    ]
+
+    for index, row in credit_data_web_df.iterrows():
+        if row["label_ko"] in labels_to_divide:
+            credit_data_web_df.at[index, "current_year"] /= 100000000
+            credit_data_web_df.at[index, "industry_avg"] /= 100000000
+            credit_data_web_df.at[index, "cluster_max"] /= 100000000
+            credit_data_web_df.at[index, "cluster_median"] /= 100000000
+            credit_data_web_df.at[index, "cluster_min"] /= 100000000
 
     desired_labels = {
         "stability": [
