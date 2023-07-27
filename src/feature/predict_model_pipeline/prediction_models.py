@@ -1,4 +1,5 @@
 from settings import *
+import pickle
 
 rank_mapping = {
     "AAA": 9,
