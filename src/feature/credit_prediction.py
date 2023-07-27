@@ -20,10 +20,10 @@ industry_average = pd.read_sql(query, engine)
 query = "SELECT * FROM Data_Lake.crb_index;"
 crb_index = pd.read_sql(query, engine)
 
-query = "SELECT * FROM Data_Lake.economic_indicators;"
+query = "SELECT * FROM Data_Warehouse.economic_indicators;"
 economic_indicators = pd.read_sql(query, engine)
 
-query = "SELECT * FROM Data_Warehouse.credit_analysis_model_a;"
+query = "SELECT * FROM Data_Mart.credit_model_a;"
 model_a = pd.read_sql(query, engine)
 
 
