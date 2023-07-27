@@ -3,14 +3,16 @@ from django.views.generic import FormView, ListView
 from .models import *
 from django.http import JsonResponse
 from django.views import View
-import pandas as pd
-import pickle
-from math import floor
-from .django_transform import django_transform
+from .utils.django_transform import django_transform
 from .utils.openai_utils import get_corp_summary
 from .utils.wordcloud_utils import *
+from .utils.django_info import django_info
+from .utils.main import *
+
+import pandas as pd
+import pickle
 import json
-from .django_info import django_info
+from math import floor
 
 
 def home(request):
@@ -917,8 +919,11 @@ def search_view(request):
 def credit_request(request):
     if request.method == "POST":
         csv_file = request.FILES["file"]
+
+        credit_group_prediction = get_credit_rank(csv_file)
+
         (
-            credit_group_prediction,
+            credit_group_prediction1,
             main_fs,
             credit_data_web,
             investment_data_web,
