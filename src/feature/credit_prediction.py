@@ -3,12 +3,12 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-import joblib
+import pickle
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 user = "multi"
-password = "*****!"
+password = "Campus123!"
 host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database = "Data_Mart"
 
@@ -59,20 +59,18 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-clf = RandomForestClassifier(
-    criterion="entropy",
-    max_depth=18,
-    max_features="sqrt",
-    n_estimators=500,
-    random_state=42,
-)
-clf.fit(X_train, y_train)
+# clf = RandomForestClassifier(
+#     criterion="entropy",
+#     max_depth=18,
+#     max_features="sqrt",
+#     n_estimators=500,
+#     random_state=42,
+# )
+# clf.fit(X_train, y_train)
 ###############################################################################
+with open("rf_model.pkl", "rb") as file:
+    clf = pickle.load(file)
 
-# joblib.dump(clf, "credit_prediction.pkl")
-
-# Load prediction .pkl
-# clf = joblib.load("credit_prediction.pkl")
 
 # y_pred = clf.predict(X_test)
 
@@ -85,42 +83,42 @@ cf = fs["cf"]
 
 # 액셀에서 계정 값 받아오기
 sector = corp_info["산업"][0]
-revenue = incs["Value"][0]
-cost_of_sales = incs["Value"][3]
-gross_profit = incs["Value"][5]
-operating_income = incs["Value"][13]
-net_income = incs["Value"][24]
-ebit = incs["Value"][20]
-depreciation_amortization = incs["Value"][10]
+revenue = incs["계정값"][0]
+cost_of_sales = incs["계정값"][1]
+gross_profit = incs["계정값"][2]
+operating_income = incs["계정값"][6]
+net_income = incs["계정값"][11]
+ebit = incs["계정값"][9]
+depreciation_amortization = incs["계정값"][5]
 ebitda = ebit + depreciation_amortization
-total_equity = bs["Value"][39]
-total_assets = bs["Value"][15]
-total_liabilities = bs["Value"][30]
-current_assets = bs["Value"][6]
-current_liabilities = bs["Value"][23]
-non_current_liabilities = bs["Value"][29]
-short_borrowing = bs["Value"][21]
-long_borrowing = bs["Value"][25]
-cash_and_equivalents = bs["Value"][1]
-retained_earnings = bs["Value"][35]
-tangible_assets = bs["Value"][11]
-intangible_assets = bs["Value"][12]
-accounts_receivable = bs["Value"][3]
-inventory = bs["Value"][4]
-accounts_payable = bs["Value"][19]
+total_equity = bs["계정값"][34]
+total_assets = bs["계정값"][14]
+total_liabilities = bs["계정값"][26]
+current_assets = bs["계정값"][1]
+current_liabilities = bs["계정값"][16]
+non_current_liabilities = bs["계정값"][21]
+short_borrowing = bs["계정값"][19]
+long_borrowing = bs["계정값"][22]
+cash_and_equivalents = bs["계정값"][2]
+retained_earnings = bs["계정값"][30]
+tangible_assets = bs["계정값"][11]
+intangible_assets = bs["계정값"][12]
+accounts_receivable = bs["계정값"][4]
+inventory = bs["계정값"][5]
+accounts_payable = bs["계정값"][17]
 outstanding_shares = corp_info["발행주식수"]
-cash_flow_operating = cf["Value"][7]
-selling_general_administrative_expenses = incs["Value"][8]
-cash_flow_investing = cf["Value"][12]
-cash_flow_financing = cf["Value"][18]
-long_term_assets = bs["Value"][8]
-interest = incs["Value"][16]
-tax = incs["Value"][22]
+cash_flow_operating = cf["계정값"][0]
+selling_general_administrative_expenses = incs["계정값"][4]
+cash_flow_investing = cf["계정값"][8]
+cash_flow_financing = cf["계정값"][12]
+long_term_assets = bs["계정값"][8]
+interest = incs["계정값"][7]
+tax = incs["계정값"][10]
 stock_price = corp_info["현재주가"]
 market_capitalization = stock_price * outstanding_shares
 borrowings = short_borrowing + long_borrowing
 net_liabilities = total_liabilities - total_assets
-fixed_assets = bs["Value"][9]
+fixed_assets = bs["계정값"][9]
 cash_flow_per_share = cash_flow_operating / outstanding_shares
 
 # 신용지표 피쳐
@@ -195,7 +193,7 @@ potential = industry_average[industry_average["sector"] == sector]["potential"].
 
 # 투자지표 피쳐
 # earnings_per_share = net_income / outstanding_shares
-# book_value_per_share = total_equity / outstanding_shares
+# book_계정값_per_share = total_equity / outstanding_shares
 
 # gross_profit_margin = gross_profit / revenue * 100
 # operating_profit_margin = operating_income / revenue * 100
@@ -216,11 +214,11 @@ potential = industry_average[industry_average["sector"] == sector]["potential"].
 # retention_ratio = retained_earnings / net_income
 
 # earnings_per_share = net_income / outstanding_shares
-# book_value_per_share = total_equity / outstanding_shares
+# book_계정값_per_share = total_equity / outstanding_shares
 # price_earnings_ratio = stock_price / earnings_per_share
-# price_to_book_ratio = stock_price / book_value_per_share
+# price_to_book_ratio = stock_price / book_계정값_per_share
 # price_cash_flow_ratio = stock_price / (cash_flow_operating / outstanding_shares)
-# enterprise_value_to_ebitda = (
+# enterprise_계정값_to_ebitda = (
 #     market_capitalization + borrowings - cash_and_equivalents
 # ) / ebitda
 
@@ -303,11 +301,11 @@ predict_data = pd.DataFrame(
         # "net_debt_ratio": [net_debt_ratio],
         # "retention_ratio": [retention_ratio],
         # "earnings_per_share": [earnings_per_share],
-        # "book_value_per_share": [book_value_per_share],
+        # "book_계정값_per_share": [book_계정값_per_share],
         # "price_earnings_ratio": [price_earnings_ratio],
         # "price_to_book_ratio": [price_to_book_ratio],
         # "price_cash_flow_ratio": [price_cash_flow_ratio],
-        # "enterprise_value_to_ebitda": [enterprise_value_to_ebitda],
+        # "enterprise_계정값_to_ebitda": [enterprise_계정값_to_ebitda],
         # "operating_income": [operating_income],
         # "net_income": [net_income],
         # "fixed_assets": [fixed_assets],
