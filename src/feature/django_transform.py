@@ -206,7 +206,7 @@ def django_transform(fs):
     long_term_assets = bs["계정값"][8]
     interest = incs["계정값"][7]
     tax = incs["계정값"][10]
-    stock_price = corp_info["현재주가"]
+    stock_price = corp_info["현재주가"][0]
     market_capitalization = stock_price * outstanding_shares
     borrowings = short_borrowing + long_borrowing
     net_liabilities = total_liabilities - total_assets
