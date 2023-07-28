@@ -199,6 +199,7 @@ class CreditAnalysis(ListView):
             "금융비용",
             "EBITDA",
             "법인세납부",
+            "시가총액",
         ]
 
         # Update the values of the specified labels by dividing them by 100,000,000
