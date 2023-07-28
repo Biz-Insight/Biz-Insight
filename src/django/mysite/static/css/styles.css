@@ -11588,3 +11588,26 @@ p {
     text-align: center;
     font-size: 1.5em; /* 또는 원하는 크기로 조절 */
 }
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color: #f4f4f4; /* Light gray background for a bit of contrast */
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  transition: transform 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05); /* Slightly scale the button on hover */
+}
+
+.custom-file-label::after {
+  content: "찾기";
+}
