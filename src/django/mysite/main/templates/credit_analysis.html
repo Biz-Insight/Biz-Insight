@@ -142,16 +142,38 @@
                                             </thead>
                                             <tbody class="table-group-divider">
                                                 {% for column in sector_credit_rating %}
-                                                    <tr class="bold-text">
-                                                        {% for key, value in column.items %}
-                                                            {% if forloop.first %}
-                                                                <td scope="row">{{ value }}</td>
-                                                            {% else %}
-                                                                <td scope="row" class="vertical-line text-end">{{ value }}</td>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </tr>
-                                                {% endfor %}
+                                                <tr class="bold-text">
+                                                    {% for key, value in column.items %}
+                                                        {% if forloop.first %}
+                                                            <td scope="row">{{ value }}</td>
+                                                        {% else %}
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if value == 1 %}
+                                                                    JB
+                                                                {% elif value == 2 %}
+                                                                    BBB
+                                                                {% elif value == 3 %}
+                                                                    A-
+                                                                {% elif value == 4 %}
+                                                                    A
+                                                                {% elif value == 5 %}
+                                                                    A+
+                                                                {% elif value == 6 %}
+                                                                    AA-
+                                                                {% elif value == 7 %}
+                                                                    AA
+                                                                {% elif value == 8 %}
+                                                                    AA+
+                                                                {% elif value == 9 %}
+                                                                    AAA
+                                                                {% else %}
+                                                                    {{ value }}
+                                                                {% endif %}
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
                                             </tbody>                                        
                                         </table>
                                     </div>
@@ -168,36 +190,75 @@
                                     </div>
                                     <div class="card-body">
                                         <p class="centered-and-large-text">
-                                            매출액 판정 <span class="highlighted-text">{{ cluster_label }}</span> 그룹 
-                                            <span class="highlighted-text">{{ company.sector }}</span> 산업의, 신용등급과 상관관계가 높은 항목입니다.
+                                            <span class="highlighted-text">{{ company.sector }}</span> 산업
+                                            매출액 판정 <span class="highlighted-text">{{ cluster_label }}</span> 그룹의,
+                                            신용등급과 상관관계가 높은 항목입니다.
                                         </p>
                                         <hr style="border-top: 3px solid black; margin: 1px 0;">
-                                        <table class="table">
-                                            <thead>
-                                                <tr class="bold-text">
-                                                    <th scope="col">상관관계가 높은 계정값</th>
-                                                    <th scope="col" class="vertical-line text-end">2018</th>
-                                                    <th scope="col" class="vertical-line text-end">2019</th>
-                                                    <th scope="col" class="vertical-line text-end">2020</th>
-                                                    <th scope="col" class="vertical-line text-end">2021</th>
-                                                    <th scope="col" class="vertical-line text-end">2022</th>
-                                                    <th scope="col" class="vertical-line text-end">전년대비 %</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table-group-divider">
-                                                {% for credit_data in industry_correlation %}
+                                        {% if top_correlation.0.correlation|is_nan %}
+                                            <p class="centered-and-large-text">
+                                                <span class="highlighted-text" style="color: blue;">해당 그룹은 표본이 매우 적어 상관분석을 제공하지 않습니다.</span>
+                                            </p>
+                                        {% else %}
+                                            <table class="table">
+                                                <thead>
                                                     <tr class="bold-text">
-                                                        <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                        <th scope="col">상관관계가 높은 계정값</th>
+                                                        <th scope="col" class="vertical-line text-end">상관관계</th>
+                                                        <th scope="col" class="vertical-line text-end">2018</th>
+                                                        <th scope="col" class="vertical-line text-end">2019</th>
+                                                        <th scope="col" class="vertical-line text-end">2020</th>
+                                                        <th scope="col" class="vertical-line text-end">2021</th>
+                                                        <th scope="col" class="vertical-line text-end">2022</th>
+                                                        <th scope="col" class="vertical-line text-end">전년대비 %</th>
                                                     </tr>
-                                                {% endfor %}
-                                            </tbody>                                    
-                                        </table>
+                                                </thead>
+                                                <tbody class="table-group-divider">
+                                                    {% for credit_data, correlation_value in industry_correlation|zip_lists:top_correlation %}
+                                                        <tr class="bold-text">
+                                                            <td scope="row">{{ credit_data.label_ko }}</td> 
+                                                            <td class="vertical-line text-end">{{ correlation_value.correlation|floatformat:2 }}</td>                                          
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if credit_data.number_2018 > 10000000 %}
+                                                                    {{ credit_data.number_2018|div:"100000000" }}
+                                                                {% else %}
+                                                                    {{ credit_data.number_2018|div:"1" }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if credit_data.number_2019 > 10000000 %}
+                                                                    {{ credit_data.number_2019|div:"100000000" }}
+                                                                {% else %}
+                                                                    {{ credit_data.number_2019|div:"1" }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if credit_data.number_2020 > 10000000 %}
+                                                                    {{ credit_data.number_2020|div:"100000000" }}
+                                                                {% else %}
+                                                                    {{ credit_data.number_2020|div:"1" }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if credit_data.number_2021 > 10000000 %}
+                                                                    {{ credit_data.number_2021|div:"100000000" }}
+                                                                {% else %}
+                                                                    {{ credit_data.number_2021|div:"1" }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if credit_data.number_2022 > 10000000 %}
+                                                                    {{ credit_data.number_2022|div:"100000000" }}
+                                                                {% else %}
+                                                                    {{ credit_data.number_2022|div:"1" }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>                                    
+                                            </table>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -226,52 +287,22 @@
                                             <tbody class="table-group-divider">
                                                 {% for credit_data in summary %}
                                                     <tr class="bold-text">
-                                                        <td scope="row"> {{ credit_data.label_ko }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2018|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2019|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2020|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2021|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end"> {{ credit_data.number_2022|div:"1" }}</td>
-                                                        <td scope="row" class="vertical-line text-end" style="color: red;"> {{ credit_data.yoy|div:"1" }}</td>
+                                                        <td scope="row">{{ credit_data.label_ko }}</td>
+                                                        <td class="vertical-line text-end">{{ credit_data.number_2018|div:"1" }}</td>
+                                                        <td class="vertical-line text-end">{{ credit_data.number_2019|div:"1" }}</td>
+                                                        <td class="vertical-line text-end">{{ credit_data.number_2020|div:"1" }}</td>
+                                                        <td class="vertical-line text-end">{{ credit_data.number_2021|div:"1" }}</td>
+                                                        <td class="vertical-line text-end">{{ credit_data.number_2022|div:"1" }}</td>
+                                                        <td class="vertical-line text-end" style="color: red;">{{ credit_data.yoy|div:"1" }}</td>
                                                     </tr>
                                                 {% endfor %}
-                                            </tbody>
-                                                                        
+                                            </tbody>                                                  
                                         </table>
                                     </div>
                                 </div>
                             </div>    
                         </div>  
-                        <!-- <div class="container-fluid d-flex"> 
-                            <div class="w-50 px-2" style="margin-top: 5px;">      
-                                <div class="card border-dark mb-4 card-equal-height">
-                                    <div class="card-header">
-                                        <i class="fas fa-table me-1"></i>
-                                        <span class="chart-title-unit">상관관계 테이블</span>
-                                        <span class="chart-title-unit2"></span>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <thead>
-                                                <tr class="bold-text">
-                                                    {% if "correlation" in top_correlation.0 %}
-                                                        <th>correlation</th>
-                                                    {% endif %}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for column in top_correlation %}
-                                                    <tr class="bold-text">
-                                                        <td>{{ column.correlation|floatformat:2 }}</td>
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>         -->
+                     
                         <div class="container-fluid d-flex">
                             <div class="w-100 px-2" style="margin-top: 5px;">
                                 <div class="card border-dark mb-4">

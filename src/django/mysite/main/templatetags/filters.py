@@ -1,5 +1,7 @@
 from django import template
 from django.utils.safestring import SafeText
+from itertools import zip_longest
+import math
 
 register = template.Library()
 
@@ -15,3 +17,13 @@ def div(value, arg):
         return format(round(result, 1), ",")
     except (ValueError, ZeroDivisionError, TypeError):
         return None
+
+
+@register.filter
+def zip_lists(a, b):
+    return zip_longest(a, b)
+
+
+@register.filter(name="is_nan")
+def is_nan(value):
+    return math.isnan(value)
