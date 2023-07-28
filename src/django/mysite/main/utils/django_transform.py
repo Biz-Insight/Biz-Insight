@@ -210,7 +210,7 @@ def django_transform(fs):
     accounts_receivable = bs["계정값"][4]
     inventory = bs["계정값"][5]
     accounts_payable = bs["계정값"][17]
-    outstanding_shares = corp_info["발행주식수"]
+    outstanding_shares = corp_info["발행주식수"][0]
     cash_flow_operating = cf["계정값"][0]
     selling_general_administrative_expenses = incs["계정값"][4]
     cash_flow_investing = cf["계정값"][8]

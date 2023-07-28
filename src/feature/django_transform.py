@@ -62,7 +62,7 @@ def django_transform(fs):
     ###############################################################################
 
     sector = corp_info["산업"][0]
-    revenue = incs["계정값"][0]
+    revenue = incs["Value"][0]
 
     input_sectors = [sector]
     new_data = {sector: revenue}
@@ -198,7 +198,7 @@ def django_transform(fs):
     accounts_receivable = bs["계정값"][4]
     inventory = bs["계정값"][5]
     accounts_payable = bs["계정값"][17]
-    outstanding_shares = corp_info["발행주식수"]
+    outstanding_shares = corp_info["발행주식수"][0]
     cash_flow_operating = cf["계정값"][0]
     selling_general_administrative_expenses = incs["계정값"][4]
     cash_flow_investing = cf["계정값"][8]
@@ -206,7 +206,7 @@ def django_transform(fs):
     long_term_assets = bs["계정값"][8]
     interest = incs["계정값"][7]
     tax = incs["계정값"][10]
-    stock_price = corp_info["현재주가"][0]
+    stock_price = corp_info["현재주가"]
     market_capitalization = stock_price * outstanding_shares
     borrowings = short_borrowing + long_borrowing
     net_liabilities = total_liabilities - total_assets
