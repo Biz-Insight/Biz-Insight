@@ -130,7 +130,29 @@
                                                         {% if forloop.first %}
                                                             <td scope="row">{{ value }}</td>
                                                         {% else %}
-                                                            <td scope="row" class="vertical-line text-end">{{ value }}</td>
+                                                            <td scope="row" class="vertical-line text-end">
+                                                                {% if value == 1 %}
+                                                                    JB
+                                                                {% elif value == 2 %}
+                                                                    BBB
+                                                                {% elif value == 3 %}
+                                                                    A-
+                                                                {% elif value == 4 %}
+                                                                    A
+                                                                {% elif value == 5 %}
+                                                                    A+
+                                                                {% elif value == 6 %}
+                                                                    AA-
+                                                                {% elif value == 7 %}
+                                                                    AA
+                                                                {% elif value == 8 %}
+                                                                    AA+
+                                                                {% elif value == 9 %}
+                                                                    AAA
+                                                                {% else %}
+                                                                    {{ value }}
+                                                                {% endif %}
+                                                            </td>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </tr>
@@ -151,8 +173,9 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="centered-and-large-text">
-                                        매출액 판정 <span class="highlighted-text">{{ top_correlation.0.revenue_group }}</span> 그룹 
-                                        <span class="highlighted-text">{{ top_correlation.0.sector }}</span> 산업의, 신용등급과 상관관계가 높은 항목입니다.
+                                        <span class="highlighted-text">{{ top_correlation.0.sector }}</span> 산업
+                                        매출액 판정 <span class="highlighted-text">{{ top_correlation.0.revenue_group }}</span> 그룹의,
+                                        신용등급과 상관관계가 높은 항목입니다.
                                     </p>
                                     <hr style="border-top: 3px solid black; margin: 1px 0;">
                                     <table class="table">
@@ -171,12 +194,48 @@
                                             {% for column in top_correlation %}
                                                 <tr class="bold-text">
                                                     <td scope="row">{{ column.feature }}</td> 
-                                                    <td scope="row" class="vertical-line text-end">{{ column.correlation|div:"1" }}</td>                                           
-                                                    <td scope="row" class="vertical-line text-end">{{ column.corp_value|div:"1" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.industry_average|div:"1" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_max|div:"1" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_median|div:"1" }}</td>
-                                                    <td scope="row" class="vertical-line text-end">{{ column.cluster_min|div:"1" }}</td>
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.correlation > 10000000 %}
+                                                            {{ column.correlation|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.correlation|div:"1" }}
+                                                        {% endif %}
+                                                    </td>                                           
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.corp_value > 10000000 %}
+                                                            {{ column.corp_value|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.corp_value|div:"1" }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.industry_average > 10000000 %}
+                                                            {{ column.industry_average|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.industry_average|div:"1" }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.cluster_max > 10000000 %}
+                                                            {{ column.cluster_max|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.cluster_max|div:"1" }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.cluster_median > 10000000 %}
+                                                            {{ column.cluster_median|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.cluster_median|div:"1" }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td scope="row" class="vertical-line text-end">
+                                                        {% if column.cluster_min > 10000000 %}
+                                                            {{ column.cluster_min|div:"100000000" }}
+                                                        {% else %}
+                                                            {{ column.cluster_min|div:"1" }}
+                                                        {% endif %}
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
