@@ -62,7 +62,7 @@ def import_from_excel(input_excel_data):
     sector_revenue_aggregation = pd.read_sql(query, engine)
 
     sector = corp_info["산업"][0]
-    revenue = incs["Value"][0]
+    revenue = incs["계정값"][0]
 
     input_sectors = [sector]
     new_data = {sector: revenue}
