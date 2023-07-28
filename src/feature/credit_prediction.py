@@ -82,7 +82,6 @@ incs = fs["incs"]
 cf = fs["cf"]
 
 # 액셀에서 계정 값 받아오기
-corp_name = corp_info["기업이름"][0]
 sector = corp_info["산업"][0]
 revenue = incs["계정값"][0]
 cost_of_sales = incs["계정값"][1]
