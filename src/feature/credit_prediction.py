@@ -8,7 +8,7 @@ import pickle
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 user = "multi"
-password = "Campus123!"
+password = "*****!"
 host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
 database = "Data_Mart"
 
