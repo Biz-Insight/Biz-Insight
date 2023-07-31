@@ -2985,6 +2985,7 @@ textarea.form-control-lg {
 }
 
 .btn-dark {
+  background-color: rgba(0, 0, 0, 0.6); 
   --bs-btn-color: #fff;
   --bs-btn-bg: #212529;
   --bs-btn-border-color: #212529;
@@ -11605,9 +11606,22 @@ body {
 }
 
 .btn-primary:hover {
-  transform: scale(1.05); /* Slightly scale the button on hover */
+  transform: scale(1.05);
 }
 
 .custom-file-label::after {
   content: "찾기";
 }
+
+.btn-custom-large, .input-group {
+  width: 300px;
+}
+
+.btn-custom-large {
+  padding: 3px 0; 
+  font-size: 21px;
+  display: block;
+  text-align: center;
+}
+
+
