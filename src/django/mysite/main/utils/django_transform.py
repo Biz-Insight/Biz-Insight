@@ -35,9 +35,9 @@ def django_transform(fs):
     # cf = fs["cf"]
     ###############################################################################
     # initialization
-    user = "multi"
-    password = "Campus123!"
-    host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+    user = "root"
+    password = "****"
+    host = "127.0.0.1"
     database = "Data_Mart"
 
     engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")

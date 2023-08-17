@@ -9,7 +9,7 @@ def import_from_mysql(username, password, host_ip, database_name, desired_table_
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
 
-    hostname = f"ec2-{host_ip}.ap-northeast-3.compute.amazonaws.com"
+    hostname = "127.0.0.1"
 
     connection_str = f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
     engine = create_engine(connection_str)
@@ -36,9 +36,9 @@ def import_from_excel(input_excel_data):
     cf = df_dict["cf"]
 
     # initialization
-    user = "multi"
-    password = "Campus123!"
-    host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+    user = "root"
+    password = "9420"
+    host = "127.0.0.1"
     database = "Data_Mart"
 
     engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")

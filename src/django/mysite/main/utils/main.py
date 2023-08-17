@@ -8,9 +8,9 @@ warnings.filterwarnings("ignore")
 def get_credit_rank(input_excel_data):
     # 데이터 불러오기
     data_reviews = import_from_mysql(
-        username="multi",
-        password="Campus123!",
-        host_ip="15-152-211-160",
+        username="root",
+        password="****",
+        host_ip="127.0.0.1",
         database_name="Data_Mart",
         desired_table_name="employee_reviews_2023",
     )
