@@ -37,7 +37,7 @@ def import_from_excel(input_excel_data):
 
     # initialization
     user = "root"
-    password = "9420"
+    password = "****"
     host = "127.0.0.1"
     database = "Data_Mart"
 
