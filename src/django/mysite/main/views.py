@@ -9,6 +9,7 @@ from .utils.wordcloud_utils import *
 from .utils.django_info import django_info
 from .utils.main import *
 
+from datetime import datetime
 import pandas as pd
 import pickle
 import json
@@ -904,7 +905,14 @@ class StockArea(View):
         if company_name is not None:
             stock_data = StockDay.objects.filter(corp=company_name).order_by("date")
             data = [day.close_price for day in stock_data]
-            labels = [day.date.strftime("%Y-%m-%d") for day in stock_data]
+
+            labels = [
+                datetime.strptime(day.date, "%Y-%m-%d").strftime("%Y-%m-%d")
+                if isinstance(day.date, str)
+                else day.date.strftime("%Y-%m-%d")
+                for day in stock_data
+            ]
+
             return JsonResponse({"data": data, "labels": labels})
 
         else:
