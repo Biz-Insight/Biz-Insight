@@ -4,15 +4,20 @@ import numpy as np
 import warnings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from data_utils import (
+    save_data_to_csv,
+    save_data_to_database,
+)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-username = "multi"
-password = "*****!"
-hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+username = "root"
+password = "****"
+hostname = "localhost"
 database_name = "Data_Mart"
 desired_table_name = "credit_data_web"
+DB_URL = f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
 
 
 cnx = pymysql.connect(
@@ -178,29 +183,6 @@ cols = credit_data.columns.tolist()
 cols.insert(cols.index("label_en") + 1, cols.pop(cols.index("label_ko")))
 credit_data = credit_data[cols]
 
-credit_data.to_csv("credit_data_web.csv", encoding="utf-8-sig", index=False)
+save_data_to_csv(credit_data, "credit_data_web.csv")
 
-cnx = pymysql.connect(user=username, password=password, host=hostname)
-cursor = cnx.cursor()
-
-engine = create_engine(
-    "mysql+pymysql://{user}:{pw}@{host}/{db}".format(
-        user=username, pw=password, db=database_name, host=hostname
-    )
-)
-Session = sessionmaker(bind=engine)
-session = Session()
-
-try:
-    credit_data.to_sql(
-        desired_table_name, con=engine, if_exists="replace", index=False, chunksize=1000
-    )
-    session.commit()
-except:
-    session.rollback()
-    raise
-finally:
-    session.close()
-
-cursor.close()
-cnx.close()
+save_data_to_database(credit_data, "credit_data_web", DB_URL)

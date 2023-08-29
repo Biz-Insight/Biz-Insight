@@ -7,12 +7,14 @@ import pickle
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-user = "multi"
-password = "*****!"
-host = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
-database = "Data_Mart"
+username = "root"
+password = "****"
+hostname = "localhost"
+database_name = "Data_Mart"
 
-engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
+engine = create_engine(
+    f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
+)
 
 query = "SELECT * FROM Data_Mart.industry_average_year;"
 industry_average = pd.read_sql(query, engine)

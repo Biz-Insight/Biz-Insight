@@ -3,8 +3,24 @@ import pandas as pd
 import warnings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from data_utils import (
+    save_data_to_csv,
+    save_data_to_database,
+)
+
 
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+
+def get_database_connection():
+    return pymysql.connect(
+        user=username, password=password, host=hostname, database=database_name
+    )
+
+
+def fetch_data(query):
+    with get_database_connection() as conn:
+        return pd.read_sql(query, conn)
 
 
 def process_model(model, model_filter):
@@ -29,36 +45,20 @@ def process_model(model, model_filter):
     return model_processed
 
 
-username = "multi"
-password = "*****"
-hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+username = "root"
+password = "****"
+hostname = "localhost"
 database_name = "Data_Mart"
+DB_URL = f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
 
-cnx = pymysql.connect(
-    user=username,
-    password=password,
-    host=hostname,
-    database=database_name,
-)
+cnx = get_database_connection()
 
-
-query = "SELECT * FROM Data_Warehouse.credit_data_model"
-credit_data = pd.read_sql(query, cnx)
-
-query = "SELECT * FROM Data_Warehouse.economic_indicators;"
-economic_indicators = pd.read_sql(query, cnx)
-
-query = "SELECT * FROM Data_Warehouse.credit_rank;"
-credit_rank = pd.read_sql(query, cnx)
-
-query = "SELECT * FROM Data_Warehouse.rating_filled;"
-rating_filled = pd.read_sql(query, cnx)
-
-query = "SELECT * FROM Data_Lake.crb_index;"
-crb_index = pd.read_sql(query, cnx)
-
-query = "SELECT * FROM Data_Warehouse.investment_data_model"
-investment_data = pd.read_sql(query, cnx)
+credit_data = fetch_data("SELECT * FROM Data_Warehouse.credit_data_model")
+economic_indicators = fetch_data("SELECT * FROM Data_Warehouse.economic_indicators")
+credit_rank = fetch_data("SELECT * FROM Data_Warehouse.credit_rank")
+rating_filled = fetch_data("SELECT * FROM Data_Warehouse.rating_filled")
+crb_index = fetch_data("SELECT * FROM Data_Lake.crb_index")
+investment_data = fetch_data("SELECT * FROM Data_Warehouse.investment_data_model")
 
 cnx.close()
 
@@ -156,30 +156,8 @@ model_b_filter = model_a_filter + investment_data_filter
 credit_model_a = process_model(credit_analysis_model_a, model_a_filter)
 credit_model_b = process_model(credit_analysis_model_b, model_b_filter)
 
-data_tables = {
-    "credit_model_a": credit_model_a,
-    "credit_model_b": credit_model_b,
-}
+save_data_to_csv(credit_model_a, "credit_model_a.csv")
+save_data_to_csv(credit_model_b, "credit_model_b.csv")
 
-credit_model_a.to_csv("credit_model_a.csv", encoding="utf-8-sig", index=False)
-credit_model_b.to_csv("credit_model_b.csv", encoding="utf-8-sig", index=False)
-
-engine = create_engine(
-    f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
-)
-Session = sessionmaker(bind=engine)
-
-for table_name, df in data_tables.items():
-    try:
-        with engine.begin() as connection, Session() as session:
-            df.to_sql(
-                table_name,
-                con=connection,
-                if_exists="replace",
-                index=False,
-                chunksize=1000,
-            )
-            session.commit()
-    except Exception as e:
-        print(f"An error occurred while processing {table_name}: {str(e)}")
-        session.rollback()
+save_data_to_database(credit_model_a, "credit_model_a", DB_URL)
+save_data_to_database(credit_model_b, "credit_model_b", DB_URL)
