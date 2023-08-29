@@ -2,13 +2,18 @@ import pandas as pd
 import warnings
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from data_utils import (
+    save_data_to_csv,
+    save_data_to_database,
+)
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-username = "multi"
-password = "*****!"
-hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+username = "root"
+password = "****"
+hostname = "localhost"
 database_name = "Data_Mart"
+DB_URL = f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
 
 desired_table_name = "web_visualization"
 
@@ -28,25 +33,13 @@ query = "SELECT * FROM Data_Mart.investment_data_web;"
 investment_data_web = pd.read_sql(query, engine)
 
 main_fs = main_fs.drop(["fs_type"], axis=1)
-credit_data_web = credit_data_web.drop(["id"], axis=1)
-investment_data_web = investment_data_web.drop(["id"], axis=1)
+# credit_data_web = credit_data_web.drop(["id"], axis=1)
+# investment_data_web = investment_data_web.drop(["id"], axis=1)
 
 web_visualization = pd.concat(
     [main_fs, credit_data_web, investment_data_web], axis=0, ignore_index=True
 )
 
-web_visualization.to_csv("web_visualization.csv", encoding="utf-8-sig", index=False)
+save_data_to_csv(web_visualization, "web_visualization.csv")
 
-try:
-    with engine.begin() as connection, Session() as session:
-        web_visualization.to_sql(
-            desired_table_name,
-            con=connection,
-            if_exists="replace",
-            index=False,
-            chunksize=1000,
-        )
-        session.commit()
-except Exception as e:
-    print(f"An error occurred: {str(e)}")
-    session.rollback()
+save_data_to_database(web_visualization, "web_visualization", DB_URL)

@@ -1,14 +1,17 @@
 import pymysql
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from data_utils import (
+    save_data_to_csv,
+    save_data_to_database,
+)
 
-username = "multi"
-password = "*****!"
-hostname = "ec2-15-152-211-160.ap-northeast-3.compute.amazonaws.com"
+username = "root"
+password = "****"
+hostname = "localhost"
 database_name = "Data_Mart"
 desired_table_name = "main_fs"
+DB_URL = f"mysql+pymysql://{username}:{password}@{hostname}/{database_name}"
 
 
 def reshape_and_append(preprocessed_tmp, column_name, fs_type, label_ko, main_fs):
@@ -93,29 +96,6 @@ for info in main_fs_info_list:
         main_fs=main_fs,
     )
 
-main_fs.to_csv("main_fs.csv", encoding="utf-8-sig", index=False)
+save_data_to_csv(main_fs, "main_fs.csv")
 
-cnx = pymysql.connect(user=username, password=password, host=hostname)
-cursor = cnx.cursor()
-
-engine = create_engine(
-    "mysql+pymysql://{user}:{pw}@{host}/{db}".format(
-        user=username, pw=password, db=database_name, host=hostname
-    )
-)
-Session = sessionmaker(bind=engine)
-session = Session()
-
-try:
-    main_fs.to_sql(
-        desired_table_name, con=engine, if_exists="replace", index=False, chunksize=1000
-    )
-    session.commit()
-except:
-    session.rollback()
-    raise
-finally:
-    session.close()
-
-cursor.close()
-cnx.close()
+save_data_to_database(main_fs, "main_fs", DB_URL)
